@@ -7,42 +7,29 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:wght@300&family=Monsieur+La+Doulaise&family=Playfair+Display:wght@400&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:wght@300&family=Monsieur+La+Doulaise&family=Playfair+Display:wght@400&display=swap" rel="stylesheet" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    
+
     <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <script>
       tailwind.config = {
         theme: {
           extend: {
             fontFamily: {
-              fraunces: ['"Fraunces"', 'serif'],
-              playfair: ['"Playfair Display"', 'serif'],
-              monsieur: ['"Monsieur La Doulaise"', 'cursive'],
+              fraunces: ['"Fraunces"', "serif"],
+              playfair: ['"Playfair Display"', "serif"],
+              monsieur: ['"Monsieur La Doulaise"', "cursive"],
             },
-            animation: {
-              gradient: 'gradient 13s ease infinite',
-            },
-            keyframes: {
-              gradient: {
-                '0%, 100%': { backgroundPosition: '0% 20%' },
-                '25%': { backgroundPosition: '100% 50%' },
-                '50%': { backgroundPosition: '50% 70%' },
-              }
-            }
-          }
-        }
-      }
+          },
+        },
+      };
     </script>
-    
+
     <style>
       /* === CSS de Lenis === */
       html {
@@ -61,121 +48,97 @@
         overflow: hidden;
       }
       /* === FIN CSS de Lenis === */
-      
-      /* Fondo animado */
+
+      /* Fondo estático */
       body {
         background-color: hsla(0, 100%, 91%, 1);
-        background-image: radial-gradient(
-            at 99% 1%,
-            hsla(28, 100%, 74%, 1) 0px,
-            transparent 50%
-          ),
-          radial-gradient(
-            at 0% 0%,
-            hsla(340, 100%, 94%, 1) 0px,
-            transparent 50%
-          );
-        background-size: 200% 200%;
-        animation: gradient 13s ease infinite;
+        background-image: radial-gradient(at 99% 1%, hsla(28, 100%, 74%, 1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(340, 100%, 94%, 1) 0px, transparent 50%);
       }
+
+      /* === FIN DE LA CORRECCIÓN CSS === */
     </style>
-    </head>
+  </head>
   <body class="w-full font-fraunces font-normal text-[#333] leading-relaxed">
-    
-    <div id="curves-wrapper" class="fixed inset-0 z-[1] overflow-hidden">
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 1630 1199"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        class="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2"
-        preserveaspectratio="xMidYMid slice"
-      >
-        <path
-          class="path"
-          d="M1 311.317C173.786 140.493 611.135 -143.292 978.249 88.1616C1345.36 319.615 833.513 898.921 649.507 1040.22C465.502 1181.51 319.644 1242.37 272.52 1162.45C225.397 1082.52 392.573 980.476 583.31 898.921C774.048 817.366 1173.92 740.133 1629 898.921"
-          class="stroke-[#f96d41] stroke-1 fill-none opacity-0"
-        />
-        <path
-          class="path"
-          d="M1 898.921C173.786 1069.74 611.135 1313.53 978.249 1122.08C1345.36 890.626 833.513 311.317 649.507 170.021C465.502 28.7251 319.644 -32.1337 272.52 47.7885C225.397 127.711 392.573 229.757 583.31 311.317C774.048 392.872 1173.92 470.105 1629 311.317"
-          class="stroke-[#f96d41] stroke-1 fill-none opacity-0"
-        />
-        <path
-          class="path"
-          d="M1629 311.317C1456.21 482.141 1018.87 756.096 651.751 524.643C284.637 293.19 796.487 -286.115 978.249 -127.828C1164.49 33.4674 1310.36 94.3263 1357.48 14.4042C1404.6 94.4172 1237.43 196.463 1046.69 277.018C855.952 357.573 456.075 434.806 1 277.018"
-          class="stroke-[#f96d41] stroke-1 fill-none opacity-0"
-        />
-      </svg>
+    <div class="fixed-background fixed inset-0 z-[1] pointer-events-none">
+      <div id="curves-wrapper" class="absolute inset-0 z-[1] overflow-hidden">
+        <svg width="100%" height="100%" viewBox="0 0 1630 1199" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2" preserveaspectratio="xMidYMid slice">
+          <path
+            d="M1 311.317C173.786 140.493 611.135 -143.292 978.249 88.1616C1345.36 319.615 833.513 898.921 649.507 1040.22C465.502 1181.51 319.644 1242.37 272.52 1162.45C225.397 1082.52 392.573 980.476 583.31 898.921C774.048 817.366 1173.92 740.133 1629 898.921"
+            class="path stroke-[#f96d41] stroke-1 fill-none opacity-0"
+          />
+          <path
+            d="M1 898.921C173.786 1069.74 611.135 1313.53 978.249 1122.08C1345.36 890.626 833.513 311.317 649.507 170.021C465.502 28.7251 319.644 -32.1337 272.52 47.7885C225.397 127.711 392.573 229.757 583.31 311.317C774.048 392.872 1173.92 470.105 1629 311.317"
+            class="path stroke-[#f96d41] stroke-1 fill-none opacity-0"
+          />
+          <path
+            d="M1629 311.317C1456.21 482.141 1018.87 756.096 651.751 524.643C284.637 293.19 796.487 -286.115 978.249 -127.828C1164.49 33.4674 1310.36 94.3263 1357.48 14.4042C1404.6 94.4172 1237.43 196.463 1046.69 277.018C855.952 357.573 456.075 434.806 1 277.018"
+            class="path stroke-[#f96d41] stroke-1 fill-none opacity-0"
+          />
+        </svg>
+      </div>
+
+      <span class="initial-m fixed font-playfair font-normal text-[#333] opacity-[0.08] z-[5] leading-none text-[clamp(30rem,50vmin,40rem)] top-[-15%] left-[55%] -translate-x-[20%]">M</span>
+      <span class="initial-ampersand fixed font-fraunces font-normal text-[#333] opacity-[0.08] z-[5] text-[clamp(20rem,35vmin,30rem)] top-[35%] left-1/2 -translate-x-1/2 leading-[0.8]">&</span>
+      <span class="initial-k fixed font-playfair font-normal text-[#333] opacity-[0.08] z-[5] leading-none text-[clamp(30rem,50vmin,40rem)] bottom-[-5%] left-[15%] -translate-x-1/2">K</span>
+
+      <div class="flower-divider fixed inset-0 z-[10]">
+        <img src="flor_1.png" alt="Flor" class="absolute h-[clamp(280px,40vw,380px)] w-auto left-[-20vw] top-[10%] -translate-y-1/2 rotate-[110deg]" />
+        <img src="flor_2.png" alt="Flor" class="absolute h-[clamp(280px,40vw,380px)] w-auto right-[-20vw] top-[85%] -translate-y-1/2 -rotate-[120deg]" />
+      </div>
     </div>
-
-    <section class="invitation-hero flex flex-col items-center justify-center h-screen w-screen relative z-[10] py-[4vh] px-[5vw] gap-[2vh]">
-      <span class="initial-m fixed font-playfair font-normal text-[#333] opacity-[0.08] z-[5] pointer-events-none leading-none text-[clamp(30rem,50vmin,40rem)] top-[-15%] left-[55%] -translate-x-[20%]">M</span>
-      <span class="initial-ampersand fixed font-fraunces font-normal text-[#333] opacity-[0.08] z-[5] pointer-events-none text-[clamp(20rem,35vmin,30rem)] top-[35%] left-1/2 -translate-x-1/2 leading-[0.8]">&</span>
-      <span class="initial-k fixed font-playfair font-normal text-[#333] opacity-[0.08] z-[5] pointer-events-none leading-none text-[clamp(30rem,50vmin,40rem)] bottom-[-5%] left-[15%] -translate-x-1/2">K</span>
-
-      <div class="hero-content flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
-        <header>
-          <p class="uppercase tracking-[0.1em] text-[clamp(1rem,3vw,2rem)]">¡Dimos el "sí"!</p>
-        </header>
-        <div class="names">
-          <h1 class="font-playfair font-normal text-center leading-[1.1] text-[clamp(5.5rem,9vw,7.2rem)]">María</h1>
-          <span class="font-monsieur font-normal block text-center leading-none text-[clamp(3.5rem,6vw,4rem)] m-0">Y</span>
-          <h1 class="font-playfair font-normal text-center leading-[1.1] text-[clamp(5.5rem,9vw,7.2rem)]">Kevind</h1>
+    <main class="relative z-[10]">
+      <section class="invitation-hero flex flex-col items-center justify-center h-screen w-screen relative py-[4vh] px-[5vw] gap-[2vh]">
+        <div class="hero-content flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
+          <header>
+            <p class="uppercase tracking-[0.1em] text-[clamp(1rem,3vw,2rem)]">¡Dimos el "sí"!</p>
+          </header>
+          <div class="names">
+            <h1 class="font-playfair font-normal text-center leading-[1.1] text-[clamp(5.5rem,9vw,7.2rem)]">María</h1>
+            <span class="font-monsieur font-normal block text-center leading-none text-[clamp(3.5rem,6vw,4rem)] m-0">Y</span>
+            <h1 class="font-playfair font-normal text-center leading-[1.1] text-[clamp(5.5rem,9vw,7.2rem)]">Kevind</h1>
+          </div>
+          <p class="request text-center mt-[2vh] leading-[1.1] text-[clamp(1.3rem,4vw,1.6rem)]">
+            Queremos que seas testigo<br />
+            de nuestro matrimonio civil.
+          </p>
         </div>
-        <p class="request text-center mt-[2vh] leading-[1.1] text-[clamp(1.3rem,4vw,1.6rem)]">
-          Queremos que seas testigo<br />
-          de nuestro matrimonio civil.
-        </p>
-      </div>
-    </section>
+      </section>
 
-    <section class="details-page flex flex-col items-center justify-center min-h-screen w-screen relative z-[10] gap-[2vh]">
-      <div class="details-page-content py-[20vh] px-[5vw] flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
-        
-        <div class="flower-divider relative w-full h-[150px] flex items-center justify-center mb-[1vh]">
-          <img src="flor_1.png" alt="Flor" class="absolute h-[clamp(280px,40vw,380px)] w-auto left-[-20vw] top-1/2 -translate-y-1/2 rotate-[110deg]" />
-          <img src="flor_2.png" alt="Flor" class="absolute h-[clamp(280px,40vw,380px)] w-auto right-[-20vw] top-[10%] -translate-y-1/2 -rotate-[120deg]" />
+      <section class="details-page flex flex-col items-center min-h-screen w-screen relative gap-[2vh]">
+        <div class="details-page-content pt-[25vh] px-[5vw] flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
+          <section class="details text-center">
+            <p class="date font-normal tracking-[0.05em] mb-[1vh] text-[clamp(2.5rem,5vw,2.8rem)]">10ENE26</p>
+            <p class="time uppercase tracking-[0.05em] leading-[1.3] text-[clamp(1.2rem,3vw,1.3rem)]">tres de la tarde</p>
+            <p class="venue uppercase tracking-[0.05em] leading-[1.3] text-[clamp(1.2rem,3vw,1.3rem)] mt-[0.5vh]">
+              Centro de recepciones PK2<br />
+              Av. los paredones 201<br />
+              primera cuadra Nazca
+            </p>
+          </section>
+
+          <footer class="text-center mt-[2vh] leading-[1.7]">
+            <p class="uppercase tracking-[0.05em] text-[clamp(0.9rem,2.3vmin,1.1rem)]">Recepción: A continuación de la ceremonia</p>
+            <p class="uppercase tracking-[0.05em] text-[clamp(0.9rem,2.3vmin,1.1rem)]">Código de Vestimenta: Elegante Cóctel</p>
+
+            <p class="rsvp normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
+              <strong class="font-normal uppercase">R.S.V.P.:</strong> Agradecemos confirmar su asistencia
+              <br />
+              antes del 15/12/2025 al
+              <a href="tel:+51977993344" class="phone-link text-inherit underline">977993344</a>
+            </p>
+
+            <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">Tu presencia es nuestro mejor regalo. <br /></p>
+            <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
+              Si además deseas tener un detalle,<br />
+              puedes ver
+              <a href="#link-a-la-lista-de-regalos" class="text-inherit underline">nuestra lista de sugerencias</a>.
+            </p>
+          </footer>
         </div>
-        
-        <section class="details text-center opacity-0 translate-y-[30px]">
-          <p class="date font-normal tracking-[0.05em] mb-[1vh] text-[clamp(2.5rem,5vw,2.8rem)]">10ENE26</p>
-          <p class="time uppercase tracking-[0.05em] leading-[1.3] text-[clamp(1.2rem,3vw,1.3rem)]">tres de la tarde</p>
-          <p class="venue uppercase tracking-[0.05em] leading-[1.3] text-[clamp(1.2rem,3vw,1.3rem)] mt-[0.5vh]">
-            Centro de recepciones PK2<br />
-            Av. los paredones 201<br />
-            primera cuadra Nazca
-          </p>
-        </section>
-        
-        <footer class="text-center mt-[2vh] leading-[1.7] opacity-0 translate-y-[30px]">
-          <p class="uppercase tracking-[0.05em] text-[clamp(0.9rem,2.3vmin,1.1rem)]">Recepción: A continuación de la ceremonia</p>
-          <p class="uppercase tracking-[0.05em] text-[clamp(0.9rem,2.3vmin,1.1rem)]">Código de Vestimenta: Elegante Cóctel</p>
-
-          <p class="rsvp normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
-            <strong class="font-normal uppercase">R.S.V.P.:</strong> Agradecemos confirmar su asistencia
-            <br />
-            antes del 15/12/2025 al
-            <a href="tel:+51977993344" class="phone-link text-inherit underline">977993344</a>
-          </p>
-
-          <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
-            Tu presencia es nuestro mejor regalo. <br />
-          </p>
-          <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
-            Si además deseas tener un detalle,<br />
-            puedes ver
-            <a href="#link-a-la-lista-de-regalos" class="text-inherit underline"
-              >nuestra lista de sugerencias</a
-            >.
-          </p>
-        </footer>
-      </div>
-    </section>
-
+      </section>
+    </main>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
         // --- INICIO DE LA LÓGICA DE SCROLL ACTUALIZADA ---
 
         // 1. Registrar ScrollTrigger
@@ -184,26 +147,23 @@
         // 2. Inicializar Lenis
         const lenis = new Lenis({
           duration: 1.2,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-          direction: 'vertical', 
-          gestureDirection: 'vertical', 
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          direction: "vertical",
+          gestureDirection: "vertical",
           smooth: true,
           mouseMultiplier: 1,
-          smoothTouch: false,
+          smoothTouch: true,
           touchMultiplier: 2,
           infinite: false,
-        })
+        });
 
-        lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
-          console.log({ scroll, limit, velocity, direction, progress })
-        })
+        lenis.on("scroll", ScrollTrigger.update); // <-- CONECTA LENIS CON SCROLLTRIGGER
 
-        function raf(time) {
-          lenis.raf(time)
-          requestAnimationFrame(raf)
-        }
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
 
-        requestAnimationFrame(raf)
+        gsap.ticker.lagSmoothing(0);
 
         // --- PARTE 1: ANIMACIÓN DEL HILO (Sin cambios) ---
         const paths = gsap.utils.toArray(".path");
@@ -261,89 +221,88 @@
         // --- PARTE 2: LÍNEA DE TIEMPO (Actualizada) ---
 
         // 1. Animamos la entrada del "Hero"
-        gsap.timeline({
-            onComplete: createParallaxAnimation // Llama a la función de parallax al terminar
+        gsap
+          .timeline({
+            onComplete: createParallaxAnimation, // Llama a la función de parallax al terminar
           })
-          .from(
-            ".hero-content header",
-            { opacity: 0, scale: 0.3, y: "20vh", duration: 1.5, ease: "power3.out" },
-            0.5
-          )
-          .from(
-            ".hero-content .names",
-            { opacity: 0, y: 30, duration: 1, ease: "power2.out" },
-            "-=0.5"
-          )
-          .from(
-            ".hero-content .request",
-            { opacity: 0, y: 20, duration: 1, ease: "power2.out" },
-            "-=0.5"
-          );
-        
-        // 2. FUNCIÓN DE PARALLAX CON PINNING
+          .from(".hero-content header", { opacity: 0, scale: 0.3, y: "20vh", duration: 1.5, ease: "power3.out" }, 0.5)
+          .from(".hero-content .names", { opacity: 0, y: 30, duration: 1, ease: "power2.out" }, "-=0.5")
+          .from(".hero-content .request", { opacity: 0, y: 20, duration: 1, ease: "power2.out" }, "-=0.5");
+
+        // 2. FUNCIÓN DE PARALLAX CON PINNING (¡¡CORREGIDA!!)
+        // Esta es la animación que FIJA la primera sección
         function createParallaxAnimation() {
           const parallaxTl = gsap.timeline({
             scrollTrigger: {
               trigger: ".invitation-hero",
-              start: "top top",
-              end: "bottom top", 
+              start: "top top", // <-- ARREGLADO: Vuelve a ser "top top"
+              end: "bottom top",
               scrub: 1,
-              pin: true, 
-              pinSpacing: false, 
+              pin: true, // <-- ARREGLADO: Vuelve a tener "pin: true"
+              pinSpacing: true, // Dejamos el "empuje" por defecto
             },
           });
-          
+
           const finalProps = {
             yPercent: -150,
             opacity: 0,
             filter: "blur(5px)",
-            ease: "power2.in"
+            ease: "power2.in",
           };
-          
+
           parallaxTl
             .to(".hero-content header", finalProps)
-            .to(".names h1:first-child", finalProps, "<0.25") // María
-            .to(".names span", finalProps, "<0.25") // Y
-            .to(".names h1:last-child", finalProps, "<0.25") // Kevind
-            .to(".hero-content .request", finalProps, "<0.25"); // Mensaje
+            .to(".names h1:first-child", finalProps, "<0.25")
+            .to(".names span", finalProps, "<0.25")
+            .to(".names h1:last-child", finalProps, "<0.25")
+            .to(".hero-content .request", finalProps, "<0.25");
         }
-        
-        
-        // 3. NUEVO: Animación de ENTRADA para los "Detalles"
+
+        // 3. ANIMACIÓN DE LA SECCIÓN 2 (¡¡UNIFICADA Y CORREGIDA!!)
+        // Esta es la animación que solapa la segunda sección
         const detailsTl = gsap.timeline({
           scrollTrigger: {
-            trigger: ".details-page",
-            start: "top 60%", 
-            end: "center 60%",
-            scrub: 1.5,
+            trigger: ".invitation-hero", // Se dispara con la primera sección
+            start: "50% top", // Inicia cuando el scroll del Hero va al 50%
+            end: "bottom top", // Termina cuando el pin del Hero suelta
+            scrub: 1.2,
           },
         });
-        
-        // Animamos la primera flor (izquierda)
-        detailsTl.from(".flower-divider img:first-child", {
-            yPercent: -50,
+
+        // PASO 1: Animar las flores (CON PARALLAX)
+        detailsTl.from(
+          ".flower-divider img:first-child",
+          {
+            yPercent: 280, // Comienza ARRIBA (para que baje)
             opacity: 0,
-            ease: "none", 
-            duration: 1
-        }, 0); 
+            ease: "none",
+          },
+          0
+        );
 
-        // Animamos la segunda flor (derecha) un poco después
-        detailsTl.from(".flower-divider img:last-child", {
-            yPercent: 50, 
-            opacity: 0, 
-            ease: "none", 
-            duration: 1
-        }, 0.3); 
+        detailsTl.from(
+          ".flower-divider img:last-child",
+          {
+            yPercent: 100, // Comienza ABAJO (para que suba)
+            opacity: 0,
+            ease: "none",
+          },
+          0.1
+        );
 
-        // Animamos el resto del contenido
-        detailsTl.to(".details-page-content .details, .details-page-content footer", {
-            opacity: 1,
-            y: 0,
-            stagger: 0.2, 
-            ease: "power3.out"
-        }, 0.5); 
-        
-      });
+        // PASO 2: Animar el texto escalonado
+        detailsTl.from(
+          ".details-page-content .details > p, .details-page-content footer > p",
+          {
+            opacity: 0,
+            y: 30, // Anima "desde" 30px más abajo
+           stagger: 0.1, // 0.1s de retraso entre cada <p>
+            ease: "power3.out",
+          },
+          0.2
+        ); // Inicia después de las flores
+
+      }); // <-- FIN DEL DOMContentLoaded
     </script>
   </body>
 </html>
