@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>María y Kevind | Nuestra Boda</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:wght@300&family=Monsieur+La+Doulaise&family=Playfair+Display:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+      /* --- Reseteo y Estilos Globales --- */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        font-family: "Fraunces", serif;
+        font-weight: 400;
+        color: #333;
+        line-height: 1.6;
+        overflow: hidden; /* Scroll bloqueado permanentemente */
+
+        background-color: hsla(0, 100%, 91%, 1);
+        background-image: radial-gradient(
+            at 99% 1%,
+            hsla(28, 100%, 74%, 1) 0px,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 0% 0%,
+            hsla(340, 100%, 94%, 1) 0px,
+            transparent 50%
+          );
+        animation: gradient 13s ease infinite;
+        background-size: 200% 200%;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 20%;
+        }
+        25% {
+          background-position: 100% 50%;
+        }
+        50% {
+          background-position: 50% 70%;
+        }
+        100% {
+          background-position: 0% 20%;
+        }
+      }
+
+      /* --- Estructura de Secciones --- */
+      .invitation-hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+        z-index: 10;
+        padding: 4vh 5vw;
+        gap: 2vh;
+      }
+
+      .hero-content,
+      .details-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2vh;
+        width: 100%;
+        position: relative; /* Asegura z-index para el contenido */
+        z-index: 10;
+      }
+
+      .details-content {
+        display: none;
+        opacity: 0;
+        position: absolute;
+        padding: 4vh 5vw;
+        gap: 2vh;
+      }
+
+      /* --- Hilo SVG Fijo --- */
+      #curves-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        overflow: hidden;
+      }
+      #curves-wrapper svg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        preserveaspectratio: "xMidYMid slice";
+      }
+      .path {
+        stroke: #f96d41;
+        stroke-width: 1px;
+        fill: none;
+        opacity: 0; /* JS lo controla */
+      }
+
+      /* --- INICIALES DE FONDO --- */
+      .initial-m,
+      .initial-k,
+      .initial-ampersand {
+        position: absolute;
+        font-family: "Playfair Display", serif;
+        font-weight: 400;
+        font-size: clamp(30rem, 50vmin, 40rem);
+        line-height: 1;
+        color: #333;
+        opacity: 0.08;
+        z-index: 5;
+        pointer-events: none; /* Asegura que no interfieran con clics */
+      }
+
+      .initial-m {
+        top: -15%;
+        left: 55%;
+        transform: translateX(-20%);
+      }
+      .initial-ampersand {
+        font-family: "Fraunces", serif;
+        font-size: clamp(20rem, 35vmin, 30rem);
+        top: 35%;
+        left: 50%;
+        transform: translateX(-50%);
+        line-height: 0.8;
+      }
+      .initial-k {
+        bottom: -5%;
+        left: 15%;
+        transform: translateX(-50%);
+      }
+
+      /* --- Estilos de Texto --- */
+      header p {
+        font-size: clamp(2rem, 2vmin, 1rem);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .names h1 {
+        font-family: "Playfair Display", serif;
+        font-weight: 400;
+        font-size: clamp(7.2rem, 9vmin, 5.5rem);
+        line-height: 1.1;
+        text-align: center;
+      }
+
+      .names span {
+        font-family: "Monsieur La Doulaise", cursive;
+        font-weight: 400;
+        font-size: clamp(4rem, 6vmin, 3.5rem);
+        margin: 0;
+        line-height: 1;
+        display: block;
+        text-align: center;
+      }
+      .request {
+        font-size: clamp(1.6rem, 2.5vmin, 1.3rem);
+        margin-top: 2vh;
+        line-height: 1.1;
+        text-align: center;
+      }
+
+      /* --- CSS (Flores) --- */
+      .flower-divider {
+        position: relative;
+        width: 100%;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1vh;
+      }
+
+      .flower-divider img {
+        position: absolute;
+        height: 380px;
+        width: auto;
+      }
+
+      .flower-divider img:first-child {
+        /* FLOR_1.PNG */
+        left: -150px;
+        top: 50%;
+        transform: translateY(-50%) rotate(110deg);
+      }
+
+      .flower-divider img:last-child {
+        /* FLOR_2.PNG */
+        right: -150px;
+        top: 10%;
+        transform: translateY(-50%) rotate(-120deg);
+      }
+      /* --- FIN CSS (Flores) --- */
+
+      .details {
+        text-align: center;
+      }
+      .details .date {
+        font-size: clamp(2.8rem, 5vmin, 2.5rem);
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        margin-bottom: 1vh;
+      }
+      .details .time,
+      .details .venue {
+        font-size: clamp(1.3rem, 2.5vmin, 1.2rem);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        line-height: 1.3;
+      }
+      .details .venue {
+        margin-top: 0.5vh;
+      }
+      footer {
+        line-height: 1.7;
+        margin-top: 2vh;
+        text-align: center;
+      }
+      footer p {
+        font-size: clamp(0.9rem, 2.3vmin, 1.1rem);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      footer .rsvp,
+      footer .gifts {
+        font-size: clamp(1.1rem, 2.2vmin, 1.1rem);
+        text-transform: none;
+        letter-spacing: 0;
+        margin-top: 1.5vh;
+        line-height: 1.5;
+      }
+      footer .rsvp strong {
+        font-weight: 400;
+        text-transform: uppercase;
+      }
+
+      /* Estilo para el link de la lista de regalos y teléfono */
+      footer .gifts a,
+      footer .rsvp a.phone-link {
+        color: inherit;
+        text-decoration: underline; /* Subrayado simple para ambos */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="curves-wrapper">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 1630 1199"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          class="path"
+          d="M1 311.317C173.786 140.493 611.135 -143.292 978.249 88.1616C1345.36 319.615 833.513 898.921 649.507 1040.22C465.502 1181.51 319.644 1242.37 272.52 1162.45C225.397 1082.52 392.573 980.476 583.31 898.921C774.048 817.366 1173.92 740.133 1629 898.921"
+        />
+        <path
+          class="path"
+          d="M1 898.921C173.786 1069.74 611.135 1313.53 978.249 1122.08C1345.36 890.626 833.513 311.317 649.507 170.021C465.502 28.7251 319.644 -32.1337 272.52 47.7885C225.397 127.711 392.573 229.757 583.31 311.317C774.048 392.872 1173.92 470.105 1629 311.317"
+        />
+        <path
+          class="path"
+          d="M1629 311.317C1456.21 482.141 1018.87 756.096 651.751 524.643C284.637 293.19 796.487 -286.115 978.249 -127.828C1164.49 33.4674 1310.36 94.3263 1357.48 14.4042C1404.6 94.4172 1237.43 196.463 1046.69 277.018C855.952 357.573 456.075 434.806 1 277.018"
+        />
+      </svg>
+    </div>
+
+    <section class="invitation-hero">
+      <span class="initial-m">M</span>
+      <span class="initial-ampersand">&</span>
+      <span class="initial-k">K</span>
+
+      <div class="hero-content">
+        <header>
+          <p>¡Dimos el "sí"!</p>
+        </header>
+        <div class="names">
+          <h1>María</h1>
+          <span>Y</span>
+          <h1>Kevind</h1>
+        </div>
+        <p class="request">
+          Queremos que seas testigo<br />
+          de nuestro matrimonio civil.
+        </p>
+      </div>
+
+      <div class="details-content">
+        <div class="flower-divider">
+          <img src="FLOR_1.PNG" alt="Flor" />
+          <img src="FLOR_2.PNG" alt="Flor" />
+        </div>
+        <section class="details">
+          <p class="date">10ENE26</p>
+          <p class="time">tres de la tarde</p>
+          <p class="venue">
+            Centro de recepciones PK2<br />
+            Av. los paredones 201<br />
+            primera cuadra Nazca
+          </p>
+        </section>
+        <footer>
+          <p>Recepción: A continuación de la ceremonia</p>
+          <p>Código de Vestimenta: Elegante Cóctel</p>
+
+          <p class="rsvp">
+            <strong>R.S.V.P.:</strong> Agradecemos confirmar su asistencia
+            <br />
+            antes del 15/12/2025 al
+            <a href="tel:+51977993344" class="phone-link">977993344</a>
+          </p>
+
+          <p class="gifts">
+            Tu presencia es nuestro mejor regalo. <br />
+          </p>
+          <p class="gifts">
+            Si además deseas tener un detalle,<br />
+            puedes ver
+            <a href="#link-a-la-lista-de-regalos"
+              >nuestra lista de sugerencias</a
+            >.
+          </p>
+        </footer>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // --- PARTE 1: ANIMACIÓN DEL HILO (Sin cambios) ---
+        const paths = gsap.utils.toArray(".path");
+        let activePathIndex = -1;
+
+        function animatePath(path) {
+          if (!path) return;
+          const pathLength = path.getTotalLength();
+          const randomDuration = gsap.utils.random(2.5, 4);
+          const randomScale = gsap.utils.random(0.9, 1.1);
+          const randomRotation = gsap.utils.random(-10, 10);
+          const overlapTime = randomDuration * 0.7;
+
+          gsap.set(path, {
+            strokeDasharray: pathLength + " " + pathLength,
+            strokeDashoffset: pathLength,
+            opacity: 1,
+            scale: randomScale,
+            rotation: randomRotation,
+            transformOrigin: "center center",
+          });
+
+          gsap
+            .timeline()
+            .to(path, {
+              strokeDashoffset: 0,
+              duration: randomDuration,
+              ease: "power2.in",
+            })
+            .to(
+              path,
+              {
+                strokeDashoffset: -pathLength,
+                duration: randomDuration,
+                ease: "power2.out",
+                onComplete: () => gsap.set(path, { opacity: 0 }),
+              },
+              `-=${overlapTime}`
+            )
+            .call(animateRandomPath);
+        }
+
+        function animateRandomPath() {
+          let newPathIndex;
+          do {
+            newPathIndex = Math.floor(Math.random() * paths.length);
+          } while (newPathIndex === activePathIndex);
+
+          activePathIndex = newPathIndex;
+          
+          // === INICIO DE LA CORRECCIÓN DE ERROR ===
+          // Corregido el error de tipeo (decía activePathPathIndex)
+          animatePath(paths[activePathIndex]);
+          // === FIN DE LA CORRECCIÓN DE ERROR ===
+        }
+
+        animateRandomPath(); // Inicia la animación de hilos
+
+        // --- PARTE 2: LÍNEA DE TIEMPO (Sin cambios) ---
+
+        const tl = gsap.timeline();
+
+        // 1. Animamos la entrada del contenido "Hero"
+        tl.fromTo(
+          ".hero-content header",
+          { opacity: 0, scale: 0.3, y: "20vh" },
+          { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: "power3.out" },
+          0.5
+        )
+          .from(
+            ".hero-content .names",
+            { opacity: 0, y: 30, duration: 1, ease: "power2.out" },
+            "-=0.5"
+          )
+          .from(
+            ".hero-content .request",
+            { opacity: 0, y: 20, duration: 1, ease: "power2.out" },
+            "-=0.5"
+          );
+
+        // 2. Animamos la SALIDA del "Hero" (Más ordenado)
+        
+        // === INICIO DE LA CORRECCIÓN DE TIEMPO ===
+        // Cambiado de 0.0 a 1.5 segundos para dar tiempo a la transición
+        const pause = "+=1.5"; 
+        // === FIN DE LA CORRECCIÓN DE TIEMPO ===
+
+        // 1. Se va el header
+        tl.to(
+          ".hero-content header",
+          {
+            opacity: 0,
+            y: -30,
+            filter: "blur(5px)",
+            duration: 0.8,
+            ease: "power2.in",
+          },
+          pause
+        );
+
+        // 2. Se van los nombres, uno por uno (justo después)
+        tl.to(
+          ".names > *",
+          {
+            opacity: 0,
+            y: -50,
+            filter: "blur(5px)",
+            duration: 0.7,
+            ease: "power2.in",
+            stagger: 0.2, // Un stagger más rápido
+          },
+          "-=0.6" // Empieza un poco después del header
+        );
+
+        // 3. Se va el request (justo después de los nombres)
+        tl.to(
+          ".hero-content .request",
+          {
+            opacity: 0,
+            y: -30,
+            filter: "blur(5px)",
+            duration: 0.8,
+            ease: "power2.in",
+          },
+          "-=0.6" // Empieza un poco después de los nombres
+        ).set(".hero-content", { display: "none" }); // Ocultamos todo al final
+
+        // 3. Animamos la ENTRADA del contenido "Details"
+        tl.set(".details-content", {
+          display: "flex",
+          opacity: 0,
+          y: 50,
+          filter: "blur(5px)",
+        })
+          .to(
+            ".details-content",
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 1.5,
+              ease: "power3.out",
+            },
+            "-=0.7"
+          )
+          .from(
+            ".details-content .flower-divider, .details-content .details > p, .details-content footer > p",
+            {
+              opacity: 0,
+              y: 20,
+              duration: 1,
+              ease: "power2.out",
+              stagger: 0.2,
+            },
+            "-=0.7"
+          );
+      });
+    </script>
+  </body>
+</html>
