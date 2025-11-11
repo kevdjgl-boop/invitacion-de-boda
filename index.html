@@ -16,14 +16,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     
     <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
-    <style>
-      /* --- Reseteo y Estilos Globales --- */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
 
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              fraunces: ['"Fraunces"', 'serif'],
+              playfair: ['"Playfair Display"', 'serif'],
+              monsieur: ['"Monsieur La Doulaise"', 'cursive'],
+            },
+            animation: {
+              gradient: 'gradient 13s ease infinite',
+            },
+            keyframes: {
+              gradient: {
+                '0%, 100%': { backgroundPosition: '0% 20%' },
+                '25%': { backgroundPosition: '100% 50%' },
+                '50%': { backgroundPosition: '50% 70%' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    
+    <style>
       /* === CSS de Lenis === */
       html {
         scroll-behavior: auto !important;
@@ -41,15 +61,9 @@
         overflow: hidden;
       }
       /* === FIN CSS de Lenis === */
-
-      html,
+      
+      /* Fondo animado */
       body {
-        width: 100%;
-        font-family: "Fraunces", serif;
-        font-weight: 400;
-        color: #333;
-        line-height: 1.6;
-
         background-color: hsla(0, 100%, 91%, 1);
         background-image: radial-gradient(
             at 99% 1%,
@@ -61,334 +75,98 @@
             hsla(340, 100%, 94%, 1) 0px,
             transparent 50%
           );
-        animation: gradient 13s ease infinite;
         background-size: 200% 200%;
+        animation: gradient 13s ease infinite;
       }
-
-      @keyframes gradient {
-        0% {
-          background-position: 0% 20%;
-        }
-        25% {
-          background-position: 100% 50%;
-        }
-        50% {
-          background-position: 50% 70%;
-        }
-        100% {
-          background-position: 0% 20%;
-        }
-      }
-
-      /* --- Estructura de Secciones --- */
-      .invitation-hero {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        width: 100vw;
-        position: relative;
-        z-index: 10;
-        padding: 4vh 5vw;
-        gap: 2vh;
-      }
-
-      .details-page {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh; /* Altura mínima */
-        width: 100vw;
-        position: relative;
-        z-index: 10;
-        gap: 2vh;
-      }
-
-      .details-page-content {
-        padding: 20vh 5vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2vh;
-        width: 100%;
-        position: relative;
-        z-index: 10;
-      }
-
-      .hero-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2vh;
-        width: 100%;
-        position: relative;
-        z-index: 10;
-      }
-
-      /* --- Hilo SVG Fijo --- */
-      #curves-wrapper {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        overflow: hidden;
-      }
-      #curves-wrapper svg {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        preserveaspectratio: "xMidYMid slice";
-      }
-      .path {
-        stroke: #f96d41;
-        stroke-width: 1px;
-        fill: none;
-        opacity: 0; /* JS lo controla */
-      }
-
-      /* --- INICIALES DE FONDO --- */
-      .initial-m,
-      .initial-k,
-      .initial-ampersand {
-        position: fixed;
-        font-family: "Playfair Display", serif;
-        font-weight: 400;
-        font-size: clamp(30rem, 50vmin, 40rem);
-        line-height: 1;
-        color: #333;
-        opacity: 0.08;
-        z-index: 5;
-        pointer-events: none;
-      }
-
-      .initial-m {
-        top: -15%;
-        left: 55%;
-        transform: translateX(-20%);
-      }
-      .initial-ampersand {
-        font-family: "Fraunces", serif;
-        font-size: clamp(20rem, 35vmin, 30rem);
-        top: 35%;
-        left: 50%;
-        transform: translateX(-50%);
-        line-height: 0.8;
-      }
-      .initial-k {
-        bottom: -5%;
-        left: 15%;
-        transform: translateX(-50%);
-      }
-
-      /* --- Estilos de Texto (Responsivos) --- */
-      header p {
-        font-size: clamp(1rem, 3vw, 2rem);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-      }
-
-      .names h1 {
-        font-family: "Playfair Display", serif;
-        font-weight: 400;
-        font-size: clamp(5.5rem, 9vw, 7.2rem);
-        line-height: 1.1;
-        text-align: center;
-      }
-
-      .names span {
-        font-family: "Monsieur La Doulaise", cursive;
-        font-weight: 400;
-        font-size: clamp(3.5rem, 6vw, 4rem);
-        margin: 0;
-        line-height: 1;
-        display: block;
-        text-align: center;
-      }
-      .request {
-        font-size: clamp(1.3rem, 4vw, 1.6rem);
-        margin-top: 2vh;
-        line-height: 1.1;
-        text-align: center;
-      }
-
-      /* --- CSS (Flores Responsivo) --- */
-      .flower-divider {
-        position: relative;
-        width: 100%;
-        height: 150px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1vh;
-      }
-
-      .flower-divider img {
-        position: absolute;
-        height: clamp(280px, 40vw, 380px);
-        width: auto;
-      }
-
-      .flower-divider img:first-child {
-        left: -20vw;
-        top: 50%;
-        transform: translateY(-50%) rotate(110deg);
-      }
-
-      .flower-divider img:last-child {
-        right: -20vw;
-        top: 10%;
-        transform: translateY(-50%) rotate(-120deg);
-      }
-      /* --- FIN CSS (Flores) --- */
-
-      .details {
-        text-align: center;
-      }
-      .details .date {
-        font-size: clamp(2.5rem, 5vw, 2.8rem);
-        font-weight: 400;
-        letter-spacing: 0.05em;
-        margin-bottom: 1vh;
-      }
-      .details .time,
-      .details .venue {
-        font-size: clamp(1.2rem, 3vw, 1.3rem);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        line-height: 1.3;
-      }
-      .details .venue {
-        margin-top: 0.5vh;
-      }
-      footer {
-        line-height: 1.7;
-        margin-top: 2vh;
-        text-align: center;
-      }
-      footer p {
-        font-size: clamp(0.9rem, 2.3vmin, 1.1rem);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-      footer .rsvp,
-      footer .gifts {
-        font-size: clamp(0.9rem, 3vw, 1.1rem);
-        text-transform: none;
-        letter-spacing: 0;
-        margin-top: 1.5vh;
-        line-height: 1.5;
-      }
-      footer .rsvp strong {
-        font-weight: 400;
-        text-transform: uppercase;
-      }
-
-      footer .gifts a,
-      footer .rsvp a.phone-link {
-        color: inherit;
-        text-decoration: underline;
-      }
-
-      /* Ocultar elementos para animar individualmente */
-      .flower-divider img {
-        /* GSAP controlará la opacidad y el transform */
-      }
-      
-      .details-page-content .details,
-      .details-page-content footer {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      
     </style>
-  </head>
-  <body>
-    <div id="curves-wrapper">
+    </head>
+  <body class="w-full font-fraunces font-normal text-[#333] leading-relaxed">
+    
+    <div id="curves-wrapper" class="fixed inset-0 z-[1] overflow-hidden">
       <svg
         width="100%"
         height="100%"
         viewBox="0 0 1630 1199"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        class="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2"
+        preserveaspectratio="xMidYMid slice"
       >
         <path
           class="path"
           d="M1 311.317C173.786 140.493 611.135 -143.292 978.249 88.1616C1345.36 319.615 833.513 898.921 649.507 1040.22C465.502 1181.51 319.644 1242.37 272.52 1162.45C225.397 1082.52 392.573 980.476 583.31 898.921C774.048 817.366 1173.92 740.133 1629 898.921"
+          class="stroke-[#f96d41] stroke-1 fill-none opacity-0"
         />
         <path
           class="path"
           d="M1 898.921C173.786 1069.74 611.135 1313.53 978.249 1122.08C1345.36 890.626 833.513 311.317 649.507 170.021C465.502 28.7251 319.644 -32.1337 272.52 47.7885C225.397 127.711 392.573 229.757 583.31 311.317C774.048 392.872 1173.92 470.105 1629 311.317"
+          class="stroke-[#f96d41] stroke-1 fill-none opacity-0"
         />
         <path
           class="path"
           d="M1629 311.317C1456.21 482.141 1018.87 756.096 651.751 524.643C284.637 293.19 796.487 -286.115 978.249 -127.828C1164.49 33.4674 1310.36 94.3263 1357.48 14.4042C1404.6 94.4172 1237.43 196.463 1046.69 277.018C855.952 357.573 456.075 434.806 1 277.018"
+          class="stroke-[#f96d41] stroke-1 fill-none opacity-0"
         />
       </svg>
     </div>
 
-    <section class="invitation-hero">
-      <span class="initial-m">M</span>
-      <span class="initial-ampersand">&</span>
-      <span class="initial-k">K</span>
+    <section class="invitation-hero flex flex-col items-center justify-center h-screen w-screen relative z-[10] py-[4vh] px-[5vw] gap-[2vh]">
+      <span class="initial-m fixed font-playfair font-normal text-[#333] opacity-[0.08] z-[5] pointer-events-none leading-none text-[clamp(30rem,50vmin,40rem)] top-[-15%] left-[55%] -translate-x-[20%]">M</span>
+      <span class="initial-ampersand fixed font-fraunces font-normal text-[#333] opacity-[0.08] z-[5] pointer-events-none text-[clamp(20rem,35vmin,30rem)] top-[35%] left-1/2 -translate-x-1/2 leading-[0.8]">&</span>
+      <span class="initial-k fixed font-playfair font-normal text-[#333] opacity-[0.08] z-[5] pointer-events-none leading-none text-[clamp(30rem,50vmin,40rem)] bottom-[-5%] left-[15%] -translate-x-1/2">K</span>
 
-      <div class="hero-content">
+      <div class="hero-content flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
         <header>
-          <p>¡Dimos el "sí"!</p>
+          <p class="uppercase tracking-[0.1em] text-[clamp(1rem,3vw,2rem)]">¡Dimos el "sí"!</p>
         </header>
         <div class="names">
-          <h1>María</h1>
-          <span>Y</span>
-          <h1>Kevind</h1>
+          <h1 class="font-playfair font-normal text-center leading-[1.1] text-[clamp(5.5rem,9vw,7.2rem)]">María</h1>
+          <span class="font-monsieur font-normal block text-center leading-none text-[clamp(3.5rem,6vw,4rem)] m-0">Y</span>
+          <h1 class="font-playfair font-normal text-center leading-[1.1] text-[clamp(5.5rem,9vw,7.2rem)]">Kevind</h1>
         </div>
-        <p class="request">
+        <p class="request text-center mt-[2vh] leading-[1.1] text-[clamp(1.3rem,4vw,1.6rem)]">
           Queremos que seas testigo<br />
           de nuestro matrimonio civil.
         </p>
       </div>
     </section>
 
-    <section class="details-page">
-      <div class="details-page-content">
-        <div class="flower-divider">
-          <img src="flor_1.png" alt="Flor" />
-          <img src="flor_2.png" alt="Flor" />
+    <section class="details-page flex flex-col items-center justify-center min-h-screen w-screen relative z-[10] gap-[2vh]">
+      <div class="details-page-content py-[20vh] px-[5vw] flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
+        
+        <div class="flower-divider relative w-full h-[150px] flex items-center justify-center mb-[1vh]">
+          <img src="flor_1.png" alt="Flor" class="absolute h-[clamp(280px,40vw,380px)] w-auto left-[-20vw] top-1/2 -translate-y-1/2 rotate-[110deg]" />
+          <img src="flor_2.png" alt="Flor" class="absolute h-[clamp(280px,40vw,380px)] w-auto right-[-20vw] top-[10%] -translate-y-1/2 -rotate-[120deg]" />
         </div>
-        <section class="details">
-          <p class="date">10ENE26</p>
-          <p class="time">tres de la tarde</p>
-          <p class="venue">
+        
+        <section class="details text-center opacity-0 translate-y-[30px]">
+          <p class="date font-normal tracking-[0.05em] mb-[1vh] text-[clamp(2.5rem,5vw,2.8rem)]">10ENE26</p>
+          <p class="time uppercase tracking-[0.05em] leading-[1.3] text-[clamp(1.2rem,3vw,1.3rem)]">tres de la tarde</p>
+          <p class="venue uppercase tracking-[0.05em] leading-[1.3] text-[clamp(1.2rem,3vw,1.3rem)] mt-[0.5vh]">
             Centro de recepciones PK2<br />
             Av. los paredones 201<br />
             primera cuadra Nazca
           </p>
         </section>
-        <footer>
-          <p>Recepción: A continuación de la ceremonia</p>
-          <p>Código de Vestimenta: Elegante Cóctel</p>
+        
+        <footer class="text-center mt-[2vh] leading-[1.7] opacity-0 translate-y-[30px]">
+          <p class="uppercase tracking-[0.05em] text-[clamp(0.9rem,2.3vmin,1.1rem)]">Recepción: A continuación de la ceremonia</p>
+          <p class="uppercase tracking-[0.05em] text-[clamp(0.9rem,2.3vmin,1.1rem)]">Código de Vestimenta: Elegante Cóctel</p>
 
-          <p class="rsvp">
-            <strong>R.S.V.P.:</strong> Agradecemos confirmar su asistencia
+          <p class="rsvp normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
+            <strong class="font-normal uppercase">R.S.V.P.:</strong> Agradecemos confirmar su asistencia
             <br />
             antes del 15/12/2025 al
-            <a href="tel:+51977993344" class="phone-link">977993344</a>
+            <a href="tel:+51977993344" class="phone-link text-inherit underline">977993344</a>
           </p>
 
-          <p class="gifts">
+          <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
             Tu presencia es nuestro mejor regalo. <br />
           </p>
-          <p class="gifts">
+          <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
             Si además deseas tener un detalle,<br />
             puedes ver
-            <a href="#link-a-la-lista-de-regalos"
+            <a href="#link-a-la-lista-de-regalos" class="text-inherit underline"
               >nuestra lista de sugerencias</a
             >.
           </p>
@@ -403,13 +181,12 @@
         // 1. Registrar ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
-        // === INICIO DE LA CORRECCIÓN: Código de Lenis actualizado ===
         // 2. Inicializar Lenis
         const lenis = new Lenis({
           duration: 1.2,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-          direction: 'vertical', // vertical, horizontal
-          gestureDirection: 'vertical', // vertical, horizontal, both
+          direction: 'vertical', 
+          gestureDirection: 'vertical', 
           smooth: true,
           mouseMultiplier: 1,
           smoothTouch: false,
@@ -417,7 +194,6 @@
           infinite: false,
         })
 
-        //get scroll value
         lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
           console.log({ scroll, limit, velocity, direction, progress })
         })
@@ -428,7 +204,6 @@
         }
 
         requestAnimationFrame(raf)
-        // === FIN DE LA CORRECCIÓN ===
 
         // --- PARTE 1: ANIMACIÓN DEL HILO (Sin cambios) ---
         const paths = gsap.utils.toArray(".path");
@@ -547,7 +322,7 @@
         // Animamos la primera flor (izquierda)
         detailsTl.from(".flower-divider img:first-child", {
             yPercent: -50,
-            opacity: 0, // Añadido para que aparezcan
+            opacity: 0,
             ease: "none", 
             duration: 1
         }, 0); 
@@ -555,7 +330,7 @@
         // Animamos la segunda flor (derecha) un poco después
         detailsTl.from(".flower-divider img:last-child", {
             yPercent: 50, 
-            opacity: 0, // Añadido para que aparezcan
+            opacity: 0, 
             ease: "none", 
             duration: 1
         }, 0.3); 
