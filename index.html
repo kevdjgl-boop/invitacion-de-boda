@@ -13,7 +13,9 @@
     />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <script src="https://unpkg.com/lenis@1.3.11/dist/lenis.min.js"></script>
     <style>
       /* --- Reseteo y Estilos Globales --- */
       * {
@@ -22,15 +24,31 @@
         box-sizing: border-box;
       }
 
+      /* === CSS de Lenis === */
+      html {
+        scroll-behavior: auto !important;
+      }
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+      .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      /* === FIN CSS de Lenis === */
+
       html,
       body {
-        height: 100%;
         width: 100%;
         font-family: "Fraunces", serif;
         font-weight: 400;
         color: #333;
         line-height: 1.6;
-        overflow: hidden; /* Scroll bloqueado permanentemente */
 
         background-color: hsla(0, 100%, 91%, 1);
         background-image: radial-gradient(
@@ -76,24 +94,39 @@
         gap: 2vh;
       }
 
-      .hero-content,
-      .details-content {
+      .details-page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh; /* Altura mínima */
+        width: 100vw;
+        position: relative;
+        z-index: 10;
+        gap: 2vh;
+      }
+
+      .details-page-content {
+        padding: 20vh 5vw;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 2vh;
         width: 100%;
-        position: relative; /* Asegura z-index para el contenido */
+        position: relative;
         z-index: 10;
       }
 
-      .details-content {
-        display: none;
-        opacity: 0;
-        position: absolute;
-        padding: 4vh 5vw;
+      .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         gap: 2vh;
+        width: 100%;
+        position: relative;
+        z-index: 10;
       }
 
       /* --- Hilo SVG Fijo --- */
@@ -126,7 +159,7 @@
       .initial-m,
       .initial-k,
       .initial-ampersand {
-        position: absolute;
+        position: fixed;
         font-family: "Playfair Display", serif;
         font-weight: 400;
         font-size: clamp(30rem, 50vmin, 40rem);
@@ -134,7 +167,7 @@
         color: #333;
         opacity: 0.08;
         z-index: 5;
-        pointer-events: none; /* Asegura que no interfieran con clics */
+        pointer-events: none;
       }
 
       .initial-m {
@@ -156,9 +189,9 @@
         transform: translateX(-50%);
       }
 
-      /* --- Estilos de Texto --- */
+      /* --- Estilos de Texto (Responsivos) --- */
       header p {
-        font-size: clamp(2rem, 2vmin, 1rem);
+        font-size: clamp(1rem, 3vw, 2rem);
         text-transform: uppercase;
         letter-spacing: 0.1em;
       }
@@ -166,7 +199,7 @@
       .names h1 {
         font-family: "Playfair Display", serif;
         font-weight: 400;
-        font-size: clamp(7.2rem, 9vmin, 5.5rem);
+        font-size: clamp(5.5rem, 9vw, 7.2rem);
         line-height: 1.1;
         text-align: center;
       }
@@ -174,20 +207,20 @@
       .names span {
         font-family: "Monsieur La Doulaise", cursive;
         font-weight: 400;
-        font-size: clamp(4rem, 6vmin, 3.5rem);
+        font-size: clamp(3.5rem, 6vw, 4rem);
         margin: 0;
         line-height: 1;
         display: block;
         text-align: center;
       }
       .request {
-        font-size: clamp(1.6rem, 2.5vmin, 1.3rem);
+        font-size: clamp(1.3rem, 4vw, 1.6rem);
         margin-top: 2vh;
         line-height: 1.1;
         text-align: center;
       }
 
-      /* --- CSS (Flores) --- */
+      /* --- CSS (Flores Responsivo) --- */
       .flower-divider {
         position: relative;
         width: 100%;
@@ -200,20 +233,18 @@
 
       .flower-divider img {
         position: absolute;
-        height: 380px;
+        height: clamp(280px, 40vw, 380px);
         width: auto;
       }
 
       .flower-divider img:first-child {
-        /* FLOR_1.PNG */
-        left: -150px;
+        left: -20vw;
         top: 50%;
         transform: translateY(-50%) rotate(110deg);
       }
 
       .flower-divider img:last-child {
-        /* FLOR_2.PNG */
-        right: -150px;
+        right: -20vw;
         top: 10%;
         transform: translateY(-50%) rotate(-120deg);
       }
@@ -223,14 +254,14 @@
         text-align: center;
       }
       .details .date {
-        font-size: clamp(2.8rem, 5vmin, 2.5rem);
+        font-size: clamp(2.5rem, 5vw, 2.8rem);
         font-weight: 400;
         letter-spacing: 0.05em;
         margin-bottom: 1vh;
       }
       .details .time,
       .details .venue {
-        font-size: clamp(1.3rem, 2.5vmin, 1.2rem);
+        font-size: clamp(1.2rem, 3vw, 1.3rem);
         text-transform: uppercase;
         letter-spacing: 0.05em;
         line-height: 1.3;
@@ -250,7 +281,7 @@
       }
       footer .rsvp,
       footer .gifts {
-        font-size: clamp(1.1rem, 2.2vmin, 1.1rem);
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
         text-transform: none;
         letter-spacing: 0;
         margin-top: 1.5vh;
@@ -261,12 +292,23 @@
         text-transform: uppercase;
       }
 
-      /* Estilo para el link de la lista de regalos y teléfono */
       footer .gifts a,
       footer .rsvp a.phone-link {
         color: inherit;
-        text-decoration: underline; /* Subrayado simple para ambos */
+        text-decoration: underline;
       }
+
+      /* Ocultar elementos para animar individualmente */
+      .flower-divider img {
+        /* GSAP controlará la opacidad y el transform */
+      }
+      
+      .details-page-content .details,
+      .details-page-content footer {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      
     </style>
   </head>
   <body>
@@ -312,8 +354,10 @@
           de nuestro matrimonio civil.
         </p>
       </div>
+    </section>
 
-      <div class="details-content">
+    <section class="details-page">
+      <div class="details-page-content">
         <div class="flower-divider">
           <img src="flor_1.png" alt="Flor" />
           <img src="flor_2.png" alt="Flor" />
@@ -354,6 +398,38 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        // --- INICIO DE LA LÓGICA DE SCROLL ACTUALIZADA ---
+
+        // 1. Registrar ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // === INICIO DE LA CORRECCIÓN: Código de Lenis actualizado ===
+        // 2. Inicializar Lenis
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+          direction: 'vertical', // vertical, horizontal
+          gestureDirection: 'vertical', // vertical, horizontal, both
+          smooth: true,
+          mouseMultiplier: 1,
+          smoothTouch: false,
+          touchMultiplier: 2,
+          infinite: false,
+        })
+
+        //get scroll value
+        lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
+          console.log({ scroll, limit, velocity, direction, progress })
+        })
+
+        function raf(time) {
+          lenis.raf(time)
+          requestAnimationFrame(raf)
+        }
+
+        requestAnimationFrame(raf)
+        // === FIN DE LA CORRECCIÓN ===
+
         // --- PARTE 1: ANIMACIÓN DEL HILO (Sin cambios) ---
         const paths = gsap.utils.toArray(".path");
         let activePathIndex = -1;
@@ -402,26 +478,22 @@
           } while (newPathIndex === activePathIndex);
 
           activePathIndex = newPathIndex;
-          
-          // === INICIO DE LA CORRECCIÓN DE ERROR ===
-          // Corregido el error de tipeo (decía activePathPathIndex)
           animatePath(paths[activePathIndex]);
-          // === FIN DE LA CORRECCIÓN DE ERROR ===
         }
 
-        animateRandomPath(); // Inicia la animación de hilos
+        animateRandomPath();
 
-        // --- PARTE 2: LÍNEA DE TIEMPO (Sin cambios) ---
+        // --- PARTE 2: LÍNEA DE TIEMPO (Actualizada) ---
 
-        const tl = gsap.timeline();
-
-        // 1. Animamos la entrada del contenido "Hero"
-        tl.fromTo(
-          ".hero-content header",
-          { opacity: 0, scale: 0.3, y: "20vh" },
-          { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: "power3.out" },
-          0.5
-        )
+        // 1. Animamos la entrada del "Hero"
+        gsap.timeline({
+            onComplete: createParallaxAnimation // Llama a la función de parallax al terminar
+          })
+          .from(
+            ".hero-content header",
+            { opacity: 0, scale: 0.3, y: "20vh", duration: 1.5, ease: "power3.out" },
+            0.5
+          )
           .from(
             ".hero-content .names",
             { opacity: 0, y: 30, duration: 1, ease: "power2.out" },
@@ -432,83 +504,70 @@
             { opacity: 0, y: 20, duration: 1, ease: "power2.out" },
             "-=0.5"
           );
-
-        // 2. Animamos la SALIDA del "Hero" (Más ordenado)
         
-        // === INICIO DE LA CORRECCIÓN DE TIEMPO ===
-        // Cambiado de 0.0 a 1.5 segundos para dar tiempo a la transición
-        const pause = "+=1.5"; 
-        // === FIN DE LA CORRECCIÓN DE TIEMPO ===
-
-        // 1. Se va el header
-        tl.to(
-          ".hero-content header",
-          {
-            opacity: 0,
-            y: -30,
-            filter: "blur(5px)",
-            duration: 0.8,
-            ease: "power2.in",
-          },
-          pause
-        );
-
-        // 2. Se van los nombres, uno por uno (justo después)
-        tl.to(
-          ".names > *",
-          {
-            opacity: 0,
-            y: -50,
-            filter: "blur(5px)",
-            duration: 0.7,
-            ease: "power2.in",
-            stagger: 0.2, // Un stagger más rápido
-          },
-          "-=0.6" // Empieza un poco después del header
-        );
-
-        // 3. Se va el request (justo después de los nombres)
-        tl.to(
-          ".hero-content .request",
-          {
-            opacity: 0,
-            y: -30,
-            filter: "blur(5px)",
-            duration: 0.8,
-            ease: "power2.in",
-          },
-          "-=0.6" // Empieza un poco después de los nombres
-        ).set(".hero-content", { display: "none" }); // Ocultamos todo al final
-
-        // 3. Animamos la ENTRADA del contenido "Details"
-        tl.set(".details-content", {
-          display: "flex",
-          opacity: 0,
-          y: 50,
-          filter: "blur(5px)",
-        })
-          .to(
-            ".details-content",
-            {
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-              duration: 1.5,
-              ease: "power3.out",
+        // 2. FUNCIÓN DE PARALLAX CON PINNING
+        function createParallaxAnimation() {
+          const parallaxTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: ".invitation-hero",
+              start: "top top",
+              end: "bottom top", 
+              scrub: 1,
+              pin: true, 
+              pinSpacing: false, 
             },
-            "-=0.7"
-          )
-          .from(
-            ".details-content .flower-divider, .details-content .details > p, .details-content footer > p",
-            {
-              opacity: 0,
-              y: 20,
-              duration: 1,
-              ease: "power2.out",
-              stagger: 0.2,
-            },
-            "-=0.7"
-          );
+          });
+          
+          const finalProps = {
+            yPercent: -150,
+            opacity: 0,
+            filter: "blur(5px)",
+            ease: "power2.in"
+          };
+          
+          parallaxTl
+            .to(".hero-content header", finalProps)
+            .to(".names h1:first-child", finalProps, "<0.25") // María
+            .to(".names span", finalProps, "<0.25") // Y
+            .to(".names h1:last-child", finalProps, "<0.25") // Kevind
+            .to(".hero-content .request", finalProps, "<0.25"); // Mensaje
+        }
+        
+        
+        // 3. NUEVO: Animación de ENTRADA para los "Detalles"
+        const detailsTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".details-page",
+            start: "top 60%", 
+            end: "center 60%",
+            scrub: 1.5,
+          },
+        });
+        
+        // Animamos la primera flor (izquierda)
+        detailsTl.from(".flower-divider img:first-child", {
+            yPercent: -50,
+            opacity: 0, // Añadido para que aparezcan
+            ease: "none", 
+            duration: 1
+        }, 0); 
+
+        // Animamos la segunda flor (derecha) un poco después
+        detailsTl.from(".flower-divider img:last-child", {
+            yPercent: 50, 
+            opacity: 0, // Añadido para que aparezcan
+            ease: "none", 
+            duration: 1
+        }, 0.3); 
+
+        // Animamos el resto del contenido
+        detailsTl.to(".details-page-content .details, .details-page-content footer", {
+            opacity: 1,
+            y: 0,
+            stagger: 0.2, 
+            ease: "power3.out"
+        }, 0.5); 
+        
       });
     </script>
   </body>
