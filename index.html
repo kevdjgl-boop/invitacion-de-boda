@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
           smooth: true,
           mouseMultiplier: 1,
           smoothTouch: true,
-          touchMultiplier: 2,
+          touchMultiplier: 1,
           infinite: false,
         });
 
@@ -258,51 +258,36 @@ document.addEventListener("DOMContentLoaded", function () {
             .to(".hero-content .request", finalProps, "<0.25");
         }
 
-        // 3. ANIMACIÓN DE LA SECCIÓN 2 (¡¡UNIFICADA Y CORREGIDA!!)
-        // Esta es la animación que solapa la segunda sección
-        const detailsTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: ".invitation-hero", // Se dispara con la primera sección
-            start: "50% top", // Inicia cuando el scroll del Hero va al 50%
-            end: "bottom top", // Termina cuando el pin del Hero suelta
-            scrub: 1.2,
-          },
-        });
+         gsap.from(".flower-divider img", {
+  scrollTrigger: {
+    trigger: ".details-page", // Se dispara con la sección 2
+    start: "top 80%",       // Cuando la sección está 20% visible
+    toggleActions: "play none none none", // Solo se reproduce una vez
+    // scrub: false, // (Ya no se usa scrub)
+  },
+  duration: 1.2, // <-- LA ANIMACIÓN DURA 1.2 SEGUNDOS
+  yPercent: 40,  // El movimiento que ya teníamos
+  opacity: 0,
+  ease: "power2.out",
+  stagger: 0.2,    // 0.2s de retraso entre la primera y la segunda flor
+});
 
-        // PASO 1: Animar las flores (CON PARALLAX)
-        detailsTl.from(
-          ".flower-divider img:first-child",
-          {
-            yPercent: 280, // Comienza ARRIBA (para que baje)
-            opacity: 0,
-            ease: "none",
-          },
-          0
-        );
+// ANIMACIÓN 2: EL TEXTO
+// Se dispara un poquito después que las flores.
+gsap.from(".details-page-content .details > p, .details-page-content footer > p", {
+  scrollTrigger: {
+    trigger: ".details-page", // Se dispara con la sección 2
+    start: "top 75%",       // Un poco después que las flores (80% vs 75%)
+    toggleActions: "play none none none", // Solo se reproduce una vez
+  },
+  duration: 1, // <-- LA ANIMACIÓN DURA 1 SEGUNDO
+  y: 70,
+  opacity: 0,
+  ease: "power3.out",
+  stagger: 0.15, // La cascada entre cada <p>
+});
 
-        detailsTl.from(
-          ".flower-divider img:last-child",
-          {
-            yPercent: 100, // Comienza ABAJO (para que suba)
-            opacity: 0,
-            ease: "none",
-          },
-          0.1
-        );
-
-        // PASO 2: Animar el texto escalonado
-        detailsTl.from(
-          ".details-page-content .details > p, .details-page-content footer > p",
-          {
-            opacity: 0,
-            y: 30, // Anima "desde" 30px más abajo
-           stagger: 0.1, // 0.1s de retraso entre cada <p>
-            ease: "power3.out",
-          },
-          0.2
-        ); // Inicia después de las flores
-
-      }); // <-- FIN DEL DOMContentLoaded
+});
     </script>
   </body>
 </html>
