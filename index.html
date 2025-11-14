@@ -72,7 +72,7 @@
         height: 100vh; /* Ocupa el 100% de la pantalla */
         width: 100%;
         position: relative; /* Clave para el 'pin' */
-        overflow: hidden;
+        
       }
 
       .spotlight-header {
@@ -214,13 +214,22 @@
               <img src="boda.png" alt="Recuerdo 1" />
             </div>
             <div class="spotlight-img">
-              <img src="boda.png" alt="Recuerdo 2" />
+              <img src="boda1.jpg" alt="Recuerdo 2" />
             </div>
             <div class="spotlight-img">
-              <img src="boda.png" alt="Recuerdo 3" />
+              <img src="boda2.jpg" alt="Recuerdo 3" />
             </div>
             <div class="spotlight-img">
-              <img src="boda.png" alt="Recuerdo 4" />
+              <img src="boda3.jpg" alt="Recuerdo 4" />
+            </div>
+            <div class="spotlight-img">
+              <img src="boda4.jpg" alt="Recuerdo 5" />
+            </div>
+            <div class="spotlight-img">
+              <img src="boda5.jpg" alt="Recuerdo 6" />
+            </div>
+            <div class="spotlight-img">
+              <img src="boda6.png" alt="Recuerdo 7" />
             </div>
           </div>
         </section>
@@ -231,7 +240,7 @@
             <img src="sobre_atras.png" alt="Sobre" class="w-full h-auto" />
           </div>
 
-          <section class="final-details envelope-content absolute bottom-0 z-20 w-[99%] left-1/2 -translate-x-1/2 min-h-screen text-[#333] flex flex-col items-center gap-[2vh] py-15" style="background-image: url('carta.jpg'); background-size: cover; background-position: center;">
+          <section class="final-details envelope-content absolute bottom-0 z-20 w-[99%] left-1/2 -translate-x-1/2 min-h-screen text-[#333] flex flex-col items-center gap-[2vh] py-15" style="background-image: url('carta.jpg'); background-size: cover; background-position: center">
             <div class="details-page-content px-[5vw] flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
               <div id="countdown" class="text-center my-8 w-full">
                 <p class="tracking-[0.05em] text-lg mb-4">Faltan:</p>
@@ -322,7 +331,6 @@
           </div>
         </div>
       </div>
-      
     </main>
 
     <script>
@@ -339,40 +347,40 @@
           messagingSenderId: "766114888160",
           appId: "1:766114888160:web:235c92c8d6ecdb78cc5385",
         };
-const audio = document.getElementById("musica-fondo");
-    audio.volume = 0.5; // Opcional: ajusta el volumen
-    
-    // Una variable para asegurarnos de que solo se ejecute UNA vez
-    let audioIniciado = false;
+        const audio = document.getElementById("musica-fondo");
+        audio.volume = 0.5; // Opcional: ajusta el volumen
 
-    function iniciarMusica() {
-        // Si ya se inició, no hacer nada
-        if (audioIniciado) {
-            return; 
-        }
-        
-        // 1. Marcar como iniciado
-        audioIniciado = true;
-        
-        // 2. Intentar reproducir la música
-        audio.play().catch(e => {
+        // Una variable para asegurarnos de que solo se ejecute UNA vez
+        let audioIniciado = false;
+
+        function iniciarMusica() {
+          // Si ya se inició, no hacer nada
+          if (audioIniciado) {
+            return;
+          }
+
+          // 1. Marcar como iniciado
+          audioIniciado = true;
+
+          // 2. Intentar reproducir la música
+          audio.play().catch((e) => {
             console.warn("Error al iniciar audio (ignorar si es en modo 'silencio'):", e);
-        });
-        
-        // 3. Importante: Dejamos de escuchar
-        //    (para que no intente reproducir con cada scroll o clic)
-        document.removeEventListener("touchstart", iniciarMusica);
-        document.removeEventListener("mousedown", iniciarMusica);
-        document.removeEventListener("keydown", iniciarMusica);
-    }
+          });
 
-    // Escuchamos por la *primera* interacción del usuario
-    // 'touchstart' -> El primer toque en un móvil (incluso para scroll)
-    // 'mousedown'  -> El primer clic en un PC
-    // 'keydown'    -> La primera vez que se presiona una tecla (ej. 'espacio' para scroll)
-    document.addEventListener("touchstart", iniciarMusica);
-    document.addEventListener("mousedown", iniciarMusica);
-    document.addEventListener("keydown", iniciarMusica);
+          // 3. Importante: Dejamos de escuchar
+          //    (para que no intente reproducir con cada scroll o clic)
+          document.removeEventListener("touchstart", iniciarMusica);
+          document.removeEventListener("mousedown", iniciarMusica);
+          document.removeEventListener("keydown", iniciarMusica);
+        }
+
+        // Escuchamos por la *primera* interacción del usuario
+        // 'touchstart' -> El primer toque en un móvil (incluso para scroll)
+        // 'mousedown'  -> El primer clic en un PC
+        // 'keydown'    -> La primera vez que se presiona una tecla (ej. 'espacio' para scroll)
+        document.addEventListener("touchstart", iniciarMusica);
+        document.addEventListener("mousedown", iniciarMusica);
+        document.addEventListener("keydown", iniciarMusica);
 
         // 2. Inicializar Firebase y Firestore
         firebase.initializeApp(firebaseConfig);
@@ -494,10 +502,13 @@ const audio = document.getElementById("musica-fondo");
         // --- AÑADE ESTA NUEVA ANIMACIÓN "SPOTLIGHT" ---
 
         const spotlightImgFinalPos = [
-          [-140, -140],
-          [40, -130],
-          [-160, 40],
+          [-100, -140],
+          [10, -130],
+          [-100, -40],
           [20, 30],
+          [30, -60],
+          [-60, 30],
+          [-130, 30],
         ];
 
         const spotlightImages = document.querySelectorAll(".spotlight-img");
@@ -533,10 +544,33 @@ const audio = document.getElementById("musica-fondo");
               gsap.set(header, { opacity: 1, filter: "blur(0px)", scale: 1 });
             }
             // === FIN Lógica para el desenfoque del título ===
+            if (spotlightImages.length > 0) {
+              const firstImage = spotlightImages[0]; // La primera imagen
 
-            const initialRotations = [5, -3, 3.5, -1];
-            const phaseOneStartOffsets = [0, 0.1, 0.2, 0.3];
-            const phaseTwoStartOffsets = [0.5, 0.55, 0.6, 0.65];
+              // Empezamos a escalar al 80% del progreso total
+              const scaleStartProgress = 0.8;
+              const finalScale = 1.3; // 30% más grande
+
+              let currentScale = 1; // Escala por defecto
+
+              // Usamos la variable 'progress' que ya existe
+              if (progress > scaleStartProgress) {
+                const scaleProgress = (progress - scaleStartProgress) / (1 - scaleStartProgress);
+                currentScale = 1 + (finalScale - 1) * scaleProgress;
+              }
+
+              // Aplicar la escala a la primera imagen
+              gsap.set(firstImage, { scale: currentScale });
+
+              // Aplicar la escala por defecto (1) al resto de imágenes
+              // para asegurarnos de que no se "contaminen" si cambiamos el [0]
+              for (let i = 1; i < spotlightImages.length; i++) {
+                gsap.set(spotlightImages[i], { scale: 1 });
+              }
+            }
+            const initialRotations = [8, -10, 4, -2, 12, -6, 15];
+            const phaseOneStartOffsets = [0, 0.1, 0.2, 0.3, 0.15, 0.25, 0.3];
+            const phaseTwoStartOffsets = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8];
             const phase2EndProgress = 0.95;
 
             spotlightImages.forEach((img, index) => {
@@ -586,8 +620,24 @@ const audio = document.getElementById("musica-fondo");
                 rotation = initialRotation;
               }
 
+              // --- INICIO: LÓGICA DE ESCALA (AHORA DENTRO DEL BUCLE) ---
+              let currentScale = 1; // Escala por defecto para todas
+
+              // Si es la PRIMERA imagen (index === 0)
+              if (index === 0) {
+                const scaleStartProgress = 0.8;
+                const finalScale = 1.3; // 30% más grande
+
+                if (progress > scaleStartProgress) {
+                  const scaleProgress = (progress - scaleStartProgress) / (1 - scaleStartProgress);
+                  currentScale = 1 + (finalScale - 1) * scaleProgress;
+                }
+              }
+              // --- FIN: LÓGICA DE ESCALA ---
+
               gsap.set(img, {
-                transform: `translate(${x}%, ${y}%) rotate(${rotation}deg)`,
+                // Y aquí añadimos la escala al 'transform'
+                transform: `translate(${x}%, ${y}%) rotate(${rotation}deg) scale(${currentScale})`,
               });
             });
           },
@@ -596,60 +646,66 @@ const audio = document.getElementById("musica-fondo");
 
         animateRandomPath();
 
-      // =============================================
-    // ⬇️ REEMPLAZA EL JS DEL SOBRE POR ESTE ⬇️
-    // =============================================
+        // =============================================
+        // ⬇️ REEMPLAZA EL JS DEL SOBRE POR ESTE ⬇️
+        // =============================================
 
-    // --- INICIO: ANIMACIÓN DEL SOBRE (Versión con Deslizamiento al 65%) ---
+        // --- INICIO: ANIMACIÓN DEL SOBRE (Versión con Deslizamiento al 65%) ---
 
-    // 1. Seleccionamos las TRES partes
-    const detailsSection = document.querySelector(".final-details.envelope-content");
-    const envelopeBack = document.querySelector(".envelope-back");
-    const envelopeFront = document.querySelector(".envelope-front");
+        // 1. Seleccionamos las TRES partes
+        const detailsSection = document.querySelector(".final-details.envelope-content");
+        const envelopeBack = document.querySelector(".envelope-back");
+        const envelopeFront = document.querySelector(".envelope-front");
 
-    // 2. Estado inicial de la invitación
-    // ⬇️ ¡Ajusta este número (80) si lo necesitas!
-    const startYPercent = 80; 
-    gsap.set(detailsSection, { yPercent: startYPercent });
+        // 2. Estado inicial de la invitación
+        // ⬇️ ¡Ajusta este número (80) si lo necesitas!
+        const startYPercent = 80;
+        gsap.set(detailsSection, { yPercent: startYPercent });
 
-    
-    // 3. Creamos una LÍNEA DE TIEMPO (timeline) de GSAP
-    // Esta timeline "contendrá" nuestras dos animaciones
-    const envelopeTimeline = gsap.timeline();
+        // 3. Creamos una LÍNEA DE TIEMPO (timeline) de GSAP
+        // Esta timeline "contendrá" nuestras dos animaciones
+        const envelopeTimeline = gsap.timeline();
 
-    // 4. Añadimos la Animación 1 a la timeline:
-    // "La invitación sube de 80 a 0"
-    // Esta animación dura 1 "segundo" (por defecto en la timeline)
-    envelopeTimeline.to(detailsSection, {
-        yPercent: 0,
-        ease: "power1.inOut" // Un ease suave para todo el recorrido
-    }, 0); // La añadimos al principio (segundo 0)
+        // 4. Añadimos la Animación 1 a la timeline:
+        // "La invitación sube de 80 a 0"
+        // Esta animación dura 1 "segundo" (por defecto en la timeline)
+        envelopeTimeline.to(
+          detailsSection,
+          {
+            yPercent: 0,
+            ease: "power1.inOut", // Un ease suave para todo el recorrido
+          },
+          0
+        ); // La añadimos al principio (segundo 0)
 
-    // 5. Añadimos la Animación 2 a la timeline:
-    // "El sobre (ambas partes) se desliza hacia abajo"
-    // 
-    // Usamos el parámetro de posición "<65%"
-    // Esto significa: "Empieza esta animación cuando la 
-    // animación anterior ('<') haya completado el 65% de su duración"
-    envelopeTimeline.to([envelopeBack, envelopeFront], {
-        y: "100vh", // Mueve el sobre 100% de la altura de la pantalla
-        ease: "power1.in" // Un 'ease' para que acelere al caer
-    }, "<65%"); 
+        // 5. Añadimos la Animación 2 a la timeline:
+        // "El sobre (ambas partes) se desliza hacia abajo"
+        //
+        // Usamos el parámetro de posición "<65%"
+        // Esto significa: "Empieza esta animación cuando la
+        // animación anterior ('<') haya completado el 65% de su duración"
+        envelopeTimeline.to(
+          [envelopeBack, envelopeFront],
+          {
+            y: "100vh", // Mueve el sobre 100% de la altura de la pantalla
+            ease: "power1.in", // Un 'ease' para que acelere al caer
+          },
+          "<65%"
+        );
 
-    
-    // 6. Conectamos la TIMELINE al ScrollTrigger
-    // (Igual que antes, pero con nuestra nueva timeline)
-    ScrollTrigger.create({
-      trigger: ".envelope-wrapper", 
-      start: "top top", 
-      end: "bottom bottom",
-      pin: ".envelope-sticky-container",
-      scrub: 1, // Suaviza la animación
-      
-      // Le damos nuestra timeline
-      animation: envelopeTimeline 
-    });
-    // --- FIN: ANIMACIÓN DEL SOBRE ---
+        // 6. Conectamos la TIMELINE al ScrollTrigger
+        // (Igual que antes, pero con nuestra nueva timeline)
+        ScrollTrigger.create({
+          trigger: ".envelope-wrapper",
+          start: "top top",
+          end: "bottom bottom",
+          pin: ".envelope-sticky-container",
+          scrub: 1, // Suaviza la animación
+
+          // Le damos nuestra timeline
+          animation: envelopeTimeline,
+        });
+        // --- FIN: ANIMACIÓN DEL SOBRE ---
         // --- PARTE 2: LÍNEA DE TIEMPO (Actualizada) ---
 
         // 1. Animamos la entrada del "Hero"
