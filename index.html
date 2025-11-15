@@ -553,6 +553,7 @@
           pin: true,
           pinSpacing: true,
           scrub: 1,
+          pinType: "transform",
 
           onUpdate: (self) => {
             const progress = self.progress;
@@ -738,7 +739,7 @@
           end: "bottom bottom",
           pin: ".envelope-sticky-container",
           scrub: 1, // Suaviza la animación
-
+pinType: "transform",
           // Le damos nuestra timeline
           animation: envelopeTimeline,
         });
@@ -1011,3 +1012,4 @@
     </div>
   </body>
 </html>
+
