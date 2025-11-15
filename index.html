@@ -34,189 +34,199 @@
     </script>
 
     <style>
-      /* === CSS de Lenis === */
-      html {
-        scroll-behavior: auto !important;
-      }
-      main {
-        overflow-x: clip;
-      }
-      html.lenis {
-        height: auto;
-      }
-      .lenis.lenis-smooth {
-        scroll-behavior: auto;
-      }
-      .lenis.lenis-smooth [data-lenis-prevent] {
-        overscroll-behavior: contain;
-      }
-      .lenis.lenis-stopped {
-        overflow: hidden;
-      }
-      /* === FIN CSS de Lenis === */
+            /* === CSS de Lenis === */
+            html {
+              scroll-behavior: auto !important;
+            }
+            main {
+              overflow-x: clip;
+            }
+            html.lenis {
+              height: auto;
+            }
+            .lenis.lenis-smooth {
+              scroll-behavior: auto;
+            }
+            .lenis.lenis-smooth [data-lenis-prevent] {
+              overscroll-behavior: contain;
+            }
+            .lenis.lenis-stopped {
+              overflow: hidden;
+            }
+            /* === FIN CSS de Lenis === */
 
-      /* Fondo estático */
-      body {
-        background-color: hsla(0, 100%, 91%, 1);
-        background-image: radial-gradient(at 99% 1%, hsla(28, 100%, 74%, 1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(340, 100%, 94%, 1) 0px, transparent 50%);
-        overflow-x: hidden;
-      }
+            /* Fondo estático */
+            body {
+              background-color: hsla(0, 100%, 91%, 1);
+              background-image: radial-gradient(at 99% 1%, hsla(28, 100%, 74%, 1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(340, 100%, 94%, 1) 0px, transparent 50%);
+              overflow-x: hidden;
+            }
 
-      /* === FIN DE LA CORRECCIÓN CSS === */
-      /* === CSS PARA LA ANIMACIÓN SPOTLIGHT === */
+            /* === FIN DE LA CORRECCIÓN CSS === */
+            /* === CSS PARA LA ANIMACIÓN SPOTLIGHT === */
 
-      .spotlight {
-        /* Fondo oscuro para la animación */
-        color: #eee;
+            .spotlight {
+              /* Fondo oscuro para la animación */
+              color: #eee;
 
-        height: 100vh; /* Ocupa el 100% de la pantalla */
-        width: 100%;
-        position: relative; /* Clave para el 'pin' */
-      }
+              height: 100vh; /* Ocupa el 100% de la pantalla */
+              width: 100%;
+              position: relative; /* Clave para el 'pin' */
+              
+            }
 
-      .spotlight-header {
-        position: absolute;
+            .spotlight-header {
+              position: absolute;
 
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 10;
-        text-align: center;
-        width: auto; /* Ajustamos a "auto" para que se ajuste al texto */
-        max-width: 80%; /* Aseguramos que no sea muy ancho */
-        padding: 20px 40px; /* Espacio alrededor del texto */
-        display: flex;        /* <-- NUEVO */
-        align-items: center;    /* <-- NUEVO: Centra verticalmente */
-        justify-content: center; /* <-- NUEVO: Asegura el centrado horizontal */
-        flex-direction: column;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              z-index: 10;
+              text-align: center;
+              width: auto; /* Ajustamos a "auto" para que se ajuste al texto */
+              max-width: 80%; /* Aseguramos que no sea muy ancho */
+              padding: 20px 40px; /* Espacio alrededor del texto */
+              display: flex;        /* <-- NUEVO */
+              align-items: center;    /* <-- NUEVO: Centra verticalmente */
+              justify-content: center; /* <-- NUEVO: Asegura el centrado horizontal */
+              flex-direction: column;
 
-        /* Glassmorphism: Fondo semi-transparente y Blur */
-        background-color: rgba(227, 202, 202, 0.25); /* Fondo oscuro suave */
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px); /* Para compatibilidad */
+              /* Glassmorphism: Fondo semi-transparente y Blur */
+              background-color: rgba(227, 202, 202, 0.25); /* Fondo oscuro suave */
+              backdrop-filter: blur(8px);
+              -webkit-backdrop-filter: blur(8px); /* Para compatibilidad */
 
-        /* Inverted Corners (Bordes invertidos) */
-        border-radius: 25px; /* Radio estándar */
-        --corner-size: 20px; /* Tamaño del corte */
+              /* Inverted Corners (Bordes invertidos) */
+              border-radius: 25px; /* Radio estándar */
+              --corner-size: 20px; /* Tamaño del corte */
 
-        /* La máscara que invierte las esquinas */
-        -webkit-mask: linear-gradient(#f1e8e8, #e7e4e4) padding-box, radial-gradient(var(--corner-size) at 0 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
-          radial-gradient(var(--corner-size) at 100% 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)), radial-gradient(var(--corner-size) at 0 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
-          radial-gradient(var(--corner-size) at 100% 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size));
+              /* La máscara que invierte las esquinas */
+              -webkit-mask: linear-gradient(#f1e8e8, #e7e4e4) padding-box, radial-gradient(var(--corner-size) at 0 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
+                radial-gradient(var(--corner-size) at 100% 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)), radial-gradient(var(--corner-size) at 0 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
+                radial-gradient(var(--corner-size) at 100% 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size));
 
-        -webkit-mask-composite: destination-out;
-        mask-composite: exclude;
-      }
+              -webkit-mask-composite: destination-out;
+              mask-composite: exclude;
+            }
 
-      /* Aseguramos que el H1 no tenga márgenes */
-      .spotlight-header h1 {
-        font-size: clamp(3.5rem, 6vw, 5rem);
-        line-height: 1.1;
-        margin: 0; /* Elimina el margen del h1 para que se ajuste bien al padding del padre */
-      }
+            /* Aseguramos que el H1 no tenga márgenes */
+            .spotlight-header h1 {
+              font-size: clamp(3.5rem, 6vw, 5rem);
+              line-height: 1.1;
+              margin: 0; /* Elimina el margen del h1 para que se ajuste bien al padding del padre */
+            }
 
-      .spotlight-images {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-      }
+            .spotlight-images {
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+            }
 
-      .spotlight-img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 60vw;
-        min-width: 180px;
-        will-change: transform;
-        transform: translate(-50%, 200%);
-      }
+            .spotlight-img {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              width: 65%;
+              min-width: 180px;
+              will-change: transform;
+              transform: translate(-50%, 200%);
+            }
+      @media screen and (max-width: 650px) {
+         .spotlight-img {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              width: 50%;
+              min-width: 180px;
+              will-change: transform;
+              transform: translate(-100%, 200%);
 
-      .spotlight-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 8px;
-      }
-      .regalo-checkbox {
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        flex-shrink: 0; /* Evita que el checkbox se encoja */
-      }
-      .regalo-checkbox:hover {
-        border-color: #f96d41; /* Color de tu web */
-      }
+            .spotlight-img img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 8px;
+            }
+            .regalo-checkbox {
+              appearance: none;
+              width: 20px;
+              height: 20px;
+              border: 2px solid #ccc;
+              border-radius: 4px;
+              cursor: pointer;
+              transition: all 0.2s ease;
+              flex-shrink: 0; /* Evita que el checkbox se encoja */
+            }
+            .regalo-checkbox:hover {
+              border-color: #f96d41; /* Color de tu web */
+            }
 
-      /* Estilo cuando está MARCADO */
-      .regalo-checkbox:checked {
-        background-color: #f96d41;
-        border-color: #f96d41;
-        background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
-      }
+            /* Estilo cuando está MARCADO */
+            .regalo-checkbox:checked {
+              background-color: #f96d41;
+              border-color: #f96d41;
+              background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+            }
 
-      /* Estilo cuando está MARCADO Y DESHABILITADO (Bloqueado) */
-      .regalo-checkbox:checked:disabled {
-        background-color: #ccc;
-        border-color: #ccc;
-        cursor: not-allowed;
-      }
+            /* Estilo cuando está MARCADO Y DESHABILITADO (Bloqueado) */
+            .regalo-checkbox:checked:disabled {
+              background-color: #ccc;
+              border-color: #ccc;
+              cursor: not-allowed;
+            }
 
-      /* Estilo para el texto del regalo cuando está comprado */
-      .regalo-comprado .regalo-nombre {
-        text-decoration: line-through;
-        color: #999;
-      }
-      /* === CSS PARA OCULTAR EL SCROLLBAR DEL MODAL === */
+            /* Estilo para el texto del regalo cuando está comprado */
+            .regalo-comprado .regalo-nombre {
+              text-decoration: line-through;
+              color: #999;
+            }
+            /* === CSS PARA OCULTAR EL SCROLLBAR DEL MODAL === */
 
-      #modal-contenido::-webkit-scrollbar {
-        display: none; /* Para Chrome, Safari y Opera */
-      }
-      #modal-contenido {
-        -ms-overflow-style: none; /* Para IE y Edge */
-        scrollbar-width: none; /* Para Firefox */
-      }
+            #modal-contenido::-webkit-scrollbar {
+              display: none; /* Para Chrome, Safari y Opera */
+            }
+            #modal-contenido {
+              -ms-overflow-style: none; /* Para IE y Edge */
+              scrollbar-width: none; /* Para Firefox */
+            }
 
-     
-      .is-locked {
-        overflow: hidden !important;
-        height: 100vh !important;
-        /* Esta regla previene el "pull-to-refresh" en iOS y Android */
-        overscroll-behavior: contain;
-      }
-      html.is-locked,
-      body.is-locked {
-        overflow: hidden !important;
-        height: 100vh !important;
-        overscroll-behavior: contain;
-      }
-      #audio-overlay {
-        /* Anula todos los gestos táctiles que puedan iniciar el scroll */
-        touch-action: none;
-        /* Evita que se pueda seleccionar el texto mientras la capa esté activa */
-        user-select: none;
-      }
+
+            .is-locked {
+
+              height: 100vh !important;
+              /* Esta regla previene el "pull-to-refresh" en iOS y Android */
+              overscroll-behavior: contain;
+            }
+            html.is-locked,
+            body.is-locked {
+              overflow: hidden !important;
+              height: 100vh !important;
+              overscroll-behavior: contain;
+            }
+            #audio-overlay {
+              /* Anula todos los gestos táctiles que puedan iniciar el scroll */
+              touch-action: none;
+              /* Evita que se pueda seleccionar el texto mientras la capa esté activa */
+              user-select: none;
+            }
     </style>
   </head>
   <body class="w-full font-fraunces font-normal text-[#333] leading-relaxed">
-    <div id="audio-overlay" class="fixed inset-0 z-[9999] bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center p-8 text-center hidden">
-      <img src="flor_1.png" alt="Flor decorativa" class="absolute top-[-0%] left-[60%] h-[300px] w-auto opacity-70 rotate-[240deg] sm:block" />
+    <div id="audio-overlay" class="fixed inset-0 z-[9999] bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center p-8 text-center ">
+      <img src="flor_1.png" alt="Flor decorativa" class="absolute h-[clamp(380px,40vw,780px)] w-auto left-[-20vw] xl:left-[-10vw] top-[10%] -translate-y-1/2 rotate-[110deg]" />
 
-      <img src="flor_2.png" alt="Flor decorativa" class="absolute top-[-15%] right-[-30%] h-[350px] w-auto opacity-70 rotate-[-120deg] sm:block" />
+      <img src="flor_2.png" alt="Flor decorativa" class="absolute h-[clamp(380px,40vw,980px)] w-auto left-[-30vw] xl:left-[-13vw] top-[100%] -translate-y-1/2 rotate-[20deg]" />
 
-      <img src="flor_1.png" alt="Flor decorativa" class="absolute top-[-15%] left-[-50%] h-[500px] w-auto opacity-60 rotate-[110deg] sm:block" />
+      <img src="flor_1.png" alt="Flor decorativa" class="absolute h-[clamp(380px,40vw,780px)] w-auto right-[-30vw] xl:right-[-15vw] top-[90%] -translate-y-1/2 -rotate-[40deg]" />
 
-      <img src="flor_2.png" alt="Flor decorativa" class="absolute top-[60%] left-[-50%] h-[520px] w-auto opacity-50 rotate-[110deg] sm:block" />
+      <img src="flor_2.png" alt="Flor decorativa" class="absolute w-auto top-[60%] left-[-50%] h-[520px]   opacity-50 rotate-[110deg] xl:h-[300px] top-[-25%] left-[90vw] rotate-[90deg] sm:block" />
 
-      <img src="flor_1.png" alt="Flor decorativa" class="absolute bottom-[-35%] right-[-35%] h-[520px] w-auto opacity-70 rotate-[270deg] sm:block" />
+      <img src="flor_1.png" alt="Flor decorativa" class="absolute w-auto bottom-[-35%] right-[-35%] h-[520px]   opacity-70 rotate-[270deg] xl:h-[100px] top-[-15%] left-[70vw] rotate-[0deg] sm:block" />
 
-      <img src="flor_1.png" alt="Flor decorativa" class="absolute bottom-[2%] left-[-20%] h-[v300px] w-auto opacity-70 rotate-[10deg] sm:block" />
+      <img src="flor_1.png" alt="Flor decorativa" class="absolute w-auto bottom-[2%] left-[-20%] h-[v300px]   opacity-70 rotate-[10deg] xl:h-[400px] top-[80%] left-[70vw] rotate-[90deg] sm:block" />
 
-      <img src="flor_2.png" alt="Flor decorativa" class="absolute bottom-[-15%] right-[-35%] h-[400px] w-auto opacity-70 rotate-[-10deg] sm:block" />
+      <img src="flor_2.png" alt="Flor decorativa" class="absolute w-auto bottom-[-15%] right-[-35%] h-[400px]   opacity-70 rotate-[-10deg] xl:h-[700px] top-[-25%] left-[75vw] rotate-[210deg] sm:block" />
       <h2 class="font-playfair font-bold text-6xl text-[#333] mb-8">¡Bienvenidos!</h2>
       <h3 class="font-montserrat font-bold leading-[1.1] mb-7 text-2xl">Hace diez años nuestros caminos se cruzaron, y hoy estamos listos para decir si, para siempre.</h3>
       <button id="audio-start-button" class="bg-[#f96d41] text-white font-montserrat font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">Acceder a la Invitación</button>
@@ -244,12 +254,13 @@
       <span class="initial-ampersand fixed font-fraunces font-normal text-[#333] opacity-[0.08] z-[5] text-[clamp(20rem,35vmin,30rem)] top-[35%] left-1/2 -translate-x-1/2 leading-[0.8]">&</span>
       <span class="initial-k fixed font-playfair font-normal text-[#333] opacity-[0.08] z-[5] leading-none text-[clamp(30rem,50vmin,40rem)] bottom-[-5%] left-[15%] -translate-x-1/2">K</span>
 
-      <div class="flower-divider fixed inset-0 z-[10]">
-        <img src="flor_1.png" alt="Flor" class="absolute h-[clamp(380px,40vw,580px)] w-auto left-[-20vw] top-[10%] -translate-y-1/2 rotate-[110deg]" />
-        <img src="flor_2.png" alt="Flor" class="absolute h-[clamp(420px,40vw,580px)] w-auto right-[-30vw] top-[90%] -translate-y-1/2 -rotate-[40deg]" />
+     <div class="flower-divider fixed inset-0 z-[10]">
+        <img src="flor_1.webp" alt="Flor" class="absolute h-[clamp(380px,40vw,780px)] w-auto left-[-20vw] xl:left-[-10vw] top-[10%] -translate-y-1/2 rotate-[110deg]" />
+        <img src="flor_2.webp" alt="Flor" class="absolute h-[clamp(380px,40vw,780px)] w-auto right-[-30vw] xl:right-[-15vw] top-[90%] -translate-y-1/2 -rotate-[40deg]" />
+        <img src="flor_1.webp" alt="Flor" class="absolute h-[clamp(380px,40vw,780px)] w-auto left-[-30vw] xl:left-[70vw] top-[110%] -translate-y-1/2 rotate-[-40deg]" />
       </div>
     </div>
-    <main class="relative z-[10]">
+    <main class="relative z-[10] w-full">
       <section class="invitation-hero flex flex-col items-center justify-center h-[90vh] w-full relative py-[4vh] px-[5vw] gap-[2vh]">
         <div class="hero-content flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
           <header>
@@ -267,10 +278,8 @@
         </div>
       </section>
 
-      <section class="spotlight">
-        <div class="spotlight-header">
-          <h1 class="font-playfair tracking-[0.05em] font-bold">Nuestro Recuerdos</h1>
-        </div>
+      <section class="spotlight  xl:max-w-[650px] xl:mx-auto">
+        <div class="spotlight-header"></div>
         <div class="spotlight-images">
           <div class="spotlight-img">
             <img src="boda.webp" alt="Recuerdo 1" />
@@ -296,54 +305,52 @@
         </div>
       </section>
 
-      <div class="envelope-wrapper relative h-[250vh] w-full">
-        <div class="envelope-sticky-container sticky top-0 w-full overflow-hidden" style="height: 100lvh">
+      <div class="envelope-wrapper relative h-[250vh]  xl:max-w-[650px] xl:mx-auto">
+        <div class="envelope-sticky-container sticky top-0 w-full" style="height: 100lvh">
           <div class="envelope-back absolute bottom-0 z-10 w-full h-auto">
             <img src="sobre_atras.webp" alt="Sobre" class="w-full h-auto" />
           </div>
 
-          <section class="final-details envelope-content absolute bottom-0 z-20 w-[99%] left-1/2 -translate-x-1/2 min-h-screen text-[#333] flex flex-col items-center gap-[0.5vh] pt-20 pb-8" style="background-image: url('carta.webp'); background-size: cover; background-position: center">
+          <section class="final-details envelope-content absolute bottom-0 z-20 w-[99%] left-1/2 -translate-x-1/2 min-h-screen text-[#333] flex flex-col items-center gap-[0.5vh] pt-20 pb-8" style="background-image: url('carta.webp'); background-size: contain; background-position: center">
             <div class="details-page-content px-[5vw] flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
               <section class="details text-center">
                 <p class="date tracking-[0.05em] mb-[1vh] leading-[1] font-bold text-[clamp(3.5rem,5vw,2.8rem)]">10ENE26<br />3:00 pm</p>
                 <p class="time uppercase tracking-[0.05em] leading-[1.1] text-[clamp(3.2rem,3vw,1.3rem)]"></p>
-               <div id="countdown" class="text-center my-8 w-full p-5" style="background-image: url('contenedor-contador.webp'); background-size: cover; background-position: center;">
+                <div id="countdown" class="text-center my-8 w-full p-6" style="background-image: url('contenedor-contador.webp'); background-size: contain; background-position: center; background-repeat: no-repeat">
                   <p class="tracking-[0.05em] text-amber-900 text-2xl mb-0">Faltan:</p>
 
                   <div class="flex justify-center text-center -mt-1 p-2">
-  
-  <div>
-    <span id="days" class="font-playfair text-3xl sm:text-5xl block w-16 sm:w-24 text-amber-900">00</span>
-    <span class="block text-xs tracking-widest mt-2 text-amber-900">Días</span>
-  </div>
+                    <div>
+                      <span id="days" class="font-playfair text-3xl sm:text-5xl block w-16 sm:w-15 text-amber-900">00</span>
+                      <span class="block text-xs tracking-widest mt-2 text-amber-900">Días</span>
+                    </div>
 
-  <span class="font-playfair text-3xl sm:text-5xl text-amber-900">:</span> 
+                    <span class="font-playfair text-3xl sm:text-5xl text-amber-900">:</span>
 
-  <div>
-    <span id="hours" class="font-playfair text-3xl sm:text-5xl block w-16 sm:w-24 text-amber-900">00</span>
-    <span class="block text-xs tracking-widest mt-2 text-amber-900">Horas</span>
-  </div>
+                    <div>
+                      <span id="hours" class="font-playfair text-3xl sm:text-5xl block w-16 sm:w-15 text-amber-900">00</span>
+                      <span class="block text-xs tracking-widest mt-2 text-amber-900">Horas</span>
+                    </div>
 
-  <span class="font-playfair text-3xl sm:text-5xl text-amber-900">:</span>
+                    <span class="font-playfair text-3xl sm:text-5xl text-amber-900">:</span>
 
-  <div>
-    <span id="minutes" class="font-playfair text-3xl sm:text-5xl block w-16 sm:w-24 text-amber-900">00</span>
-    <span class="block text-xs tracking-widest mt-2 text-amber-900">Minutos</span>
-  </div>
+                    <div>
+                      <span id="minutes" class="font-playfair text-3xl sm:text-5xl block w-16 sm:w-15 text-amber-900">00</span>
+                      <span class="block text-xs tracking-widest mt-2 text-amber-900">Minutos</span>
+                    </div>
 
-  <span class="font-playfair text-3xl sm:text-5xl text-amber-900">:</span>
+                    <span class="font-playfair text-3xl sm:text-5xl text-amber-900">:</span>
 
-  <div>
-    <span id="seconds" class="font-playfair text-3xl sm:text-5xl block w-16 sm:w-24 text-amber-900">00</span>
-    <span class="block text-xs tracking-widest mt-2 text-amber-900">Segundos</span>
-  </div>
-</div>
+                    <div>
+                      <span id="seconds" class="font-playfair text-3xl sm:text-5xl block w-16 sm:w-15 text-amber-900">00</span>
+                      <span class="block text-xs tracking-widest mt-2 text-amber-900">Segundos</span>
+                    </div>
+                  </div>
                 </div>
 
                 <p class="venue tracking-[0.05em] leading-[1.1] text-[clamp(1.2rem,3vw,1.5rem)] mt-0">
                   Centro de recepciones PK2<br />
-                  Av. los paredones 201 
-                  1° cuadra Nazca
+                  Av. los paredones 201 1° cuadra Nazca
                 </p>
               </section>
 
@@ -351,10 +358,10 @@
                 <p class="tracking-[0.05em] font-bold text-[clamp(0.9rem,2.3vmin,1.1rem)]">Recepción: A continuación de la ceremonia</p>
                 <p class="tracking-[0.05em] font-bold text-[clamp(0.9rem,2.3vmin,1.1rem)]">Código de Vestimenta: Elegante Cóctel</p>
 
-                <p class="rsvp normal-case tracking-normal mt-[1.5vh] leading-[1.2] text-[clamp(0.9rem,3vw,1.1rem)]">
-                  <strong class="font-bold uppercase">R.S.V.P.:</strong> Agradecemos confirmar su asistencia
-                  <br />
-                  antes del 15/12/2025
+                <p class="rsvp normal-case tracking-normal mt-[1.5vh] leading-[1.3] text-[clamp(0.9rem,3vw,1.1rem)]">
+                  <strong class="font-bold"> R.S.V.P.: Agradecemos confirmar su asistencia  <br />
+                  antes del 15/12/2025</strong>
+                 
                   <a href="tel:+51977993344" class="phone-link text-inherit underline"></a>
                 </p>
                 <div class="flex justify-center gap-8 mt-8">
@@ -373,11 +380,11 @@
                   </div>
                 </div>
 
-                <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
+                <p class="gifts normal-case font-bold tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
                   Nuestra mayor alegría es que nos acompañes en<br />
                   este día. si deseas un detalle extra, tendremos
                 </p>
-                <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">Si además deseas tener un detalle puedes ver</p>
+                <p class="gifts normal-case font-bold tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">Si además deseas tener un detalle puedes ver</p>
                 <button id="btn-abrir-regalos" class="bg-amber-100 text-gray-800 font-bold uppercase tracking-widest px-8 py-3 rounded transition-transform transform hover:scale-105 mt-5">Nuestra Lista de Regalos</button>
 
                 <div id="modal-regalos" class="fixed inset-0 bg-black bg-opacity-75 z-[5000] flex justify-center items-center p-4 hidden text-black">
@@ -423,7 +430,24 @@
         });
 
         lenis.on("scroll", ScrollTrigger.update); // <-- CONECTA LENIS CON SCROLLTRIGGER
-
+        const MOBILE_POSITIONS = [
+          [-90, -180],
+          [5, -130],
+          [-100, -60],
+          [20, 30],
+          [0, -60],
+          [-60, 30],
+          [-130, 30],
+        ];
+        const DESKTOP_POSITIONS = [
+          [-120, -105], 
+          [90, -100],   
+          [50, -10],  
+          [120, 0],     
+          [-25, -50],    
+          [-150, -20],    
+          [-220, -50],   
+        ];
         gsap.ticker.add((time) => {
           lenis.raf(time * 1000);
         });
@@ -600,15 +624,7 @@
         }
         // --- AÑADE ESTA NUEVA ANIMACIÓN "SPOTLIGHT" ---
 
-        const spotlightImgFinalPos = [
-          [-90, -180],
-          [5, -130],
-          [-100, -60],
-          [20, 30],
-          [0, -60],
-          [-60, 30],
-          [-130, 30],
-        ];
+  
 
         const spotlightImages = document.querySelectorAll(".spotlight-img");
         gsap.set(".spotlight-header h1", {
@@ -629,31 +645,11 @@
 
           onUpdate: (self) => {
             const progress = self.progress;
-            const header = document.querySelector(".spotlight-header h1"); // Seleccionar el título
-            const headerContainer = document.querySelector(".spotlight-header");
-
-            // === Lógica para el desenfoque del título ===
-            // El título aparece al 10% del scroll del trigger
-            const headerAppearStart = 0.15; // Empieza a aparecer al 5%
-            const headerAppearEnd = 0.2; // Termina de aparecer al 20%
-
-            if (progress < headerAppearStart) {
-              gsap.set(header, { opacity: 0, filter: "blur(10px)", scale: 0.9 });
-              gsap.set(headerContainer, { opacity: 0 }); // <-- APLICAR AL CONTENEDOR
-            } else if (progress >= headerAppearStart && progress <= headerAppearEnd) {
-              const headerProgress = (progress - headerAppearStart) / (headerAppearEnd - headerAppearStart);
-              gsap.set(header, {
-                opacity: headerProgress,
-                filter: `blur(${gsap.utils.interpolate(10, 0, headerProgress)}px)`,
-                scale: gsap.utils.interpolate(0.9, 1, headerProgress),
-              });
-              gsap.set(headerContainer, { opacity: headerProgress }); // <-- APLICAR AL CONTENEDOR
-            } else {
-              // Asegurarse de que el estado final sea correcto una vez pasado el punto de aparición
-              gsap.set(header, { opacity: 1, filter: "blur(0px)", scale: 1 });
-              gsap.set(headerContainer, { opacity: 1 });
-            }
-            // === FIN Lógica para el desenfoque del título ===
+            
+            // NOTA: EL CÓDIGO DE ANIMACIÓN DEL TÍTULO SE HA ELIMINADO PARA QUITAR EL ERROR.
+            // SOLO QUEDA LA LÓGICA DE LAS FOTOS.
+            
+            // === Lógica de Animación de Fotos (Imágenes) ===
             if (spotlightImages.length > 0) {
               const firstImage = spotlightImages[0]; // La primera imagen
 
@@ -678,6 +674,12 @@
                 gsap.set(spotlightImages[i], { scale: 1 });
               }
             }
+            
+            // Lógica de dispersión (usa el array activo, que ahora tienes que definir globalmente)
+            // NOTA: Aquí tienes que asegurarte de que MOBILE_POSITIONS y DESKTOP_POSITIONS 
+            // estén definidos al inicio del script.
+            const activePos = window.innerWidth > 800 ? DESKTOP_POSITIONS : MOBILE_POSITIONS;
+            
             const initialRotations = [8, -10, 4, -2, 12, -6, 15];
             const phaseOneStartOffsets = [0, 0.1, 0.2, 0.3, 0.15, 0.25, 0.3];
             const phaseTwoStartOffsets = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8];
@@ -692,12 +694,13 @@
               const phase2Start = phaseTwoStartOffsets[index];
               const phase2End = Math.min(phase2Start + (phase2EndProgress - phase2Start) * 0.9, phase2EndProgress);
 
-              const finalX = spotlightImgFinalPos[index][0];
-              const finalY = spotlightImgFinalPos[index][1];
+              const finalX = activePos[index][0];
+              const finalY = activePos[index][1];
 
               let x = -50;
               let y, rotation;
-
+              // ... (resto de la lógica de posicionamiento) ...
+              
               if (progress < phase1Start) {
                 y = 200;
                 rotation = initialRotation;
@@ -746,7 +749,6 @@
               // --- FIN: LÓGICA DE ESCALA ---
 
               gsap.set(img, {
-                // Y aquí añadimos la escala al 'transform'
                 transform: `translate(${x}%, ${y}%) rotate(${rotation}deg) scale(${currentScale})`,
               });
             });
