@@ -552,6 +552,7 @@
           end: `+=${window.innerHeight * 6}px`,
           pin: true,
           pinSpacing: true,
+          fastScrollEnd: true,
           scrub: 1,
 
           onUpdate: (self) => {
@@ -736,7 +737,8 @@
           trigger: ".envelope-wrapper",
           start: "top top",
           end: "bottom bottom",
-          pin: ".envelope-sticky-container",
+          pin: ".envelope-sticky-container",+
+          fastScrollEnd: true,
           scrub: 1, // Suaviza la animación
 
           // Le damos nuestra timeline
