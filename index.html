@@ -76,16 +76,45 @@
 
       .spotlight-header {
         position: absolute;
+        
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 10; /* Texto por encima de las imágenes */
+        z-index: 10;
         text-align: center;
-        width: 80%;
+        width: auto; /* Ajustamos a "auto" para que se ajuste al texto */
+        max-width: 80%; /* Aseguramos que no sea muy ancho */
+        padding: 20px 40px; /* Espacio alrededor del texto */
+        
+        /* Glassmorphism: Fondo semi-transparente y Blur */
+        background-color: rgba(227, 202, 202, 0.25); /* Fondo oscuro suave */
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px); /* Para compatibilidad */
+        
+        
+        /* Inverted Corners (Bordes invertidos) */
+        border-radius: 25px; /* Radio estándar */
+        --corner-size: 20px; /* Tamaño del corte */
+        
+        /* La máscara que invierte las esquinas */
+        -webkit-mask: 
+          linear-gradient(#f1e8e8, #e7e4e4) padding-box,
+          radial-gradient(var(--corner-size) at 0 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
+          radial-gradient(var(--corner-size) at 100% 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
+          radial-gradient(var(--corner-size) at 0 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
+          radial-gradient(var(--corner-size) at 100% 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size));
+        
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
       }
+      
+      /* Aseguramos que el H1 no tenga márgenes */
       .spotlight-header h1 {
-        font-size: clamp(2.5rem, 6vw, 5rem);
+        font-size: clamp(3.5rem, 6vw, 5rem);
+        line-height: 1.1;
+        margin: 0; /* Elimina el margen del h1 para que se ajuste bien al padding del padre */
       }
+ 
 
       .spotlight-images {
         position: absolute;
@@ -98,13 +127,10 @@
         position: absolute;
         top: 50%;
         left: 50%;
-
-        /* Tamaño de las imágenes */
-        width: 50vw;
-
+        width: 60vw;
         min-width: 180px;
-
-        will-change: transform; /* Para que la animación sea fluida */
+        will-change: transform;
+        transform: translate(-50%, 200%);
       }
 
       .spotlight-img img {
@@ -182,8 +208,8 @@
       <span class="initial-k fixed font-playfair font-normal text-[#333] opacity-[0.08] z-[5] leading-none text-[clamp(30rem,50vmin,40rem)] bottom-[-5%] left-[15%] -translate-x-1/2">K</span>
 
       <div class="flower-divider fixed inset-0 z-[10]">
-        <img src="flor_1.png" alt="Flor" class="absolute h-[clamp(280px,40vw,380px)] w-auto left-[-20vw] top-[10%] -translate-y-1/2 rotate-[110deg]" />
-        <img src="flor_2.png" alt="Flor" class="absolute h-[clamp(280px,40vw,380px)] w-auto right-[-20vw] top-[85%] -translate-y-1/2 -rotate-[120deg]" />
+        <img src="flor_1.png" alt="Flor" class="absolute h-[clamp(380px,40vw,580px)] w-auto left-[-20vw] top-[10%] -translate-y-1/2 rotate-[110deg]" />
+        <img src="flor_2.png" alt="Flor" class="absolute h-[clamp(420px,40vw,580px)] w-auto right-[-30vw] top-[90%] -translate-y-1/2 -rotate-[40deg]" />
       </div>
     </div>
     <main class="relative z-[10]">
@@ -205,6 +231,7 @@
       </section>
 
       <section class="spotlight">
+        
         <div class="spotlight-header">
           <h1 class="font-playfair">Nuestros Momentos</h1>
         </div>
@@ -234,12 +261,12 @@
       </section>
 
       <div class="envelope-wrapper relative h-[250vh] w-full">
-        <div class="envelope-sticky-container sticky top-0 w-full overflow-hidden">
+        <div class="envelope-sticky-container sticky top-0 w-full overflow-hidden" style="height: 100lvh">
           <div class="envelope-back absolute bottom-0 z-10 w-full h-auto">
             <img src="sobre_atras.png" alt="Sobre" class="w-full h-auto" />
           </div>
 
-          <section class="final-details envelope-content absolute bottom-0 z-20 w-[99%] left-1/2 -translate-x-1/2 min-h-screen text-[#333] flex flex-col items-center gap-[2vh] py-15" style="background-image: url('carta.jpg'); background-size: cover; background-position: center">
+          <section class="final-details envelope-content absolute bottom-0 z-20 w-[99%] left-1/2 -translate-x-1/2 min-h-screen text-[#333] flex flex-col items-center gap-[2vh] py-20" style="background-image: url('carta.jpg'); background-size: cover; background-position: center">
             <div class="details-page-content px-[5vw] flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
               <div id="countdown" class="text-center my-8 w-full">
                 <p class="tracking-[0.05em] text-lg mb-4">Faltan:</p>
@@ -285,25 +312,27 @@
                 </p>
                 <div class="flex justify-center gap-8 mt-8">
                   <div class="flex flex-col items-center text-center">
-                    <button id="btn-rsvp-si" class="bg-white text-gray-800 font-montserrat font-semibold uppercase tracking-wider px-10 py-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">Sí</button>
+                    <a href="https://wa.link/yuka9p">
+                    <button id="btn-rsvp-si"  class="bg-white text-gray-800 font-montserrat font-semibold uppercase tracking-wider px-10 py-3 rounded-full transition-all duration-300 transform hover:scale-105">Sí</button>
                     <p class="font-montserrat text-xs tracking-widest mt-2 w-24">¡Ahí estaré! con Uds.</p>
+                    </a>
                   </div>
 
                   <div class="flex flex-col items-center text-center">
-                    <button id="btn-rsvp-no" class="bg-transparent border-2 border-gray-400 text-gray-400 font-montserrat font-semibold uppercase tracking-wider px-10 py-3 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-gray-400 hover:text-gray-800 hover:border-gray-400">
-                      No
-                    </button>
+                    <a href="https://wa.link/6mpk62">
+                    <button id="btn-rsvp-no" class="bg-white text-gray-800 font-montserrat font-semibold uppercase tracking-wider px-10 py-3 rounded-full transition-all duration-300 transform hover:scale-105">No</button>
                     <p class="font-montserrat text-xs tracking-widest mt-2 w-32">Lo siento, no podré</p>
+                  </a>
                   </div>
                 </div>
 
-                <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">Tu presencia es nuestro mejor regalo. <br /></p>
+                <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">¡Tu presencia es muy importante! <br /></p>
                 <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
                   Si además deseas tener un detalle,<br />
                   puedes ver
-                  <a href="#link-a-la-lista-de-regalos" class="text-inherit underline">nuestra lista de sugerencias</a>.
+                  <a class="text-inherit">nuestra lista de sugerencias</a>.
                 </p>
-                <button id="btn-abrir-regalos" class="bg-white text-gray-800 font-bold uppercase tracking-widest px-8 py-3 rounded shadow-lg transition-transform transform hover:scale-105 mt-10">Ver Lista de Regalos</button>
+                <button id="btn-abrir-regalos" class="bg-white text-gray-800 font-bold uppercase tracking-widest px-8 py-3 rounded transition-transform transform hover:scale-105 mt-10">Ver Lista de Regalos</button>
 
                 <div id="modal-regalos" class="fixed inset-0 bg-black bg-opacity-75 z-[5000] flex justify-center items-center p-4 hidden text-black">
                   <div id="modal-contenido" data-lenis-prevent class="bg-white font-montserrat text-gray-800 p-6 rounded-lg shadow-xl w-full max-w-lg max-h-[80vh] flex flex-col">
@@ -333,11 +362,9 @@
     </main>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // --- INICIO DE LA LÓGICA DE SCROLL ACTUALIZADA ---
-
-        // 1. Registrar ScrollTrigger
+      document.addEventListener("DOMContentLoaded", () => {
         gsap.registerPlugin(ScrollTrigger);
+
         const firebaseConfig = {
           apiKey: "AIzaSyDtwlvV5GiZs_k827RTw8KRq4KZw9UthVw",
           authDomain: "boda-e2a20.firebaseapp.com",
@@ -447,6 +474,7 @@
         });
 
         gsap.ticker.lagSmoothing(0);
+        lenis.stop();
 
         // --- PARTE 1: ANIMACIÓN DEL HILO (Sin cambios) ---
         const paths = gsap.utils.toArray(".path");
@@ -501,16 +529,22 @@
         // --- AÑADE ESTA NUEVA ANIMACIÓN "SPOTLIGHT" ---
 
         const spotlightImgFinalPos = [
-          [-100, -140],
-          [10, -130],
-          [-100, -40],
+          [-90, -180],
+          [5, -130],
+          [-100, -60],
           [20, 30],
-          [30, -60],
+          [0, -60],
           [-60, 30],
           [-130, 30],
         ];
 
         const spotlightImages = document.querySelectorAll(".spotlight-img");
+        gsap.set(".spotlight-header h1", {
+          opacity: 0,
+          filter: "blur(10px)",
+          scale: 0.9,
+        });
+        gsap.set(".spotlight-header", { opacity: 0 });
 
         ScrollTrigger.create({
           trigger: ".spotlight",
@@ -523,14 +557,16 @@
           onUpdate: (self) => {
             const progress = self.progress;
             const header = document.querySelector(".spotlight-header h1"); // Seleccionar el título
+            const headerContainer = document.querySelector(".spotlight-header");
 
             // === Lógica para el desenfoque del título ===
             // El título aparece al 10% del scroll del trigger
-            const headerAppearStart = 0.05; // Empieza a aparecer al 5%
+            const headerAppearStart = 0.15; // Empieza a aparecer al 5%
             const headerAppearEnd = 0.2; // Termina de aparecer al 20%
 
             if (progress < headerAppearStart) {
               gsap.set(header, { opacity: 0, filter: "blur(10px)", scale: 0.9 });
+              gsap.set(headerContainer, { opacity: 0 }); // <-- APLICAR AL CONTENEDOR
             } else if (progress >= headerAppearStart && progress <= headerAppearEnd) {
               const headerProgress = (progress - headerAppearStart) / (headerAppearEnd - headerAppearStart);
               gsap.set(header, {
@@ -538,9 +574,11 @@
                 filter: `blur(${gsap.utils.interpolate(10, 0, headerProgress)}px)`,
                 scale: gsap.utils.interpolate(0.9, 1, headerProgress),
               });
+              gsap.set(headerContainer, { opacity: headerProgress }); // <-- APLICAR AL CONTENEDOR
             } else {
               // Asegurarse de que el estado final sea correcto una vez pasado el punto de aparición
               gsap.set(header, { opacity: 1, filter: "blur(0px)", scale: 1 });
+              gsap.set(headerContainer, { opacity: 1 });
             }
             // === FIN Lógica para el desenfoque del título ===
             if (spotlightImages.length > 0) {
@@ -686,7 +724,7 @@
         envelopeTimeline.to(
           [envelopeBack, envelopeFront],
           {
-            y: "100vh", // Mueve el sobre 100% de la altura de la pantalla
+            y: "100vh", // Mueve el sobre 100% de la altura de la pantalla      
             ease: "power1.in", // Un 'ease' para que acelere al caer
           },
           "<65%"
@@ -710,7 +748,10 @@
         // 1. Animamos la entrada del "Hero"
         gsap
           .timeline({
-            onComplete: createParallaxAnimation, // Llama a la función de parallax al terminar
+            onComplete: () => {
+              lenis.start(); // Reanudar el scroll
+              createParallaxAnimation(); // Ejecutar la lógica de animación de scroll original
+            },
           })
           .from(".hero-content header", { opacity: 0, scale: 0.3, y: "20vh", duration: 1.5, ease: "power3.out" }, 0.5)
           .from(".hero-content .names", { opacity: 0, y: 30, duration: 1, ease: "power2.out" }, "-=0.5")
@@ -723,7 +764,7 @@
             scrollTrigger: {
               trigger: ".invitation-hero",
               start: "top top",
-              scrub: 1,
+              scrub: 2,
               pin: true, // <-- ARREGLADO: Vuelve a tener "pin: true"
               pinSpacing: false, // Dejamos el "empuje" por defecto
             },
@@ -970,4 +1011,3 @@
     </div>
   </body>
 </html>
-
