@@ -204,7 +204,7 @@
           </p>
         </div>
       </section>
-      <div class="spotlight-pin-wrapper">
+      
         <section class="spotlight">
           <div class="spotlight-header">
             <h1 class="font-playfair">Nuestros Momentos</h1>
@@ -233,7 +233,7 @@
             </div>
           </div>
         </section>
-      </div>
+      
       <div class="envelope-wrapper relative h-[250vh] w-full">
         <div class="envelope-sticky-container sticky top-0 w-full overflow-hidden" style="height: 100lvh;">
           <div class="envelope-back absolute bottom-0 z-10 w-full h-auto">
@@ -514,7 +514,7 @@
         const spotlightImages = document.querySelectorAll(".spotlight-img");
 
         ScrollTrigger.create({
-          trigger: ".spotlight-pin-wrapper",
+          trigger: ".spotlight",
           start: "top top",
           end: `+=${window.innerHeight * 6}px`,
           pin: true,
@@ -723,7 +723,7 @@
           const parallaxTl = gsap.timeline({
             scrollTrigger: {
               trigger: ".invitation-hero",
-              start: "10%",
+              start: "top top",
               scrub: 1,
               pin: true, // <-- ARREGLADO: Vuelve a tener "pin: true"
               pinSpacing: false, // Dejamos el "empuje" por defecto
@@ -971,4 +971,3 @@
     </div>
   </body>
 </html>
-
