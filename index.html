@@ -176,41 +176,41 @@
         -ms-overflow-style: none; /* Para IE y Edge */
         scrollbar-width: none; /* Para Firefox */
       }
-#countdown {
-  /* Separación interna */
-  padding: 15px; 
-  
-  /* Aseguramos que el contenido del contador esté dentro del flujo */
-  position: relative; 
-  
-  /* Borde dorado de 2px que respeta la forma de la máscara */
-  box-shadow: 0 0 0 50px gold; 
-  
-  /* Borde redondeado */
-  border-radius: 15px; 
-  
-  /* Propiedad personalizada para el tamaño del corte de las esquinas */
-  --corner-size-counter: 15px; 
-  
-  /* El fondo es transparente para que se vea la imagen de la carta */
- 
+      #countdown {
+        /* Separación interna */
+        padding: 15px;
 
-  /* Aplicamos la máscara para las esquinas invertidas */
-  -webkit-mask: 
-    /* El cuerpo principal del contenedor */
-    linear-gradient(white, white) padding-box,
-    /* Esquinas radiales para el corte */
-    radial-gradient(var(--corner-size-counter) at 0 0, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter)),
-    radial-gradient(var(--corner-size-counter) at 100% 0, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter)),
-    radial-gradient(var(--corner-size-counter) at 0 100%, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter)),
-    radial-gradient(var(--corner-size-counter) at 100% 100%, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter));
+        /* Aseguramos que el contenido del contador esté dentro del flujo */
+        position: relative;
 
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-}
+        /* Borde dorado de 2px que respeta la forma de la máscara */
+        box-shadow: 0 0 0 50px gold;
+
+        /* Borde redondeado */
+        border-radius: 15px;
+
+        /* Propiedad personalizada para el tamaño del corte de las esquinas */
+        --corner-size-counter: 15px;
+
+        /* El fondo es transparente para que se vea la imagen de la carta */
+
+        /* Aplicamos la máscara para las esquinas invertidas */
+        -webkit-mask: 
+    /* El cuerpo principal del contenedor */ linear-gradient(white, white) padding-box, /* Esquinas radiales para el corte */ radial-gradient(var(--corner-size-counter) at 0 0, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter)),
+          radial-gradient(var(--corner-size-counter) at 100% 0, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter)), radial-gradient(var(--corner-size-counter) at 0 100%, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter)),
+          radial-gradient(var(--corner-size-counter) at 100% 100%, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter));
+
+        -webkit-mask-composite: destination-out;
+        mask-composite: exclude;
+      }
     </style>
   </head>
   <body class="w-full font-fraunces font-normal text-[#333] leading-relaxed">
+    <div id="audio-overlay" class="fixed inset-0 z-[9999] bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center p-8 text-center">
+      <h2 class="font-playfair text-3xl text-[#333] mb-4">María & Kevind</h2>
+      <p class="font-montserrat text-base text-[#333] mb-8">Toca "Iniciar" para habilitar la música de fondo.</p>
+      <button id="audio-start-button" class="bg-[#f96d41] text-white font-montserrat font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">Iniciar Invitación 🎵</button>
+    </div>
     <audio id="musica-fondo" src="boda.mp3"></audio>
     <div class="fixed-background fixed inset-0 z-[1] pointer-events-none">
       <div id="curves-wrapper" class="absolute inset-0 z-[1] overflow-hidden">
@@ -393,6 +393,26 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         gsap.registerPlugin(ScrollTrigger);
+                const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          direction: "vertical",
+          gestureDirection: "vertical",
+          smooth: true,
+          mouseMultiplier: 1,
+          smoothTouch: true,
+          touchMultiplier: 1,
+          infinite: false,
+        });
+
+        lenis.on("scroll", ScrollTrigger.update); // <-- CONECTA LENIS CON SCROLLTRIGGER
+
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
+        lenis.stop();
 
         const firebaseConfig = {
           apiKey: "AIzaSyDtwlvV5GiZs_k827RTw8KRq4KZw9UthVw",
@@ -408,34 +428,36 @@
         // Una variable para asegurarnos de que solo se ejecute UNA vez
         let audioIniciado = false;
 
-        function iniciarMusica() {
-          // Si ya se inició, no hacer nada
-          if (audioIniciado) {
-            return;
-          }
+        // (Reemplaza las funciones iniciarMusica() y los event listeners anteriores)
 
-          // 1. Marcar como iniciado
-          audioIniciado = true;
+        const audioOverlay = document.getElementById("audio-overlay");
+        const audioStartButton = document.getElementById("audio-start-button");
 
-          // 2. Intentar reproducir la música
+        function iniciarMusicaConBoton() {
+          const audio = document.getElementById("musica-fondo");
+
           audio.play().catch((e) => {
-            console.warn("Error al iniciar audio (ignorar si es en modo 'silencio'):", e);
+            console.warn("Error al iniciar audio (debe ser ignorado si el archivo no existe):", e);
           });
 
-          // 3. Importante: Dejamos de escuchar
-          //    (para que no intente reproducir con cada scroll o clic)
-          document.removeEventListener("touchstart", iniciarMusica);
-          document.removeEventListener("mousedown", iniciarMusica);
-          document.removeEventListener("keydown", iniciarMusica);
+          // 1. Oculta el overlay
+          audioOverlay.style.display = "none";
+
+          // 2. Inicia el scroll (Lenis está detenido desde el principio)
+          lenis.start();
+
+          // 3. Elimina el listener para que solo se ejecute una vez
+          audioStartButton.removeEventListener("click", iniciarMusicaConBoton);
         }
 
-        // Escuchamos por la *primera* interacción del usuario
-        // 'touchstart' -> El primer toque en un móvil (incluso para scroll)
-        // 'mousedown'  -> El primer clic en un PC
-        // 'keydown'    -> La primera vez que se presiona una tecla (ej. 'espacio' para scroll)
-        document.addEventListener("touchstart", iniciarMusica);
-        document.addEventListener("mousedown", iniciarMusica);
-        document.addEventListener("keydown", iniciarMusica);
+        // Bloqueamos el scroll y adjuntamos el listener al botón
+        if (audioStartButton) {
+          // Bloqueamos Lenis (Ya lo tienes en la línea 572, pero lo repito por claridad)
+          lenis.stop();
+          audioStartButton.addEventListener("click", iniciarMusicaConBoton);
+        }
+
+        // (El resto del script, incluyendo la lógica de GSAP y Firebase, debe seguir igual).
 
         // 2. Inicializar Firebase y Firestore
         firebase.initializeApp(firebaseConfig);
@@ -484,26 +506,7 @@
         });
 
         // 2. Inicializar Lenis
-        const lenis = new Lenis({
-          duration: 1.2,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          direction: "vertical",
-          gestureDirection: "vertical",
-          smooth: true,
-          mouseMultiplier: 1,
-          smoothTouch: true,
-          touchMultiplier: 1,
-          infinite: false,
-        });
 
-        lenis.on("scroll", ScrollTrigger.update); // <-- CONECTA LENIS CON SCROLLTRIGGER
-
-        gsap.ticker.add((time) => {
-          lenis.raf(time * 1000);
-        });
-
-        gsap.ticker.lagSmoothing(0);
-        lenis.stop();
 
         // --- PARTE 1: ANIMACIÓN DEL HILO (Sin cambios) ---
         const paths = gsap.utils.toArray(".path");
