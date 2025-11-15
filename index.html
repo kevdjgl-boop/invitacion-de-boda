@@ -62,16 +62,12 @@
         overflow-x: hidden;
       }
 
-      /* === FIN DE LA CORRECCIÓN CSS === */
       /* === CSS PARA LA ANIMACIÓN SPOTLIGHT === */
-
       .spotlight {
-        /* Fondo oscuro para la animación */
         color: #eee;
-
-        height: 100vh; /* Ocupa el 100% de la pantalla */
+        height: 100vh;
         width: 100%;
-        position: relative; /* Clave para el 'pin' */
+        position: relative;
       }
 
       .spotlight-header {
@@ -79,7 +75,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 10; /* Texto por encima de las imágenes */
+        z-index: 10;
         text-align: center;
         width: 80%;
       }
@@ -98,13 +94,9 @@
         position: absolute;
         top: 50%;
         left: 50%;
-
-        /* Tamaño de las imágenes */
         width: 50vw;
-
         min-width: 180px;
-
-        will-change: transform; /* Para que la animación sea fluida */
+        will-change: transform;
       }
 
       .spotlight-img img {
@@ -113,6 +105,7 @@
         object-fit: cover;
         border-radius: 8px;
       }
+
       .regalo-checkbox {
         appearance: none;
         width: 20px;
@@ -121,58 +114,53 @@
         border-radius: 4px;
         cursor: pointer;
         transition: all 0.2s ease;
-        flex-shrink: 0; /* Evita que el checkbox se encoja */
+        flex-shrink: 0;
       }
       .regalo-checkbox:hover {
-        border-color: #f96d41; /* Color de tu web */
+        border-color: #f96d41;
       }
-
-      /* Estilo cuando está MARCADO */
       .regalo-checkbox:checked {
         background-color: #f96d41;
         border-color: #f96d41;
         background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
       }
-
-      /* Estilo cuando está MARCADO Y DESHABILITADO (Bloqueado) */
       .regalo-checkbox:checked:disabled {
         background-color: #ccc;
         border-color: #ccc;
         cursor: not-allowed;
       }
-
-      /* Estilo para el texto del regalo cuando está comprado */
       .regalo-comprado .regalo-nombre {
         text-decoration: line-through;
         color: #999;
       }
-      /* === CSS PARA OCULTAR EL SCROLLBAR DEL MODAL === */
 
       #modal-contenido::-webkit-scrollbar {
-        display: none; /* Para Chrome, Safari y Opera */
+        display: none;
       }
       #modal-contenido {
-        -ms-overflow-style: none; /* Para IE y Edge */
-        scrollbar-width: none; /* Para Firefox */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
     </style>
   </head>
   <body class="w-full font-fraunces font-normal text-[#333] leading-relaxed">
     <audio id="musica-fondo" src="boda.mp3"></audio>
+
     <div class="fixed-background fixed inset-0 z-[1] pointer-events-none">
       <div id="curves-wrapper" class="absolute inset-0 z-[1] overflow-hidden">
+        <!-- SVG paths -->
         <svg width="100%" height="100%" viewBox="0 0 1630 1199" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2" preserveaspectratio="xMidYMid slice">
           <path
+            class="path stroke-[#f96d41] stroke-1 fill-none opacity-0"
             d="M1 311.317C173.786 140.493 611.135 -143.292 978.249 88.1616C1345.36 319.615 833.513 898.921 649.507 1040.22C465.502 1181.51 319.644 1242.37 272.52 1162.45C225.397 1082.52 392.573 980.476 583.31 898.921C774.048 817.366 1173.92 740.133 1629 898.921"
-            class="path stroke-[#f96d41] stroke-1 fill-none opacity-0"
           />
           <path
+            class="path stroke-[#f96d41] stroke-1 fill-none opacity-0"
             d="M1 898.921C173.786 1069.74 611.135 1313.53 978.249 1122.08C1345.36 890.626 833.513 311.317 649.507 170.021C465.502 28.7251 319.644 -32.1337 272.52 47.7885C225.397 127.711 392.573 229.757 583.31 311.317C774.048 392.872 1173.92 470.105 1629 311.317"
-            class="path stroke-[#f96d41] stroke-1 fill-none opacity-0"
           />
           <path
-            d="M1629 311.317C1456.21 482.141 1018.87 756.096 651.751 524.643C284.637 293.19 796.487 -286.115 978.249 -127.828C1164.49 33.4674 1310.36 94.3263 1357.48 14.4042C1404.6 94.4172 1237.43 196.463 1046.69 277.018C855.952 357.573 456.075 434.806 1 277.018"
             class="path stroke-[#f96d41] stroke-1 fill-none opacity-0"
+            d="M1629 311.317C1456.21 482.141 1018.87 756.096 651.751 524.643C284.637 293.19 796.487 -286.115 978.249 -127.828C1164.49 33.4674 1310.36 94.3263 1357.48 14.4042C1404.6 94.4172 1237.43 196.463 1046.69 277.018C855.952 357.573 456.075 434.806 1 277.018"
           />
         </svg>
       </div>
@@ -186,6 +174,7 @@
         <img src="flor_2.png" alt="Flor" class="absolute h-[clamp(280px,40vw,380px)] w-auto right-[-20vw] top-[85%] -translate-y-1/2 -rotate-[120deg]" />
       </div>
     </div>
+
     <main class="relative z-[10]">
       <section class="invitation-hero flex flex-col items-center justify-center h-[90vh] w-full relative py-[4vh] px-[5vw] gap-[2vh]">
         <div class="hero-content flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
@@ -203,36 +192,22 @@
           </p>
         </div>
       </section>
-       
-        <section class="spotlight">
-          <div class="spotlight-header">
-            <h1 class="font-playfair">Nuestros Momentos</h1>
-          </div>
-          <div class="spotlight-images">
-            <div class="spotlight-img">
-              <img src="boda.png" alt="Recuerdo 1" />
-            </div>
-            <div class="spotlight-img">
-              <img src="boda1.jpg" alt="Recuerdo 2" />
-            </div>
-            <div class="spotlight-img">
-              <img src="boda2.jpg" alt="Recuerdo 3" />
-            </div>
-            <div class="spotlight-img">
-              <img src="boda3.jpg" alt="Recuerdo 4" />
-            </div>
-            <div class="spotlight-img">
-              <img src="boda4.jpg" alt="Recuerdo 5" />
-            </div>
-            <div class="spotlight-img">
-              <img src="boda5.png" alt="Recuerdo 6" />
-            </div>
-            <div class="spotlight-img">
-              <img src="boda6.png" alt="Recuerdo 7" />
-            </div>
-          
-        </section>
-      </div>
+
+      <section class="spotlight">
+        <div class="spotlight-header">
+          <h1 class="font-playfair">Nuestros Momentos</h1>
+        </div>
+        <div class="spotlight-images">
+          <div class="spotlight-img"><img src="boda.png" alt="Recuerdo 1" /></div>
+          <div class="spotlight-img"><img src="boda1.jpg" alt="Recuerdo 2" /></div>
+          <div class="spotlight-img"><img src="boda2.jpg" alt="Recuerdo 3" /></div>
+          <div class="spotlight-img"><img src="boda3.jpg" alt="Recuerdo 4" /></div>
+          <div class="spotlight-img"><img src="boda4.jpg" alt="Recuerdo 5" /></div>
+          <div class="spotlight-img"><img src="boda5.png" alt="Recuerdo 6" /></div>
+          <div class="spotlight-img"><img src="boda6.png" alt="Recuerdo 7" /></div>
+        </div>
+      </section>
+
       <div class="envelope-wrapper relative h-[250vh] w-full">
         <div class="envelope-sticky-container sticky top-0 h-screen w-full overflow-hidden">
           <div class="envelope-back absolute bottom-0 z-10 w-full h-auto">
@@ -244,22 +219,10 @@
               <div id="countdown" class="text-center my-8 w-full">
                 <p class="tracking-[0.05em] text-lg mb-4">Faltan:</p>
                 <div class="flex justify-center gap-4 sm:gap-8 text-center">
-                  <div>
-                    <span id="days" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
-                    <span class="block text-xs uppercase tracking-widest mt-2">Días</span>
-                  </div>
-                  <div>
-                    <span id="hours" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
-                    <span class="block text-xs uppercase tracking-widest mt-2">Horas</span>
-                  </div>
-                  <div>
-                    <span id="minutes" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
-                    <span class="block text-xs uppercase tracking-widest mt-2">Minutos</span>
-                  </div>
-                  <div>
-                    <span id="seconds" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
-                    <span class="block text-xs uppercase tracking-widest mt-2">Segundos</span>
-                  </div>
+                  <div><span id="days" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span><span class="block text-xs uppercase tracking-widest mt-2">Días</span></div>
+                  <div><span id="hours" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span><span class="block text-xs uppercase tracking-widest mt-2">Horas</span></div>
+                  <div><span id="minutes" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span><span class="block text-xs uppercase tracking-widest mt-2">Minutos</span></div>
+                  <div><span id="seconds" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span><span class="block text-xs uppercase tracking-widest mt-2">Segundos</span></div>
                 </div>
               </div>
 
@@ -283,6 +246,7 @@
                   antes del 15/12/2025
                   <a href="tel:+51977993344" class="phone-link text-inherit underline"></a>
                 </p>
+
                 <div class="flex justify-center gap-8 mt-8">
                   <div class="flex flex-col items-center text-center">
                     <button id="btn-rsvp-si" class="bg-white text-gray-800 font-montserrat font-semibold uppercase tracking-wider px-10 py-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl">Sí</button>
@@ -303,6 +267,7 @@
                   puedes ver
                   <a href="#link-a-la-lista-de-regalos" class="text-inherit underline">nuestra lista de sugerencias</a>.
                 </p>
+
                 <button id="btn-abrir-regalos" class="bg-white text-gray-800 font-bold uppercase tracking-widest px-8 py-3 rounded shadow-lg transition-transform transform hover:scale-105 mt-10">Ver Lista de Regalos</button>
 
                 <div id="modal-regalos" class="fixed inset-0 bg-black bg-opacity-75 z-[5000] flex justify-center items-center p-4 hidden text-black">
@@ -325,6 +290,7 @@
               </footer>
             </div>
           </section>
+
           <div class="envelope-front absolute bottom-0 z-30 w-full h-auto pointer-events-none">
             <img src="sobre_adelante.png" alt="Sobre" class="w-full h-auto" />
           </div>
@@ -335,24 +301,16 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // --- INICIO DE LA LÓGICA DE SCROLL ACTUALIZADA ---
-        // 1. Obtenemos la altura REAL de la ventana al cargar
         const stableHeight = window.innerHeight;
-
-        // 2. Seleccionamos los dos contenedores que se "fijan"
         const spotlightContainer = document.querySelector(".spotlight");
         const envelopeContainer = document.querySelector(".envelope-sticky-container");
 
-        // 3. Forzamos su altura a un valor de píxeles FIJO
-        // Esto evita que cambien de tamaño cuando la barra de Chrome se oculta.
-        if (spotlightContainer) {
-          spotlightContainer.style.height = `${stableHeight}px`;
-        }
-        if (envelopeContainer) {
-          envelopeContainer.style.height = `${stableHeight}px`;
-        }
+        if (spotlightContainer) spotlightContainer.style.height = `${stableHeight}px`;
+        if (envelopeContainer) envelopeContainer.style.height = `${stableHeight}px`;
         // --- FIN: ARREGLO PARA EL "SALTO" MÓVIL ---
-        // 1. Registrar ScrollTrigger
+
         gsap.registerPlugin(ScrollTrigger);
+
         const firebaseConfig = {
           apiKey: "AIzaSyDtwlvV5GiZs_k827RTw8KRq4KZw9UthVw",
           authDomain: "boda-e2a20.firebaseapp.com",
@@ -362,91 +320,85 @@
           appId: "1:766114888160:web:235c92c8d6ecdb78cc5385",
         };
 
-        // ⬇️ REEMPLAZA TU CÓDIGO DE AUDIO POR ESTE ⬇️
-
-        // --- INICIO: LÓGICA DE MÚSICA (Versión Definitiva) ---
+        // LÓGICA DE MÚSICA
         const audio = document.getElementById("musica-fondo");
-        audio.volume = 0.5;
+        if (audio) audio.volume = 0.5;
         let audioIniciado = false;
 
-        // Esta es la función que se llamará UNA SOLA VEZ
         function iniciarMusica() {
-          if (audioIniciado) {
-            return; // Si ya se inició, no hacer nada
+          if (audioIniciado) return;
+          audioIniciado = true;
+          if (audio) {
+            audio.play().catch((e) => {
+              console.warn("Error al iniciar audio (ignorar si es en modo 'silencio'):", e);
+            });
           }
-
-          audioIniciado = true; // 1. Marcar como iniciado
-
-          // 2. Intentar reproducir
-          audio.play().catch((e) => {
-            console.warn("Error al iniciar audio (ignorar si es en modo 'silencio'):", e);
-          });
-
-          // 3. Importante: Dejamos de escuchar a TODOS los eventos
           document.removeEventListener("touchstart", iniciarMusica);
           document.removeEventListener("mousedown", iniciarMusica);
           document.removeEventListener("keydown", iniciarMusica);
-
-          // 4. También le decimos a Lenis que deje de llamar a esta función
-          if (typeof lenis !== "undefined") {
-            // Si Lenis existe
-            lenis.off("scroll", iniciarMusica); // .off() es lo contrario de .on()
+          if (typeof lenis !== "undefined" && lenis && typeof lenis.off === "function") {
+            lenis.off("scroll", iniciarMusica);
           }
         }
 
-        // 1. Escuchamos los eventos de interacción directa (clic, toque, tecla)
         document.addEventListener("touchstart", iniciarMusica);
         document.addEventListener("mousedown", iniciarMusica);
         document.addEventListener("keydown", iniciarMusica);
-        // --- FIN: LÓGICA DE MÚSICA ---
 
-        // 2. Inicializar Firebase y Firestore
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        // Inicializar Firebase (si está disponible)
+        if (typeof firebase !== "undefined" && firebase && typeof firebase.initializeApp === "function") {
+          firebase.initializeApp(firebaseConfig);
+        } else {
+          console.warn("Firebase no está disponible - algunas funciones (lista de regalos) no funcionarán en local.");
+        }
 
-        // 3. Conectar al formulario
+        const db = typeof firebase !== "undefined" && firebase && firebase.firestore ? firebase.firestore() : null;
+
+        // Elementos del admin / form
         const formRegalo = document.getElementById("form-regalo");
         const btnAnadir = document.getElementById("btn-anadir");
         const msgAdmin = document.getElementById("admin-mensaje");
 
-        formRegalo.addEventListener("submit", async function (e) {
-          e.preventDefault();
+        if (formRegalo && btnAnadir) {
+          formRegalo.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const nombreEl = document.getElementById("regalo-nombre");
+            const linkEl = document.getElementById("regalo-link");
+            const precioEl = document.getElementById("regalo-precio");
 
-          const nombre = document.getElementById("regalo-nombre").value;
-          const link = document.getElementById("regalo-link").value;
-          const precio = document.getElementById("regalo-precio").value;
+            const nombre = nombreEl ? nombreEl.value.trim() : "";
+            const link = linkEl ? linkEl.value.trim() : "";
+            const precio = precioEl ? precioEl.value.trim() : "";
 
-          if (!nombre || !precio || !link) return;
+            if (!nombre || !precio || !link) {
+              if (msgAdmin) msgAdmin.innerText = "Completa todos los campos.";
+              return;
+            }
 
-          btnAnadir.disabled = true;
-          btnAnadir.innerText = "Añadiendo...";
+            btnAnadir.disabled = true;
+            btnAnadir.innerText = "Añadiendo...";
 
-          try {
-            // Añadir el regalo a la base de datos
-            await db.collection("regalos").add({
-              nombre: nombre,
-              link: link,
-              precio: precio,
-              comprado: false,
-            });
+            try {
+              if (!db) throw new Error("Firestore no inicializado");
+              await db.collection("regalos").add({
+                nombre: nombre,
+                link: link,
+                precio: precio,
+                comprado: false,
+              });
+              if (msgAdmin) msgAdmin.innerText = `¡Éxito! Se añadió "${nombre}".`;
+              formRegalo.reset();
+            } catch (error) {
+              console.error("Error al añadir:", error);
+              if (msgAdmin) msgAdmin.innerText = "Error. Revisa la consola.";
+            }
 
-            // Éxito
-            msgAdmin.innerText = `¡Éxito! Se añadió "${nombre}".`;
-            formRegalo.reset();
-          } catch (error) {
-            // ¡ARREGLADO! El código de error AHORA ESTÁ DENTRO del catch
-            console.error("Error al añadir:", error);
-            msgAdmin.innerText = "Error. Revisa la consola.";
-          } // <-- El 'catch' cierra aquí
+            btnAnadir.disabled = false;
+            btnAnadir.innerText = "Añadir Regalo";
+          });
+        }
 
-          // ¡ARREGLADO! La llave (}) extra se eliminó
-
-          // Esto se ejecuta después del try...catch
-          btnAnadir.disabled = false;
-          btnAnadir.innerText = "Añadir Regalo";
-        });
-
-        // 2. Inicializar Lenis
+        // Inicializar Lenis
         const lenis = new Lenis({
           duration: 1.2,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -459,15 +411,14 @@
           infinite: false,
         });
 
-        lenis.on("scroll", ScrollTrigger.update); // <-- CONECTA LENIS CON SCROLLTRIGGER
+        lenis.on("scroll", ScrollTrigger.update);
         lenis.on("scroll", iniciarMusica);
         gsap.ticker.add((time) => {
           lenis.raf(time * 1000);
         });
-
         gsap.ticker.lagSmoothing(0);
 
-        // --- PARTE 1: ANIMACIÓN DEL HILO (Sin cambios) ---
+        // Animación hilo (paths)
         const paths = gsap.utils.toArray(".path");
         let activePathIndex = -1;
 
@@ -490,11 +441,7 @@
 
           gsap
             .timeline()
-            .to(path, {
-              strokeDashoffset: 0,
-              duration: randomDuration,
-              ease: "power2.in",
-            })
+            .to(path, { strokeDashoffset: 0, duration: randomDuration, ease: "power2.in" })
             .to(
               path,
               {
@@ -509,16 +456,16 @@
         }
 
         function animateRandomPath() {
+          if (!paths || !paths.length) return;
           let newPathIndex;
           do {
             newPathIndex = Math.floor(Math.random() * paths.length);
-          } while (newPathIndex === activePathIndex);
-
+          } while (newPathIndex === activePathIndex && paths.length > 1);
           activePathIndex = newPathIndex;
           animatePath(paths[activePathIndex]);
         }
-        // --- AÑADE ESTA NUEVA ANIMACIÓN "SPOTLIGHT" ---
 
+        // Spotlight animation
         const spotlightImgFinalPos = [
           [-100, -140],
           [10, -130],
@@ -528,7 +475,6 @@
           [-60, 30],
           [-130, 30],
         ];
-
         const spotlightImages = document.querySelectorAll(".spotlight-img");
 
         ScrollTrigger.create({
@@ -538,71 +484,57 @@
           pin: true,
           pinSpacing: true,
           scrub: 1,
-    
 
           onUpdate: (self) => {
             const progress = self.progress;
-            const header = document.querySelector(".spotlight-header h1"); // Seleccionar el título
+            const header = document.querySelector(".spotlight-header h1");
+            const headerAppearStart = 0.05;
+            const headerAppearEnd = 0.2;
 
-            // === Lógica para el desenfoque del título ===
-            // El título aparece al 10% del scroll del trigger
-            const headerAppearStart = 0.05; // Empieza a aparecer al 5%
-            const headerAppearEnd = 0.2; // Termina de aparecer al 20%
-
-            if (progress < headerAppearStart) {
-              gsap.set(header, { opacity: 0, filter: "blur(10px)", scale: 0.9 });
-            } else if (progress >= headerAppearStart && progress <= headerAppearEnd) {
-              const headerProgress = (progress - headerAppearStart) / (headerAppearEnd - headerAppearStart);
-              gsap.set(header, {
-                opacity: headerProgress,
-                filter: `blur(${gsap.utils.interpolate(10, 0, headerProgress)}px)`,
-                scale: gsap.utils.interpolate(0.9, 1, headerProgress),
-              });
-            } else {
-              // Asegurarse de que el estado final sea correcto una vez pasado el punto de aparición
-              gsap.set(header, { opacity: 1, filter: "blur(0px)", scale: 1 });
+            if (header) {
+              if (progress < headerAppearStart) {
+                gsap.set(header, { opacity: 0, filter: "blur(10px)", scale: 0.9 });
+              } else if (progress >= headerAppearStart && progress <= headerAppearEnd) {
+                const headerProgress = (progress - headerAppearStart) / (headerAppearEnd - headerAppearStart);
+                gsap.set(header, {
+                  opacity: headerProgress,
+                  filter: `blur(${gsap.utils.interpolate(10, 0, headerProgress)}px)`,
+                  scale: gsap.utils.interpolate(0.9, 1, headerProgress),
+                });
+              } else {
+                gsap.set(header, { opacity: 1, filter: "blur(0px)", scale: 1 });
+              }
             }
-            // === FIN Lógica para el desenfoque del título ===
-            if (spotlightImages.length > 0) {
-              const firstImage = spotlightImages[0]; // La primera imagen
 
-              // Empezamos a escalar al 80% del progreso total
+            if (spotlightImages && spotlightImages.length > 0) {
+              const firstImage = spotlightImages[0];
               const scaleStartProgress = 0.8;
-              const finalScale = 1.3; // 30% más grande
-
-              let currentScale = 1; // Escala por defecto
-
-              // Usamos la variable 'progress' que ya existe
+              const finalScale = 1.3;
+              let currentScale = 1;
               if (progress > scaleStartProgress) {
                 const scaleProgress = (progress - scaleStartProgress) / (1 - scaleStartProgress);
                 currentScale = 1 + (finalScale - 1) * scaleProgress;
               }
-
-              // Aplicar la escala a la primera imagen
-              gsap.set(firstImage, { scale: currentScale });
-
-              // Aplicar la escala por defecto (1) al resto de imágenes
-              // para asegurarnos de que no se "contaminen" si cambiamos el [0]
-              for (let i = 1; i < spotlightImages.length; i++) {
-                gsap.set(spotlightImages[i], { scale: 1 });
-              }
+              if (firstImage) gsap.set(firstImage, { scale: currentScale });
+              for (let i = 1; i < spotlightImages.length; i++) gsap.set(spotlightImages[i], { scale: 1 });
             }
+
             const initialRotations = [8, -10, 4, -2, 12, -6, 15];
             const phaseOneStartOffsets = [0, 0.1, 0.2, 0.3, 0.15, 0.25, 0.3];
             const phaseTwoStartOffsets = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8];
             const phase2EndProgress = 0.95;
 
             spotlightImages.forEach((img, index) => {
-              const initialRotation = initialRotations[index];
-              const phase1Start = phaseOneStartOffsets[index];
+              const initialRotation = initialRotations[index] ?? 0;
+              const phase1Start = phaseOneStartOffsets[index] ?? 0;
               const phase1EndProgress = 0.45;
               const phase1End = Math.min(phase1Start + (phase1EndProgress - phase1Start) * 0.9, phase1EndProgress);
 
-              const phase2Start = phaseTwoStartOffsets[index];
+              const phase2Start = phaseTwoStartOffsets[index] ?? 0.6;
               const phase2End = Math.min(phase2Start + (phase2EndProgress - phase2Start) * 0.9, phase2EndProgress);
 
-              const finalX = spotlightImgFinalPos[index][0];
-              const finalY = spotlightImgFinalPos[index][1];
+              const finalX = (spotlightImgFinalPos[index] && spotlightImgFinalPos[index][0]) || -50;
+              const finalY = (spotlightImgFinalPos[index] && spotlightImgFinalPos[index][1]) || -50;
 
               let x = -50;
               let y, rotation;
@@ -612,26 +544,23 @@
                 rotation = initialRotation;
               } else if (progress <= phase1EndProgress) {
                 let phase1Progress;
-                if (progress >= phase1End) {
-                  phase1Progress = 1;
-                } else {
-                  const linearProgress = (progress - phase1Start) / (phase1End - phase1Start);
+                if (progress >= phase1End) phase1Progress = 1;
+                else {
+                  const linearProgress = (progress - phase1Start) / Math.max(0.0001, phase1End - phase1Start);
                   phase1Progress = 1 - Math.pow(1 - linearProgress, 3);
                 }
                 y = 200 - phase1Progress * 250;
                 rotation = initialRotation;
               } else if (progress < phase2EndProgress) {
                 let phase2Progress;
-                if (progress >= phase2End) {
-                  phase2Progress = 1;
-                } else if (progress < phase2Start) {
-                  phase2Progress = 0;
-                } else {
-                  const linearProgress = (progress - phase2Start) / (phase2End - phase2Start);
+                if (progress >= phase2End) phase2Progress = 1;
+                else if (progress < phase2Start) phase2Progress = 0;
+                else {
+                  const linearProgress = (progress - phase2Start) / Math.max(0.0001, phase2End - phase2Start);
                   phase2Progress = 1 - Math.pow(1 - linearProgress, 3);
                 }
-                x = -50 + phase2Progress * (finalX - -50);
-                y = -50 + phase2Progress * (finalY - -50);
+                x = -50 + phase2Progress * (finalX + 50);
+                y = -50 + phase2Progress * (finalY + 50);
                 rotation = initialRotation;
               } else {
                 x = finalX;
@@ -639,156 +568,90 @@
                 rotation = initialRotation;
               }
 
-              // --- INICIO: LÓGICA DE ESCALA (AHORA DENTRO DEL BUCLE) ---
-              let currentScale = 1; // Escala por defecto para todas
-
-              // Si es la PRIMERA imagen (index === 0)
+              let currentScale = 1;
               if (index === 0) {
                 const scaleStartProgress = 0.8;
-                const finalScale = 1.3; // 30% más grande
-
+                const finalScale = 1.3;
                 if (progress > scaleStartProgress) {
                   const scaleProgress = (progress - scaleStartProgress) / (1 - scaleStartProgress);
                   currentScale = 1 + (finalScale - 1) * scaleProgress;
                 }
               }
-              // --- FIN: LÓGICA DE ESCALA ---
 
               gsap.set(img, {
-                // Y aquí añadimos la escala al 'transform'
                 transform: `translate(${x}%, ${y}%) rotate(${rotation}deg) scale(${currentScale})`,
               });
             });
           },
         });
-        // --- FIN DE LA ANIMACIÓN "SPOTLIGHT" ---
 
+        // start the path animation loop if paths exist
         animateRandomPath();
 
-        // =============================================
-        // ⬇️ REEMPLAZA EL JS DEL SOBRE POR ESTE ⬇️
-        // =============================================
-
-        // --- INICIO: ANIMACIÓN DEL SOBRE (Versión con Deslizamiento al 65%) ---
-
-        // 1. Seleccionamos las TRES partes
+        // Envelope animation
         const detailsSection = document.querySelector(".final-details.envelope-content");
         const envelopeBack = document.querySelector(".envelope-back");
         const envelopeFront = document.querySelector(".envelope-front");
 
-        // 2. Estado inicial de la invitación
-        // ⬇️ ¡Ajusta este número (80) si lo necesitas!
         const startYPercent = 80;
-        gsap.set(detailsSection, { yPercent: startYPercent });
+        if (detailsSection) gsap.set(detailsSection, { yPercent: startYPercent });
 
-        // 3. Creamos una LÍNEA DE TIEMPO (timeline) de GSAP
-        // Esta timeline "contendrá" nuestras dos animaciones
         const envelopeTimeline = gsap.timeline();
+        if (detailsSection) {
+          envelopeTimeline.to(detailsSection, { yPercent: 0, ease: "power1.inOut" }, 0);
+        }
+        envelopeTimeline.to([envelopeBack, envelopeFront], { y: "100vh", ease: "power1.in" }, "<65%");
 
-        // 4. Añadimos la Animación 1 a la timeline:
-        // "La invitación sube de 80 a 0"
-        // Esta animación dura 1 "segundo" (por defecto en la timeline)
-        envelopeTimeline.to(
-          detailsSection,
-          {
-            yPercent: 0,
-            ease: "power1.inOut", // Un ease suave para todo el recorrido
-          },
-          0
-        ); // La añadimos al principio (segundo 0)
-
-        // 5. Añadimos la Animación 2 a la timeline:
-        // "El sobre (ambas partes) se desliza hacia abajo"
-        //
-        // Usamos el parámetro de posición "<65%"
-        // Esto significa: "Empieza esta animación cuando la
-        // animación anterior ('<') haya completado el 65% de su duración"
-        envelopeTimeline.to(
-          [envelopeBack, envelopeFront],
-          {
-            y: "100vh", // Mueve el sobre 100% de la altura de la pantalla
-            ease: "power1.in", // Un 'ease' para que acelere al caer
-          },
-          "<65%"
-        );
-
-        // 6. Conectamos la TIMELINE al ScrollTrigger
-        // (Igual que antes, pero con nuestra nueva timeline)
         ScrollTrigger.create({
           trigger: ".envelope-wrapper",
           start: "top top",
           end: "bottom bottom",
           pin: ".envelope-sticky-container",
-          scrub: 1, // Suaviza la animación
-
-          // Le damos nuestra timeline
+          scrub: 1,
           animation: envelopeTimeline,
         });
-        // --- FIN: ANIMACIÓN DEL SOBRE ---
-        // --- PARTE 2: LÍNEA DE TIEMPO (Actualizada) ---
 
-        // 1. Animamos la entrada del "Hero"
+        // Hero intro + parallax
         gsap
-          .timeline({
-            onComplete: createParallaxAnimation, // Llama a la función de parallax al terminar
-          })
+          .timeline({ onComplete: createParallaxAnimation })
           .from(".hero-content header", { opacity: 0, scale: 0.3, y: "20vh", duration: 1.5, ease: "power3.out" }, 0.5)
           .from(".hero-content .names", { opacity: 0, y: 30, duration: 1, ease: "power2.out" }, "-=0.5")
           .from(".hero-content .request", { opacity: 0, y: 20, duration: 1, ease: "power2.out" }, "-=0.5");
 
-        // 2. FUNCIÓN DE PARALLAX CON PINNING (¡¡CORREGIDA!!)
-        // Esta es la animación que FIJA la primera sección
-function createParallaxAnimation() {
+        function createParallaxAnimation() {
           const parallaxTl = gsap.timeline({
             scrollTrigger: {
               trigger: ".invitation-hero",
               start: "top top",
               scrub: 1,
               pin: true,
-              pinSpacing: true,
-              end: "+=100%",       
+              pinSpacing: false,
+              //end: "+=100%",
             },
           });
 
-          const finalProps = {
-            yPercent: -150,
-            opacity: 0,
-            filter: "blur(5px)",
-            ease: "power2.in",
-          };
-
+          const finalProps = { yPercent: -150, opacity: 0, filter: "blur(5px)", ease: "power2.in" };
           parallaxTl.to(".hero-content header", finalProps).to(".names h1:first-child", finalProps, "<0.25").to(".names span", finalProps, "<0.25").to(".names h1:last-child", finalProps, "<0.25").to(".hero-content .request", finalProps, "<0.25");
         }
 
-        // Establecemos la fecha objetivo (10 de Enero 2026 a las 15:00, como dice tu invitación)
+        // Countdown
         const countdownDate = new Date("January 10, 2026 15:00:00").getTime();
-
-        // Seleccionar los elementos del HTML
         const elDays = document.getElementById("days");
         const elHours = document.getElementById("hours");
         const elMinutes = document.getElementById("minutes");
         const elSeconds = document.getElementById("seconds");
 
-        // Actualizar el contador cada segundo
         const countdownInterval = setInterval(function () {
-          // Obtener la fecha y hora actual
           const now = new Date().getTime();
-
-          // Calcular la distancia
           const distance = countdownDate - now;
-
-          // Cálculos de tiempo
           const days = Math.floor(distance / (1000 * 60 * 60 * 24));
           const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-          // Función para añadir un cero delante si el número es menor a 10
           function pad(num) {
             return num < 10 ? "0" + num : num;
           }
-
-          // Mostrar los resultados en el HTML (solo si los elementos existen)
           if (elDays && elHours && elMinutes && elSeconds) {
             elDays.innerHTML = pad(days);
             elHours.innerHTML = pad(hours);
@@ -796,19 +659,14 @@ function createParallaxAnimation() {
             elSeconds.innerHTML = pad(seconds);
           }
 
-          // Si el contador termina
           if (distance < 0) {
             clearInterval(countdownInterval);
             const countdownElement = document.getElementById("countdown");
-            if (countdownElement) {
-              countdownElement.innerHTML = "<p class='font-playfair text-4xl'>¡Llegó el gran día!</p>";
-            }
+            if (countdownElement) countdownElement.innerHTML = "<p class='font-playfair text-4xl'>¡Llegó el gran día!</p>";
           }
-        }, 1000); // 1000ms = 1 segundo
+        }, 1000);
 
-        // --- INICIO: LÓGICA DEL MODAL DE REGALOS (CORREGIDA) ---
-
-        // 1. Seleccionar elementos de AMBOS modales
+        // MODALES - elementos
         const btnAbrir = document.getElementById("btn-abrir-regalos");
         const btnCerrar = document.getElementById("btn-cerrar-regalos");
         const modalRegalos = document.getElementById("modal-regalos");
@@ -821,112 +679,92 @@ function createParallaxAnimation() {
         const btnConfirmarNo = document.getElementById("btn-confirmar-no");
         const btnCerrarGracias = document.getElementById("btn-cerrar-gracias");
 
-        // --- Event Listeners de los Modales ---
+        if (btnAbrir) {
+          btnAbrir.addEventListener("click", () => {
+            if (modalRegalos) modalRegalos.classList.remove("hidden");
+            cargarListaRegalos();
+            if (lenis && typeof lenis.stop === "function") lenis.stop();
+          });
+        }
 
-        // Función para ABRIR el modal principal
-        btnAbrir.addEventListener("click", () => {
-          modalRegalos.classList.remove("hidden");
-          cargarListaRegalos();
-          lenis.stop(); // Pausar scroll del fondo
-        });
+        if (btnCerrar) {
+          btnCerrar.addEventListener("click", () => {
+            if (modalRegalos) modalRegalos.classList.add("hidden");
+            if (modalConfirmacion) modalConfirmacion.classList.add("hidden");
+            if (lenis && typeof lenis.start === "function") lenis.start();
+          });
+        }
 
-        // Función para CERRAR el modal principal
-        btnCerrar.addEventListener("click", () => {
-          modalRegalos.classList.add("hidden");
-          modalConfirmacion.classList.add("hidden"); // Asegurarse de cerrar ambos
-          lenis.start(); // Reanudar scroll del fondo
-        });
-
-        // --- Event Listeners del Modal de Confirmación ---
-
-        // Botón "Sí, confirmar"
-        btnConfirmarSi.addEventListener("click", async () => {
-          const regaloID = modalConfirmacion.dataset.regaloId; // Obtener el ID guardado
-          if (!regaloID) return;
-
-          // Desactivar botón para evitar doble clic
-          btnConfirmarSi.disabled = true;
-          btnConfirmarSi.innerText = "Marcando...";
-
-          try {
-            // 1. Actualizar Firebase
-            await db.collection("regalos").doc(regaloID).update({
-              comprado: true,
-            });
-
-            // 2. Mostrar paso de "Gracias"
-            confirmacionPregunta.classList.add("hidden");
-            confirmacionGracias.classList.remove("hidden");
-
-            // 3. Actualizar la lista original (detrás)
-            const checkboxOriginal = document.querySelector(`.regalo-checkbox[data-id="${regaloID}"]`);
-            if (checkboxOriginal) {
-              checkboxOriginal.checked = true;
-              checkboxOriginal.disabled = true;
-              // Aquí usamos 'closest' para encontrar el div padre y añadir la clase
-              checkboxOriginal.closest(".flex.items-center.justify-between").classList.add("regalo-comprado");
+        if (btnConfirmarSi) {
+          btnConfirmarSi.addEventListener("click", async () => {
+            const regaloID = modalConfirmacion ? modalConfirmacion.dataset.regaloId : null;
+            if (!regaloID) return;
+            btnConfirmarSi.disabled = true;
+            btnConfirmarSi.innerText = "Marcando...";
+            try {
+              if (!db) throw new Error("Firestore no inicializado");
+              await db.collection("regalos").doc(regaloID).update({ comprado: true });
+              if (confirmacionPregunta) confirmacionPregunta.classList.add("hidden");
+              if (confirmacionGracias) confirmacionGracias.classList.remove("hidden");
+              const checkboxOriginal = document.querySelector(`.regalo-checkbox[data-id="${regaloID}"]`);
+              if (checkboxOriginal) {
+                checkboxOriginal.checked = true;
+                checkboxOriginal.disabled = true;
+                const parent = checkboxOriginal.closest(".flex.items-center.justify-between");
+                if (parent) parent.classList.add("regalo-comprado");
+              }
+            } catch (error) {
+              console.error("Error al actualizar:", error);
+              alert("Hubo un error al marcar el regalo. Por favor, intenta de nuevo.");
+              if (modalConfirmacion) modalConfirmacion.classList.add("hidden");
             }
-          } catch (error) {
-            console.error("Error al actualizar:", error);
-            alert("Hubo un error al marcar el regalo. Por favor, intenta de nuevo.");
-            modalConfirmacion.classList.add("hidden"); // Cerrar modal de confirmación si falla
-          }
+            btnConfirmarSi.disabled = false;
+            if (btnConfirmarSi) btnConfirmarSi.innerText = "Sí, confirmar";
+          });
+        }
 
-          // Resetear el botón
-          btnConfirmarSi.disabled = false;
-        });
+        if (btnConfirmarNo)
+          btnConfirmarNo.addEventListener("click", () => {
+            if (modalConfirmacion) modalConfirmacion.classList.add("hidden");
+          });
+        if (btnCerrarGracias)
+          btnCerrarGracias.addEventListener("click", () => {
+            if (modalRegalos) modalRegalos.classList.add("hidden");
+            if (modalConfirmacion) modalConfirmacion.classList.add("hidden");
+            if (lenis && typeof lenis.start === "function") lenis.start();
+          });
 
-        // Botón "Cancelar"
-        btnConfirmarNo.addEventListener("click", () => {
-          modalConfirmacion.classList.add("hidden");
-        });
-
-        // Botón "Cerrar" (del paso de Gracias)
-        btnCerrarGracias.addEventListener("click", () => {
-          modalRegalos.classList.add("hidden");
-          modalConfirmacion.classList.add("hidden");
-          lenis.start(); // Reanudar scroll
-        });
-
-        // --- Lógica de Carga de Regalos ---
-
-        // Función principal para cargar y mostrar los regalos
+        // Cargar lista de regalos
         async function cargarListaRegalos() {
+          if (!listaContainer) return;
           listaContainer.innerHTML = "<p>Actualizando lista...</p>";
-
           try {
+            if (!db) throw new Error("Firestore no inicializado");
             const snapshot = await db.collection("regalos").get();
             listaContainer.innerHTML = "";
-
             snapshot.forEach((doc) => {
               const regalo = doc.data();
               const regaloID = doc.id;
-
               const itemDiv = document.createElement("div");
               itemDiv.className = "flex items-center justify-between border-b py-3 gap-4";
-
-              if (regalo.comprado) {
-                itemDiv.classList.add("regalo-comprado");
-              }
-
-              // HTML interno (Nombre, Link, Precio y Checkbox)
+              if (regalo.comprado) itemDiv.classList.add("regalo-comprado");
               itemDiv.innerHTML = `
-                      <div class="flex-grow">
-                        <a href="${regalo.link}" target="_blank" rel="noopener noreferrer" class="regalo-nombre font-bold text-lg hover:underline">${regalo.nombre}</a>
-                        <p class="text-sm text-gray-600">${regalo.precio}</p>
-                      </div>
-                      <div class="text-right flex-shrink-0">
-                        <input type="checkbox" class="regalo-checkbox" data-id="${regaloID}" ${regalo.comprado ? "checked disabled" : ""}>
-                        <p class="text-xs text-gray-500 mt-1">Marcar</p>
-                      </div>
-                    `;
-
+       <div class="flex-grow">
+         <a href="${regalo.link}" target="_blank" rel="noopener noreferrer" class="regalo-nombre font-bold text-lg hover:underline">${regalo.nombre}</a>
+         <p class="text-sm text-gray-600">${regalo.precio}</p>
+       </div>
+       <div class="text-right flex-shrink-0">
+         <input type="checkbox" class="regalo-checkbox" data-id="${regaloID}" ${regalo.comprado ? "checked disabled" : ""}>
+         <p class="text-xs text-gray-500 mt-1">Marcar</p>
+       </div>
+     `;
               listaContainer.appendChild(itemDiv);
             });
 
-            // 3. Añadir el "click" a todos los checkboxes
+            // Añadir click a checkboxes (si hay)
             document.querySelectorAll(".regalo-checkbox").forEach((checkbox) => {
-              checkbox.addEventListener("click", abrirModalConfirmacion); // Cambiado de 'marcarComoComprado'
+              checkbox.removeEventListener("click", abrirModalConfirmacion);
+              checkbox.addEventListener("click", abrirModalConfirmacion);
             });
           } catch (error) {
             console.error("Error al cargar regalos:", error);
@@ -934,24 +772,20 @@ function createParallaxAnimation() {
           }
         }
 
-        // Nueva función que se ejecuta al hacer clic en un checkbox
+        // Abrir modal confirmacion al hacer click en checkbox
         function abrirModalConfirmacion(e) {
           const checkbox = e.target;
-          const regaloID = checkbox.dataset.id;
-
-          // 1. Prevenir que el checkbox se marque solo
+          const regaloID = checkbox ? checkbox.dataset.id : null;
+          if (!regaloID) return;
           e.preventDefault();
-
-          // 2. Guardar el ID del regalo en el modal de confirmación
-          modalConfirmacion.dataset.regaloId = regaloID;
-
-          // 3. Resetear y mostrar el modal de confirmación
-          confirmacionPregunta.classList.remove("hidden");
-          confirmacionGracias.classList.add("hidden");
-          modalConfirmacion.classList.remove("hidden");
+          if (modalConfirmacion) modalConfirmacion.dataset.regaloId = regaloID;
+          if (confirmacionPregunta) confirmacionPregunta.classList.remove("hidden");
+          if (confirmacionGracias) confirmacionGracias.classList.add("hidden");
+          if (modalConfirmacion) modalConfirmacion.classList.remove("hidden");
         }
       });
     </script>
+
     <div id="modal-confirmacion" class="fixed inset-0 bg-black bg-opacity-80 z-[6000] flex justify-center items-center p-4 hidden text-black">
       <div class="bg-white rounded-lg shadow-xl w-full max-w-sm p-6 text-center">
         <div id="confirmacion-pregunta">
@@ -970,6 +804,7 @@ function createParallaxAnimation() {
         </div>
       </div>
     </div>
+
     <div id="admin-panel" class="fixed bottom-0 left-0 w-full bg-white p-4 shadow-lg z-[9999] hidden">
       <h3 class="font-playfair text-lg text-black">Panel de Admin (Temporal)</h3>
       <form id="form-regalo" class="flex flex-wrap gap-4 items-end">
