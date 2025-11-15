@@ -207,9 +207,11 @@
   </head>
   <body class="w-full font-fraunces font-normal text-[#333] leading-relaxed">
     <div id="audio-overlay" class="fixed inset-0 z-[9999] bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center p-8 text-center">
-      <h2 class="font-playfair text-3xl text-[#333] mb-4">María & Kevind</h2>
-      <p class="font-montserrat text-base text-[#333] mb-8">Toca "Iniciar" para habilitar la música de fondo.</p>
-      <button id="audio-start-button" class="bg-[#f96d41] text-white font-montserrat font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">Iniciar Invitación 🎵</button>
+      <h2 class="font-playfair text-6xl text-[#333] mb-8">¡Bienvenidos!</h2>
+      <h3 class="font-montserrat font-bold leading-[1.2] mb-7 text-3xl">Hace dos años nuestros caminos se cruzaron, y hoy estamos listos para decir si, para siempre.</h3>
+      <button id="audio-start-button" class="bg-[#f96d41] text-white font-montserrat font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
+        Acceder a la Invitación
+    </button>
     </div>
     <audio id="musica-fondo" src="boda.mp3"></audio>
     <div class="fixed-background fixed inset-0 z-[1] pointer-events-none">
@@ -243,14 +245,14 @@
       <section class="invitation-hero flex flex-col items-center justify-center h-[90vh] w-full relative py-[4vh] px-[5vw] gap-[2vh]">
         <div class="hero-content flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
           <header>
-            <p class="uppercase tracking-[0.1em] text-[clamp(1rem,3vw,2rem)]">¡Dimos el "sí"!</p>
+            <p class="uppercase tracking-[0.1em] text-[clamp(1.3rem,3vw,2rem)]">¡Nos Casamos!</p>
           </header>
           <div class="names">
             <h1 class="font-playfair font-normal text-center leading-[1.1] text-[clamp(5.5rem,9vw,7.2rem)]">María</h1>
             <span class="font-monsieur font-normal block text-center leading-none text-[clamp(3.5rem,6vw,4rem)] m-0">Y</span>
             <h1 class="font-playfair font-normal text-center leading-[1.1] text-[clamp(5.5rem,9vw,7.2rem)]">Kevind</h1>
           </div>
-          <p class="request text-center mt-[2vh] leading-[1.1] text-[clamp(1.3rem,4vw,1.6rem)]">
+          <p class="request text-center mt-[2vh] leading-[1.2] text-[clamp(1.5rem,4vw,1.6rem)]">
             Queremos que seas testigo<br />
             de nuestro matrimonio civil.
           </p>
@@ -393,7 +395,7 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         gsap.registerPlugin(ScrollTrigger);
-                const lenis = new Lenis({
+        const lenis = new Lenis({
           duration: 1.2,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           direction: "vertical",
@@ -449,6 +451,28 @@
           // 3. Elimina el listener para que solo se ejecute una vez
           audioStartButton.removeEventListener("click", iniciarMusicaConBoton);
         }
+
+        function controlarMusicaPorFoco() {
+          const audio = document.getElementById("musica-fondo");
+
+          if (document.hidden) {
+            // La pestaña NO está visible (ej: el usuario cambió de pestaña)
+            audio.pause();
+            console.log("Música pausada por cambio de pestaña.");
+          } else {
+            // La pestaña está visible (ej: el usuario regresó)
+            // Solo intentamos reproducir si la música ya se había iniciado al menos una vez.
+            if (audio.currentTime > 0 && !audio.paused) {
+              audio.play().catch((e) => {
+                // Capturamos el error si el navegador aún bloquea la reproducción automática
+                console.warn("No se pudo reanudar el audio automáticamente:", e);
+              });
+            }
+          }
+        }
+
+        // Añadir el listener al documento
+        document.addEventListener("visibilitychange", controlarMusicaPorFoco);
 
         // Bloqueamos el scroll y adjuntamos el listener al botón
         if (audioStartButton) {
@@ -506,7 +530,6 @@
         });
 
         // 2. Inicializar Lenis
-
 
         // --- PARTE 1: ANIMACIÓN DEL HILO (Sin cambios) ---
         const paths = gsap.utils.toArray(".path");
