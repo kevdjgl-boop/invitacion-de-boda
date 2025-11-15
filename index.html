@@ -76,7 +76,7 @@
 
       .spotlight-header {
         position: absolute;
-        
+
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -85,36 +85,31 @@
         width: auto; /* Ajustamos a "auto" para que se ajuste al texto */
         max-width: 80%; /* Aseguramos que no sea muy ancho */
         padding: 20px 40px; /* Espacio alrededor del texto */
-        
+
         /* Glassmorphism: Fondo semi-transparente y Blur */
         background-color: rgba(227, 202, 202, 0.25); /* Fondo oscuro suave */
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px); /* Para compatibilidad */
-        
-        
+
         /* Inverted Corners (Bordes invertidos) */
         border-radius: 25px; /* Radio estándar */
         --corner-size: 20px; /* Tamaño del corte */
-        
+
         /* La máscara que invierte las esquinas */
-        -webkit-mask: 
-          linear-gradient(#f1e8e8, #e7e4e4) padding-box,
-          radial-gradient(var(--corner-size) at 0 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
-          radial-gradient(var(--corner-size) at 100% 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
-          radial-gradient(var(--corner-size) at 0 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
+        -webkit-mask: linear-gradient(#f1e8e8, #e7e4e4) padding-box, radial-gradient(var(--corner-size) at 0 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
+          radial-gradient(var(--corner-size) at 100% 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)), radial-gradient(var(--corner-size) at 0 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
           radial-gradient(var(--corner-size) at 100% 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size));
-        
+
         -webkit-mask-composite: destination-out;
         mask-composite: exclude;
       }
-      
+
       /* Aseguramos que el H1 no tenga márgenes */
       .spotlight-header h1 {
         font-size: clamp(3.5rem, 6vw, 5rem);
         line-height: 1.1;
         margin: 0; /* Elimina el margen del h1 para que se ajuste bien al padding del padre */
       }
- 
 
       .spotlight-images {
         position: absolute;
@@ -181,6 +176,38 @@
         -ms-overflow-style: none; /* Para IE y Edge */
         scrollbar-width: none; /* Para Firefox */
       }
+#countdown {
+  /* Separación interna */
+  padding: 15px; 
+  
+  /* Aseguramos que el contenido del contador esté dentro del flujo */
+  position: relative; 
+  
+  /* Borde dorado de 2px que respeta la forma de la máscara */
+  box-shadow: 0 0 0 50px gold; 
+  
+  /* Borde redondeado */
+  border-radius: 15px; 
+  
+  /* Propiedad personalizada para el tamaño del corte de las esquinas */
+  --corner-size-counter: 15px; 
+  
+  /* El fondo es transparente para que se vea la imagen de la carta */
+ 
+
+  /* Aplicamos la máscara para las esquinas invertidas */
+  -webkit-mask: 
+    /* El cuerpo principal del contenedor */
+    linear-gradient(white, white) padding-box,
+    /* Esquinas radiales para el corte */
+    radial-gradient(var(--corner-size-counter) at 0 0, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter)),
+    radial-gradient(var(--corner-size-counter) at 100% 0, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter)),
+    radial-gradient(var(--corner-size-counter) at 0 100%, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter)),
+    radial-gradient(var(--corner-size-counter) at 100% 100%, transparent 0, transparent var(--corner-size-counter), white var(--corner-size-counter));
+
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}
     </style>
   </head>
   <body class="w-full font-fraunces font-normal text-[#333] leading-relaxed">
@@ -231,7 +258,6 @@
       </section>
 
       <section class="spotlight">
-        
         <div class="spotlight-header">
           <h1 class="font-playfair">Nuestros Momentos</h1>
         </div>
@@ -268,32 +294,32 @@
 
           <section class="final-details envelope-content absolute bottom-0 z-20 w-[99%] left-1/2 -translate-x-1/2 min-h-screen text-[#333] flex flex-col items-center gap-[2vh] py-20" style="background-image: url('carta.jpg'); background-size: cover; background-position: center">
             <div class="details-page-content px-[5vw] flex flex-col items-center justify-center gap-[2vh] w-full relative z-[10]">
-              <div id="countdown" class="text-center my-8 w-full">
-                <p class="tracking-[0.05em] text-lg mb-4">Faltan:</p>
-                <div class="flex justify-center gap-4 sm:gap-8 text-center">
-                  <div>
-                    <span id="days" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
-                    <span class="block text-xs uppercase tracking-widest mt-2">Días</span>
-                  </div>
-                  <div>
-                    <span id="hours" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
-                    <span class="block text-xs uppercase tracking-widest mt-2">Horas</span>
-                  </div>
-                  <div>
-                    <span id="minutes" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
-                    <span class="block text-xs uppercase tracking-widest mt-2">Minutos</span>
-                  </div>
-                  <div>
-                    <span id="seconds" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
-                    <span class="block text-xs uppercase tracking-widest mt-2">Segundos</span>
+              <section class="details text-center">
+                <p class="date font-normal tracking-[0.05em] mb-[1vh] text-[clamp(4.5rem,5vw,2.8rem)]">10ENE26</p>
+                <p class="time uppercase tracking-[0.05em] leading-[1.3] text-[clamp(3.2rem,3vw,1.3rem)]">3:00 pm</p>
+                <div id="countdown" class="text-center my-8 w-full bg-white p-4 rounded-lg">
+                  <p class="tracking-[0.05em] text-2xl mb-1">Faltan:</p>
+                  <div class="flex justify-center gap-4 sm:gap-8 text-center mt-0 p-2">
+                    <div>
+                      <span id="days" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
+                      <span class="block text-xs uppercase tracking-widest mt-2">Días</span>
+                    </div>
+                    <div>
+                      <span id="hours" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
+                      <span class="block text-xs uppercase tracking-widest mt-2">Horas</span>
+                    </div>
+                    <div>
+                      <span id="minutes" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
+                      <span class="block text-xs uppercase tracking-widest mt-2">Minutos</span>
+                    </div>
+                    <div>
+                      <span id="seconds" class="font-playfair text-4xl sm:text-6xl block w-16 sm:w-24">00</span>
+                      <span class="block text-xs uppercase tracking-widest mt-2">Segundos</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <section class="details text-center">
-                <p class="date font-normal tracking-[0.05em] mb-[1vh] text-[clamp(2.5rem,5vw,2.8rem)]">10ENE26</p>
-                <p class="time uppercase tracking-[0.05em] leading-[1.3] text-[clamp(1.2rem,3vw,1.3rem)]">tres de la tarde</p>
-                <p class="venue uppercase tracking-[0.05em] leading-[1.3] text-[clamp(1.2rem,3vw,1.3rem)] mt-[0.5vh]">
+                <p class="venue tracking-[0.05em] leading-[1.3] text-[clamp(1.rem,3vw,1.3rem)] mt-[0.5vh]">
                   Centro de recepciones PK2<br />
                   Av. los paredones 201<br />
                   primera cuadra Nazca
@@ -313,20 +339,23 @@
                 <div class="flex justify-center gap-8 mt-8">
                   <div class="flex flex-col items-center text-center">
                     <a href="https://wa.link/yuka9p">
-                    <button id="btn-rsvp-si"  class="bg-white text-gray-800 font-montserrat font-semibold uppercase tracking-wider px-10 py-3 rounded-full transition-all duration-300 transform hover:scale-105">Sí</button>
-                    <p class="font-montserrat text-xs tracking-widest mt-2 w-24">¡Ahí estaré! con Uds.</p>
+                      <button id="btn-rsvp-si" class="bg-white text-gray-800 font-montserrat font-semibold uppercase tracking-wider px-10 py-3 rounded-full transition-all duration-300 transform hover:scale-105">Sí</button>
+                      <p class="font-montserrat text-xs tracking-widest mt-2 w-24">¡Ahí estaré! con Uds.</p>
                     </a>
                   </div>
 
                   <div class="flex flex-col items-center text-center">
                     <a href="https://wa.link/6mpk62">
-                    <button id="btn-rsvp-no" class="bg-white text-gray-800 font-montserrat font-semibold uppercase tracking-wider px-10 py-3 rounded-full transition-all duration-300 transform hover:scale-105">No</button>
-                    <p class="font-montserrat text-xs tracking-widest mt-2 w-32">Lo siento, no podré</p>
-                  </a>
+                      <button id="btn-rsvp-no" class="bg-white text-gray-800 font-montserrat font-semibold uppercase tracking-wider px-10 py-3 rounded-full transition-all duration-300 transform hover:scale-105">No</button>
+                      <p class="font-montserrat text-xs tracking-widest mt-2 w-32">Lo siento, no podré</p>
+                    </a>
                   </div>
                 </div>
 
-                <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">¡Tu presencia es muy importante! <br /></p>
+                <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
+                  Nuestra mayor alegría es que nos acompañes en<br />
+                  este día. si deseas un detalle extra, tendremos
+                </p>
                 <p class="gifts normal-case tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">
                   Si además deseas tener un detalle,<br />
                   puedes ver
@@ -725,7 +754,7 @@
         envelopeTimeline.to(
           [envelopeBack, envelopeFront],
           {
-            y: "100vh", // Mueve el sobre 100% de la altura de la pantalla      
+            y: "100vh", // Mueve el sobre 100% de la altura de la pantalla
             ease: "power1.in", // Un 'ease' para que acelere al caer
           },
           "<65%"
