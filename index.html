@@ -69,10 +69,9 @@
         /* Fondo oscuro para la animación */
         color: #eee;
 
-        height: 100lvh; /* Ocupa el 100% de la pantalla */
+        height: 100vh; /* Ocupa el 100% de la pantalla */
         width: 100%;
         position: relative; /* Clave para el 'pin' */
-        
       }
 
       .spotlight-header {
@@ -204,7 +203,7 @@
           </p>
         </div>
       </section>
-      <div class="spotlight-pin-wrapper">
+       
         <section class="spotlight">
           <div class="spotlight-header">
             <h1 class="font-playfair">Nuestros Momentos</h1>
@@ -231,11 +230,11 @@
             <div class="spotlight-img">
               <img src="boda6.png" alt="Recuerdo 7" />
             </div>
-          </div>
+          
         </section>
       </div>
       <div class="envelope-wrapper relative h-[250vh] w-full">
-        <div class="envelope-sticky-container sticky top-0 w-full overflow-hidden" style="height: 100lvh;">
+        <div class="envelope-sticky-container sticky top-0 h-screen w-full overflow-hidden">
           <div class="envelope-back absolute bottom-0 z-10 w-full h-auto">
             <img src="sobre_atras.png" alt="Sobre" class="w-full h-auto" />
           </div>
@@ -336,7 +335,22 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // --- INICIO DE LA LÓGICA DE SCROLL ACTUALIZADA ---
+        // 1. Obtenemos la altura REAL de la ventana al cargar
+        const stableHeight = window.innerHeight;
 
+        // 2. Seleccionamos los dos contenedores que se "fijan"
+        const spotlightContainer = document.querySelector(".spotlight");
+        const envelopeContainer = document.querySelector(".envelope-sticky-container");
+
+        // 3. Forzamos su altura a un valor de píxeles FIJO
+        // Esto evita que cambien de tamaño cuando la barra de Chrome se oculta.
+        if (spotlightContainer) {
+          spotlightContainer.style.height = `${stableHeight}px`;
+        }
+        if (envelopeContainer) {
+          envelopeContainer.style.height = `${stableHeight}px`;
+        }
+        // --- FIN: ARREGLO PARA EL "SALTO" MÓVIL ---
         // 1. Registrar ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
         const firebaseConfig = {
@@ -347,40 +361,44 @@
           messagingSenderId: "766114888160",
           appId: "1:766114888160:web:235c92c8d6ecdb78cc5385",
         };
-        const audio = document.getElementById("musica-fondo");
-        audio.volume = 0.5; // Opcional: ajusta el volumen
 
-        // Una variable para asegurarnos de que solo se ejecute UNA vez
+        // ⬇️ REEMPLAZA TU CÓDIGO DE AUDIO POR ESTE ⬇️
+
+        // --- INICIO: LÓGICA DE MÚSICA (Versión Definitiva) ---
+        const audio = document.getElementById("musica-fondo");
+        audio.volume = 0.5;
         let audioIniciado = false;
 
+        // Esta es la función que se llamará UNA SOLA VEZ
         function iniciarMusica() {
-          // Si ya se inició, no hacer nada
           if (audioIniciado) {
-            return;
+            return; // Si ya se inició, no hacer nada
           }
 
-          // 1. Marcar como iniciado
-          audioIniciado = true;
+          audioIniciado = true; // 1. Marcar como iniciado
 
-          // 2. Intentar reproducir la música
+          // 2. Intentar reproducir
           audio.play().catch((e) => {
             console.warn("Error al iniciar audio (ignorar si es en modo 'silencio'):", e);
           });
 
-          // 3. Importante: Dejamos de escuchar
-          //    (para que no intente reproducir con cada scroll o clic)
+          // 3. Importante: Dejamos de escuchar a TODOS los eventos
           document.removeEventListener("touchstart", iniciarMusica);
           document.removeEventListener("mousedown", iniciarMusica);
           document.removeEventListener("keydown", iniciarMusica);
+
+          // 4. También le decimos a Lenis que deje de llamar a esta función
+          if (typeof lenis !== "undefined") {
+            // Si Lenis existe
+            lenis.off("scroll", iniciarMusica); // .off() es lo contrario de .on()
+          }
         }
 
-        // Escuchamos por la *primera* interacción del usuario
-        // 'touchstart' -> El primer toque en un móvil (incluso para scroll)
-        // 'mousedown'  -> El primer clic en un PC
-        // 'keydown'    -> La primera vez que se presiona una tecla (ej. 'espacio' para scroll)
+        // 1. Escuchamos los eventos de interacción directa (clic, toque, tecla)
         document.addEventListener("touchstart", iniciarMusica);
         document.addEventListener("mousedown", iniciarMusica);
         document.addEventListener("keydown", iniciarMusica);
+        // --- FIN: LÓGICA DE MÚSICA ---
 
         // 2. Inicializar Firebase y Firestore
         firebase.initializeApp(firebaseConfig);
@@ -442,7 +460,7 @@
         });
 
         lenis.on("scroll", ScrollTrigger.update); // <-- CONECTA LENIS CON SCROLLTRIGGER
-
+        lenis.on("scroll", iniciarMusica);
         gsap.ticker.add((time) => {
           lenis.raf(time * 1000);
         });
@@ -514,12 +532,13 @@
         const spotlightImages = document.querySelectorAll(".spotlight-img");
 
         ScrollTrigger.create({
-          trigger: ".spotlight-pin-wrapper",
+          trigger: ".spotlight",
           start: "top top",
           end: `+=${window.innerHeight * 6}px`,
           pin: true,
           pinSpacing: true,
           scrub: 1,
+    
 
           onUpdate: (self) => {
             const progress = self.progress;
@@ -719,14 +738,15 @@
 
         // 2. FUNCIÓN DE PARALLAX CON PINNING (¡¡CORREGIDA!!)
         // Esta es la animación que FIJA la primera sección
-        function createParallaxAnimation() {
+function createParallaxAnimation() {
           const parallaxTl = gsap.timeline({
             scrollTrigger: {
               trigger: ".invitation-hero",
-              start: "10%",
+              start: "top top",
               scrub: 1,
-              pin: true, // <-- ARREGLADO: Vuelve a tener "pin: true"
-              pinSpacing: false, // Dejamos el "empuje" por defecto
+              pin: true,
+              pinSpacing: false,
+              end: "+=100%",       
             },
           });
 
@@ -971,4 +991,3 @@
     </div>
   </body>
 </html>
-
