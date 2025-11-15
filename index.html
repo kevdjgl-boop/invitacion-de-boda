@@ -336,17 +336,7 @@
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // --- INICIO DE LA LÓGICA DE SCROLL ACTUALIZADA ---
-const stableHeight = window.innerHeight;
 
-    const spotlightContainer = document.querySelector(".spotlight");
-    const envelopeContainer = document.querySelector(".envelope-sticky-container");
-    
-    if (spotlightContainer) {
-      spotlightContainer.style.height = `${stableHeight}px`;
-    }
-    if (envelopeContainer) {
-      envelopeContainer.style.height = `${stableHeight}px`;
-    }
         // 1. Registrar ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
         const firebaseConfig = {
