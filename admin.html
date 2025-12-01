@@ -67,10 +67,16 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
         <div class="lg:col-span-1">
-          <div class="bg-white rounded-xl card-shadow p-6 sticky top-24">
-            <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="ph ph-plus-circle text-orange-500"></i> Agregar Nuevo Regalo</h2>
+          <div class="bg-white rounded-xl card-shadow p-6 sticky top-24 border border-gray-100">
+            <h2 class="text-lg font-bold mb-4 flex items-center gap-2" id="form-title">
+                <i class="ph ph-plus-circle text-orange-500"></i> Agregar Nuevo Regalo
+            </h2>
+            
             <form id="form-admin-regalo" class="space-y-4">
+              <input type="hidden" id="edit-id" value="">
+
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del Producto</label>
                 <input type="text" id="admin-nombre" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-sm" placeholder="Ej: Licuadora Oster" required />
@@ -86,10 +92,16 @@
                 <input type="url" id="admin-link" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-sm" placeholder="https://..." required />
               </div>
 
-              <button type="submit" id="btn-admin-guardar" class="w-full bg-gray-900 text-white font-bold py-3 px-4 rounded-lg hover:bg-orange-600 transition-colors duration-200 flex justify-center items-center gap-2">
-                <span>Guardar Regalo</span>
-                <i class="ph ph-paper-plane-right"></i>
-              </button>
+              <div class="flex gap-2">
+                  <button type="submit" id="btn-admin-guardar" class="flex-1 bg-gray-900 text-white font-bold py-3 px-4 rounded-lg hover:bg-orange-600 transition-colors duration-200 flex justify-center items-center gap-2">
+                    <span id="btn-text">Guardar Regalo</span>
+                    <i class="ph ph-paper-plane-right"></i>
+                  </button>
+                  
+                  <button type="button" id="btn-cancelar-edit" class="hidden px-4 py-3 bg-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-300 transition" onclick="cancelarEdicion()">
+                    <i class="ph-bold ph-x"></i>
+                  </button>
+              </div>
             </form>
           </div>
         </div>
@@ -108,7 +120,7 @@
     </div>
 
     <script>
-      // 1. Configuración de Firebase (LA MISMA QUE TIENES)
+      // 1. Configuración de Firebase
       const firebaseConfig = {
         apiKey: "AIzaSyDtwlvV5GiZs_k827RTw8KRq4KZw9UthVw",
         authDomain: "boda-e2a20.firebaseapp.com",
@@ -118,19 +130,26 @@
         appId: "1:766114888160:web:235c92c8d6ecdb78cc5385",
       };
 
-      // Inicializar
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
 
       // Elementos DOM
       const form = document.getElementById("form-admin-regalo");
       const listaContainer = document.getElementById("admin-lista-container");
+      
+      // Elementos para Edición
+      const editIdInput = document.getElementById("edit-id");
+      const btnGuardar = document.getElementById("btn-admin-guardar");
+      const btnGuardarTexto = document.getElementById("btn-text");
+      const btnCancelar = document.getElementById("btn-cancelar-edit");
+      const formTitle = document.getElementById("form-title");
+
+      // Stats
       const statTotal = document.getElementById("stat-total");
       const statBought = document.getElementById("stat-bought");
       const statAvailable = document.getElementById("stat-available");
 
-      // 2. ESCUCHA EN VIVO (Realtime)
-      // Usamos onSnapshot en lugar de get(). Esto actualiza la pantalla solo si hay cambios.
+      // 2. ESCUCHA EN VIVO
       db.collection("regalos")
         .orderBy("nombre")
         .onSnapshot(
@@ -146,7 +165,7 @@
 
       // 3. Renderizar la Lista
       function renderizarLista(snapshot) {
-        listaContainer.innerHTML = ""; // Limpiar
+        listaContainer.innerHTML = ""; 
 
         if (snapshot.empty) {
           listaContainer.innerHTML = '<div class="text-center py-10 bg-white rounded-xl">No hay regalos registrados aún.</div>';
@@ -157,7 +176,11 @@
           const regalo = doc.data();
           const id = doc.id;
 
-          // Definir estilos según estado
+          // Escapar comillas para evitar errores en el onclick
+          const safeNombre = regalo.nombre.replace(/'/g, "\\'");
+          const safePrecio = regalo.precio.replace(/'/g, "\\'");
+          const safeLink = regalo.link.replace(/'/g, "\\'");
+
           const statusColor = regalo.comprado ? "bg-green-100 border-green-500" : "bg-white border-transparent";
           const opacity = regalo.comprado ? "opacity-75" : "opacity-100";
           const icon = regalo.comprado ? '<i class="ph-fill ph-check-circle text-green-600 text-xl"></i>' : '<i class="ph ph-circle text-gray-300 text-xl"></i>';
@@ -173,23 +196,27 @@
                             <p class="text-lg font-bold text-gray-900 truncate">${regalo.nombre}</p>
                             <div class="flex items-center gap-2 text-sm text-gray-500">
                                 <span class="bg-gray-100 px-2 py-0.5 rounded text-gray-700 font-medium">${regalo.precio}</span>
-                                <a href="${regalo.link}" target="_blank" class="text-blue-500 hover:underline flex items-center gap-1">Ver Link <i class="ph-bold ph-arrow-up-right"></i></a>
+                                <a href="${regalo.link}" target="_blank" class="text-blue-500 hover:underline flex items-center gap-1">Link <i class="ph-bold ph-arrow-up-right"></i></a>
                             </div>
                             ${regalo.comprado ? '<span class="inline-block mt-1 text-xs font-bold text-green-700 bg-green-200 px-2 py-0.5 rounded-full">COMPRADO</span>' : '<span class="inline-block mt-1 text-xs font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded-full">DISPONIBLE</span>'}
                         </div>
                     </div>
 
-                    <div class="mt-4 sm:mt-0 flex items-center gap-3 w-full sm:w-auto justify-end border-t sm:border-t-0 pt-3 sm:pt-0 border-gray-100">
+                    <div class="mt-4 sm:mt-0 flex items-center gap-2 w-full sm:w-auto justify-end border-t sm:border-t-0 pt-3 sm:pt-0 border-gray-100">
                         
+                        <button onclick="prepararEdicion('${id}', '${safeNombre}', '${safePrecio}', '${safeLink}')" class="text-gray-400 hover:text-blue-600 p-2 rounded-lg hover:bg-blue-50 transition" title="Editar">
+                            <i class="ph-bold ph-pencil-simple text-xl"></i>
+                        </button>
+
                         ${
                           regalo.comprado
-                            ? `<button onclick="marcarDisponible('${id}')" class="text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-3 py-2 rounded-lg font-semibold transition" title="Volver a poner como disponible">
-                                Resetear
+                            ? `<button onclick="marcarDisponible('${id}')" class="text-gray-400 hover:text-yellow-600 p-2 rounded-lg hover:bg-yellow-50 transition" title="Resetear">
+                                <i class="ph-bold ph-arrow-counter-clockwise text-xl"></i>
                             </button>`
                             : ""
                         }
 
-                        <button onclick="eliminarRegalo('${id}', '${regalo.nombre}')" class="text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition" title="Eliminar permanentemente">
+                        <button onclick="eliminarRegalo('${id}', '${safeNombre}')" class="text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition" title="Eliminar">
                             <i class="ph-bold ph-trash text-xl"></i>
                         </button>
                     </div>
@@ -199,74 +226,111 @@
         });
       }
 
-      // 4. Actualizar Estadísticas
       function actualizarEstadisticas(snapshot) {
         const total = snapshot.size;
         let comprados = 0;
-
-        snapshot.forEach((doc) => {
-          if (doc.data().comprado) comprados++;
-        });
-
+        snapshot.forEach((doc) => { if (doc.data().comprado) comprados++; });
         statTotal.innerText = total;
         statBought.innerText = comprados;
         statAvailable.innerText = total - comprados;
       }
 
-      // 5. Función Agregar Regalo
+      // --- LOGICA DE FORMULARIO (Agregar y Editar) ---
+
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        const btn = document.getElementById("btn-admin-guardar");
-        const originalText = btn.innerHTML;
 
         const nombre = document.getElementById("admin-nombre").value;
         const precio = document.getElementById("admin-precio").value;
         const link = document.getElementById("admin-link").value;
+        const editId = editIdInput.value; // ¿Hay un ID guardado?
 
-        btn.disabled = true;
-        btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Guardando...';
+        btnGuardar.disabled = true;
+        const textoOriginal = btnGuardarTexto.innerText;
+        btnGuardarTexto.innerText = "Procesando...";
 
         try {
-          await db.collection("regalos").add({
-            nombre: nombre,
-            link: link,
-            precio: precio,
-            comprado: false,
-            creado: firebase.firestore.FieldValue.serverTimestamp(), // Ordenamiento opcional futuro
-          });
-          form.reset();
-          // No necesitamos alert, la lista se actualiza sola gracias a onSnapshot
+          if (editId) {
+            // MODO EDICIÓN: Actualizar documento existente
+            await db.collection("regalos").doc(editId).update({
+                nombre: nombre,
+                precio: precio,
+                link: link
+            });
+            // Al terminar, salimos del modo edición
+            cancelarEdicion();
+          } else {
+            // MODO AGREGAR: Crear nuevo
+            await db.collection("regalos").add({
+              nombre: nombre,
+              link: link,
+              precio: precio,
+              comprado: false,
+              creado: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+            form.reset();
+          }
         } catch (error) {
           console.error(error);
-          alert("Error al guardar: " + error.message);
+          alert("Error: " + error.message);
         } finally {
-          btn.disabled = false;
-          btn.innerHTML = originalText;
+          btnGuardar.disabled = false;
+          if(!editId) btnGuardarTexto.innerText = "Guardar Regalo"; // Solo restaurar texto si no estabamos editando (o si limpiamos form)
         }
       });
 
-      // 6. Funciones Globales (Eliminar y Resetear)
+      // --- FUNCIONES GLOBALES ---
+
+      // 1. Preparar Edición (Se llama al hacer click en el lápiz)
+      window.prepararEdicion = (id, nombre, precio, link) => {
+          // Llenar el formulario con los datos
+          document.getElementById("admin-nombre").value = nombre;
+          document.getElementById("admin-precio").value = precio;
+          document.getElementById("admin-link").value = link;
+          editIdInput.value = id;
+
+          // Cambiar interfaz a "Modo Edición"
+          formTitle.innerHTML = '<i class="ph ph-pencil-simple text-blue-500"></i> Editando Regalo';
+          btnGuardarTexto.innerText = "Actualizar Regalo";
+          btnGuardar.classList.remove("bg-gray-900", "hover:bg-orange-600");
+          btnGuardar.classList.add("bg-blue-600", "hover:bg-blue-700");
+          
+          // Mostrar botón cancelar
+          btnCancelar.classList.remove("hidden");
+
+          // Scroll suave hacia arriba para ver el formulario
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      // 2. Cancelar Edición
+      window.cancelarEdicion = () => {
+          form.reset();
+          editIdInput.value = "";
+          
+          // Restaurar interfaz a "Modo Agregar"
+          formTitle.innerHTML = '<i class="ph ph-plus-circle text-orange-500"></i> Agregar Nuevo Regalo';
+          btnGuardarTexto.innerText = "Guardar Regalo";
+          btnGuardar.classList.add("bg-gray-900", "hover:bg-orange-600");
+          btnGuardar.classList.remove("bg-blue-600", "hover:bg-blue-700");
+
+          // Ocultar botón cancelar
+          btnCancelar.classList.add("hidden");
+      };
 
       window.eliminarRegalo = async (id, nombre) => {
         if (confirm(`¿Estás seguro de ELIMINAR "${nombre}"?\nEsta acción no se puede deshacer.`)) {
-          try {
-            await db.collection("regalos").doc(id).delete();
-          } catch (error) {
-            alert("Error al eliminar: " + error.message);
-          }
+            // Si estamos editando EL MISMO regalo que queremos borrar, cancelamos la edición primero
+            if(editIdInput.value === id) cancelarEdicion();
+            
+            try { await db.collection("regalos").doc(id).delete(); } 
+            catch (error) { alert("Error: " + error.message); }
         }
       };
 
       window.marcarDisponible = async (id) => {
         if (confirm(`¿Quieres marcar este regalo como DISPONIBLE nuevamente?`)) {
-          try {
-            await db.collection("regalos").doc(id).update({
-              comprado: false,
-            });
-          } catch (error) {
-            alert("Error al actualizar: " + error.message);
-          }
+          try { await db.collection("regalos").doc(id).update({ comprado: false }); } 
+          catch (error) { alert("Error: " + error.message); }
         }
       };
     </script>
