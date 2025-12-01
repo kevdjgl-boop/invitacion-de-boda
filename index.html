@@ -34,182 +34,190 @@
     </script>
 
     <style>
-            /* === CSS de Lenis === */
-            html {
-              scroll-behavior: auto !important;
-            }
-            main {
-              overflow-x: clip;
-            }
-            html.lenis {
-              height: auto;
-            }
-            .lenis.lenis-smooth {
-              scroll-behavior: auto;
-            }
-            .lenis.lenis-smooth [data-lenis-prevent] {
-              overscroll-behavior: contain;
-            }
-            .lenis.lenis-stopped {
-              overflow: hidden;
-            }
-            /* === FIN CSS de Lenis === */
+                  /* === CSS de Lenis === */
+                  html {
+                    scroll-behavior: auto !important;
+                  }
+                  main {
+                    overflow-x: clip;
+                  }
+                  html.lenis {
+                    height: auto;
+                  }
+                  .lenis.lenis-smooth {
+                    scroll-behavior: auto;
+                  }
+                  .lenis.lenis-smooth [data-lenis-prevent] {
+                    overscroll-behavior: contain;
+                  }
+                  .lenis.lenis-stopped {
+                    overflow: hidden;
+                  }
+                  /* === FIN CSS de Lenis === */
 
-            /* Fondo estático */
-            body {
-              background-color: hsla(0, 100%, 91%, 1);
-              background-image: radial-gradient(at 99% 1%, hsla(28, 100%, 74%, 1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(340, 100%, 94%, 1) 0px, transparent 50%);
-              overflow-x: hidden;
-            }
+                  /* Fondo estático */
+                  body {
+                    background-color: hsla(0, 100%, 91%, 1);
+                    background-image: radial-gradient(at 99% 1%, hsla(28, 100%, 74%, 1) 0px, transparent 50%), radial-gradient(at 0% 0%, hsla(340, 100%, 94%, 1) 0px, transparent 50%);
+                    overflow-x: hidden;
+                  }
 
-            /* === FIN DE LA CORRECCIÓN CSS === */
-            /* === CSS PARA LA ANIMACIÓN SPOTLIGHT === */
+                  /* === FIN DE LA CORRECCIÓN CSS === */
+                  /* === CSS PARA LA ANIMACIÓN SPOTLIGHT === */
 
-            .spotlight {
-              /* Fondo oscuro para la animación */
-              color: #eee;
+                  .spotlight {
+                    /* Fondo oscuro para la animación */
+                    color: #eee;
 
-              height: 100vh; /* Ocupa el 100% de la pantalla */
-              width: 100%;
-              position: relative; /* Clave para el 'pin' */
+                    height: 100vh; /* Ocupa el 100% de la pantalla */
+                    width: 100%;
+                    position: relative; /* Clave para el 'pin' */
 
-            }
+                  }
 
-            .spotlight-header {
-              position: absolute;
+                  .spotlight-header {
+                    position: absolute;
 
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              z-index: 10;
-              text-align: center;
-              width: auto; /* Ajustamos a "auto" para que se ajuste al texto */
-              max-width: 80%; /* Aseguramos que no sea muy ancho */
-              padding: 20px 40px; /* Espacio alrededor del texto */
-              display: flex;        /* <-- NUEVO */
-              align-items: center;    /* <-- NUEVO: Centra verticalmente */
-              justify-content: center; /* <-- NUEVO: Asegura el centrado horizontal */
-              flex-direction: column;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 10;
+                    text-align: center;
+                    width: auto; /* Ajustamos a "auto" para que se ajuste al texto */
+                    max-width: 80%; /* Aseguramos que no sea muy ancho */
+                    padding: 20px 40px; /* Espacio alrededor del texto */
+                    display: flex;        /* <-- NUEVO */
+                    align-items: center;    /* <-- NUEVO: Centra verticalmente */
+                    justify-content: center; /* <-- NUEVO: Asegura el centrado horizontal */
+                    flex-direction: column;
 
-              /* Glassmorphism: Fondo semi-transparente y Blur */
-              background-color: rgba(227, 202, 202, 0.25); /* Fondo oscuro suave */
-              backdrop-filter: blur(8px);
-              -webkit-backdrop-filter: blur(8px); /* Para compatibilidad */
+                    /* Glassmorphism: Fondo semi-transparente y Blur */
+                    background-color: rgba(227, 202, 202, 0.25); /* Fondo oscuro suave */
+                    backdrop-filter: blur(8px);
+                    -webkit-backdrop-filter: blur(8px); /* Para compatibilidad */
 
-              /* Inverted Corners (Bordes invertidos) */
-              border-radius: 25px; /* Radio estándar */
-              --corner-size: 20px; /* Tamaño del corte */
+                    /* Inverted Corners (Bordes invertidos) */
+                    border-radius: 25px; /* Radio estándar */
+                    --corner-size: 20px; /* Tamaño del corte */
 
-              /* La máscara que invierte las esquinas */
-              -webkit-mask: linear-gradient(#f1e8e8, #e7e4e4) padding-box, radial-gradient(var(--corner-size) at 0 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
-                radial-gradient(var(--corner-size) at 100% 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)), radial-gradient(var(--corner-size) at 0 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
-                radial-gradient(var(--corner-size) at 100% 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size));
+                    /* La máscara que invierte las esquinas */
+                    -webkit-mask: linear-gradient(#f1e8e8, #e7e4e4) padding-box, radial-gradient(var(--corner-size) at 0 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
+                      radial-gradient(var(--corner-size) at 100% 0, transparent 0, transparent var(--corner-size), #000 var(--corner-size)), radial-gradient(var(--corner-size) at 0 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size)),
+                      radial-gradient(var(--corner-size) at 100% 100%, transparent 0, transparent var(--corner-size), #000 var(--corner-size));
 
-              -webkit-mask-composite: destination-out;
-              mask-composite: exclude;
-            }
+                    -webkit-mask-composite: destination-out;
+                    mask-composite: exclude;
+                  }
 
-            /* Aseguramos que el H1 no tenga márgenes */
-            .spotlight-header h1 {
-              font-size: clamp(3.5rem, 6vw, 5rem);
-              line-height: 1.1;
-              margin: 0; /* Elimina el margen del h1 para que se ajuste bien al padding del padre */
-            }
+                  /* Aseguramos que el H1 no tenga márgenes */
+                  .spotlight-header h1 {
+                    font-size: clamp(3.5rem, 6vw, 5rem);
+                    line-height: 1.1;
+                    margin: 0; /* Elimina el margen del h1 para que se ajuste bien al padding del padre */
+                  }
 
-            .spotlight-images {
-              position: absolute;
-              inset: 0;
-              width: 100%;
-              height: 100%;
-            }
+                  .spotlight-images {
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                  }
 
-            .spotlight-img {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              width: 65%;
-              min-width: 180px;
-              will-change: transform;
-              transform: translate(-50%, 200%);
-            }
-      @media screen and (max-width: 650px) {
-         .spotlight-img {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              width: 50%;
-              min-width: 180px;
-              will-change: transform;
-              transform: translate(-100%, 200%);
+                  .spotlight-img {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: 65%;
+                    min-width: 180px;
+                    will-change: transform;
+                    transform: translate(-50%, 200%);
+                  }
+            @media screen and (max-width: 650px) {
+               .spotlight-img {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: 50%;
+                    min-width: 180px;
+                    will-change: transform;
+                    transform: translate(-100%, 200%);
 
-            .spotlight-img img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-              border-radius: 8px;
-            }
-            .regalo-checkbox {
-              appearance: none;
-              width: 20px;
-              height: 20px;
-              border: 2px solid #ccc;
-              border-radius: 4px;
-              cursor: pointer;
-              transition: all 0.2s ease;
-              flex-shrink: 0; /* Evita que el checkbox se encoja */
-            }
-            .regalo-checkbox:hover {
-              border-color: #f96d41; /* Color de tu web */
-            }
+                  .spotlight-img img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 8px;
+                  }
+                  .regalo-checkbox {
+                    appearance: none;
+                    width: 20px;
+                    height: 20px;
+                    border: 2px solid #ccc;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    flex-shrink: 0; /* Evita que el checkbox se encoja */
+                  }
+                  .regalo-checkbox:hover {
+                    border-color: #f96d41; /* Color de tu web */
+                  }
 
-            /* Estilo cuando está MARCADO */
-            .regalo-checkbox:checked {
-              background-color: #f96d41;
-              border-color: #f96d41;
-              background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
-            }
+                  /* Estilo cuando está MARCADO */
+                  .regalo-checkbox:checked {
+                    background-color: #f96d41;
+                    border-color: #f96d41;
+                    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+                  }
 
-            /* Estilo cuando está MARCADO Y DESHABILITADO (Bloqueado) */
-            .regalo-checkbox:checked:disabled {
-              background-color: #ccc;
-              border-color: #ccc;
-              cursor: not-allowed;
-            }
+                  /* Estilo cuando está MARCADO Y DESHABILITADO (Bloqueado) */
+                  .regalo-checkbox:checked:disabled {
+                    background-color: #ccc;
+                    border-color: #ccc;
+                    cursor: not-allowed;
+                  }
 
-            /* Estilo para el texto del regalo cuando está comprado */
-            .regalo-comprado .regalo-nombre {
-              text-decoration: line-through;
-              color: #999;
-            }
-            /* === CSS PARA OCULTAR EL SCROLLBAR DEL MODAL === */
+                  /* Estilo para el texto del regalo cuando está comprado */
+                  .regalo-comprado .regalo-nombre {
+                    text-decoration: line-through;
+                    color: #999;
+                  }
+                  /* === CSS PARA OCULTAR EL SCROLLBAR DEL MODAL === */
 
-            #modal-contenido::-webkit-scrollbar {
-              display: none; /* Para Chrome, Safari y Opera */
-            }
-            #modal-contenido {
-              -ms-overflow-style: none; /* Para IE y Edge */
-              scrollbar-width: none; /* Para Firefox */
-            }
+                  #modal-contenido::-webkit-scrollbar {
+                    display: none; /* Para Chrome, Safari y Opera */
+                  }
+                  #modal-contenido {
+                    -ms-overflow-style: none; /* Para IE y Edge */
+                    scrollbar-width: none; /* Para Firefox */
+                  }
 
 
-            .is-locked {
+                  .is-locked {
 
-              height: 100vh !important;
-              /* Esta regla previene el "pull-to-refresh" en iOS y Android */
-              overscroll-behavior: contain;
-            }
-            html.is-locked,
-            body.is-locked {
-              overflow: hidden !important;
-              height: 100vh !important;
-              overscroll-behavior: contain;
-            }
-            #audio-overlay {
-              /* Anula todos los gestos táctiles que puedan iniciar el scroll */
-              touch-action: none;
-              /* Evita que se pueda seleccionar el texto mientras la capa esté activa */
-              user-select: none;
-            }
+                    height: 100vh !important;
+                    /* Esta regla previene el "pull-to-refresh" en iOS y Android */
+                    overscroll-behavior: contain;
+                  }
+                  html.is-locked,
+                  body.is-locked {
+                    overflow: hidden !important;
+                    height: 100vh !important;
+                    overscroll-behavior: contain;
+                  }
+                  #audio-overlay {
+                    /* Anula todos los gestos táctiles que puedan iniciar el scroll */
+                    touch-action: none;
+                    /* Evita que se pueda seleccionar el texto mientras la capa esté activa */
+                    user-select: none;
+                  }
+                  /* Utilidad para ocultar scrollbar pero permitir scroll */
+      .scrollbar-hide {
+          -ms-overflow-style: none;  /* IE y Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+          display: none; /* Chrome, Safari y Opera */
+      }
     </style>
   </head>
   <body class="w-full font-fraunces font-normal text-[#333] leading-relaxed">
@@ -389,23 +397,38 @@
                 <p class="gifts normal-case font-bold tracking-normal mt-[1.5vh] leading-[1.5] text-[clamp(0.9rem,3vw,1.1rem)]">Si además deseas tener un detalle puedes ver</p>
                 <button id="btn-abrir-regalos" class="bg-amber-100 text-gray-800 font-bold uppercase tracking-widest px-8 py-3 rounded transition-transform transform hover:scale-105 mt-5">Nuestra Lista de Regalos</button>
 
-                <div id="modal-regalos" class="fixed inset-0 bg-black bg-opacity-75 z-[5000] flex justify-center items-center p-4 hidden text-black">
-                  <div id="modal-contenido" data-lenis-prevent class="bg-white font-montserrat text-gray-800 p-6 rounded-lg shadow-xl w-full max-w-lg max-h-[80vh] flex flex-col">
-                    <div class="border-b pb-3 mb-4 flex-shrink-0">
-                      <div class="flex justify-between items-center">
-                        <h2 class="font-playfair text-2xl">Lista de Regalos</h2>
-                        <button id="btn-cerrar-regalos" class="text-3xl font-light">&times;</button>
-                      </div>
-                      <div class="text-xs text-gray-600 mt-2 text-left">
-                        <p class="font-bold uppercase">Dirección de envío:</p>
-                        <p>Av. Federico Brandzen SN (Casa 3 pisos, portón azul)</p>
-                        <p>Ref: San Francisco de Cayran Etapa 2, Mz D1 Lt 22</p>
-                        <p>San Martin de Porres, Lima - Lima - Telf: 977993344</p>
-                      </div>
-                    </div>
-                    <div id="lista-regalos-items" class="text-left overflow-y-auto"><p>Cargando lista...</p></div>
-                  </div>
-                </div>
+                <div id="modal-regalos" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[5000] flex justify-center items-end sm:items-center p-0 sm:p-4 hidden transition-opacity duration-300">
+    
+  <div id="modal-contenido" data-lenis-prevent class="bg-[#faf7f5] w-full max-w-lg sm:rounded-xl rounded-t-xl shadow-2xl flex flex-col max-h-[85vh] overflow-hidden relative animate-slide-up sm:animate-fade-in">
+    
+    <div class="px-5 py-4 border-b border-gray-200 bg-white z-20 relative">
+      <div class="flex justify-between items-start mb-2">
+        <h2 class="font-playfair font-bold text-2xl text-gray-900 leading-none">Lista de Deseos</h2>
+        <button id="btn-cerrar-regalos" class="text-gray-400 hover:text-gray-900 transition-colors p-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div class="text-sm font-montserrat text-gray-600 leading-snug pl-1 border-l-2 border-[#f96d41]">
+        <p><span class="font-bold text-gray-900">Envío:</span> Av. Federico Brandzen SN (Casa 3 pisos)</p>
+        <p class="text-xs text-gray-500 mt-0.5">Ref: San Francisco de Cayran Etapa 2</p>
+      </div>
+    </div>
+
+    <div id="lista-regalos-items" class="flex-1 overflow-y-auto p-3 pb-8 space-y-2 bg-[#f3f4f6] scroll-smooth scrollbar-hide">
+      <div class="flex justify-center py-8 text-gray-400">
+        <svg class="animate-spin h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 w-full h-6 bg-gradient-to-t from-[#f3f4f6] to-transparent pointer-events-none z-10"></div>
+  </div>
+</div>
               </footer>
             </div>
           </section>
@@ -477,31 +500,30 @@
         const audioStartButton = document.getElementById("audio-start-button");
 
         // === INICIA LA NUEVA FUNCIÓN DEL TOUR ===
-      
-// === INICIA LA NUEVA FUNCIÓN DEL TOUR (CORREGIDA) ===
-      
-      function iniciarTourAutomatico() {
-        // 1. Inicia el motor de Lenis
-        lenis.start();
 
-        // 2. Le decimos a Lenis que baje HASTA EL FINAL ABSOLUTO
-        lenis.scrollTo(lenis.dimensions.scrollHeight, {
-          
-          // 3. ¡SOLUCIÓN 2: AUMENTAMOS DURACIÓN!
-          // Tu página es muy larga con los 'pin', 8s era un cohete.
-          // 25 segundos da un tour suave que permite ver todo.
-          duration: 25, 
-          
-          // 4. ¡SOLUCIÓN 1: SUAVIZAMOS EL INICIO!
-          // Esta es una curva 'easeInOutCubic'.
-          // Empieza lento, acelera y termina lento.
-         easing: (t) => -(Math.cos(Math.PI * t) - 1) / 2
-        });
-      }
-      
-      // === TERMINA LA NUEVA FUNCIÓN DEL TOUR ===
-      
-      // === TERMINA LA NUEVA FUNCIÓN DEL TOUR ===
+        // === INICIA LA NUEVA FUNCIÓN DEL TOUR (CORREGIDA) ===
+
+        function iniciarTourAutomatico() {
+          // 1. Inicia el motor de Lenis
+          lenis.start();
+
+          // 2. Le decimos a Lenis que baje HASTA EL FINAL ABSOLUTO
+          lenis.scrollTo(lenis.dimensions.scrollHeight, {
+            // 3. ¡SOLUCIÓN 2: AUMENTAMOS DURACIÓN!
+            // Tu página es muy larga con los 'pin', 8s era un cohete.
+            // 25 segundos da un tour suave que permite ver todo.
+            duration: 25,
+
+            // 4. ¡SOLUCIÓN 1: SUAVIZAMOS EL INICIO!
+            // Esta es una curva 'easeInOutCubic'.
+            // Empieza lento, acelera y termina lento.
+            easing: (t) => -(Math.cos(Math.PI * t) - 1) / 2,
+          });
+        }
+
+        // === TERMINA LA NUEVA FUNCIÓN DEL TOUR ===
+
+        // === TERMINA LA NUEVA FUNCIÓN DEL TOUR ===
 
         function iniciarMusicaConBoton() {
           const audio = document.getElementById("musica-fondo");
@@ -1015,61 +1037,117 @@
         // --- Lógica de Carga de Regalos ---
 
         // Función principal para cargar y mostrar los regalos
-        async function cargarListaRegalos() {
-          listaContainer.innerHTML = "<p>Actualizando lista...</p>";
+        // Reemplaza tu función cargarListaRegalos() actual por esta:
 
-          try {
-            const snapshot = await db.collection("regalos").get();
-            listaContainer.innerHTML = "";
+        // --- FUNCIÓN 1: CARGAR Y RENDERIZAR LA LISTA ---
+async function cargarListaRegalos() {
+  const listaContainer = document.getElementById("lista-regalos-items");
+  
+  // Limpiamos contenido previo
+  listaContainer.innerHTML = `
+    <div class="flex justify-center py-10">
+       <svg class="animate-spin h-6 w-6 text-orange-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+    </div>`;
 
-            snapshot.forEach((doc) => {
-              const regalo = doc.data();
-              const regaloID = doc.id;
+  try {
+    const snapshot = await db.collection("regalos").get();
+    let regalos = [];
+    snapshot.forEach((doc) => regalos.push({ id: doc.id, ...doc.data() }));
 
-              const itemDiv = document.createElement("div");
-              itemDiv.className = "flex items-center justify-between border-b py-3 gap-4";
+    // Ordenar
+    regalos.sort((a, b) => a.comprado - b.comprado);
 
-              if (regalo.comprado) {
-                itemDiv.classList.add("regalo-comprado");
-              }
+    listaContainer.innerHTML = ""; // Limpiar spinner
 
-              // HTML interno (Nombre, Link, Precio y Checkbox)
-              itemDiv.innerHTML = `
-                      <div class="flex-grow">
-                        <a href="${regalo.link}" target="_blank" rel="noopener noreferrer" class="regalo-nombre font-bold text-lg hover:underline">${regalo.nombre}</a>
-                        <p class="text-sm text-gray-600">${regalo.precio}</p>
-                      </div>
-                      <div class="text-right flex-shrink-0">
-                        <input type="checkbox" class="regalo-checkbox" data-id="${regaloID}" ${regalo.comprado ? "checked disabled" : ""}>
-                        <p class="text-xs text-gray-500 mt-1">Marcar</p>
-                      </div>
-                    `;
+    if (regalos.length === 0) {
+        listaContainer.innerHTML = `<div class="text-center py-8 text-gray-500 text-sm">No hay regalos disponibles.</div>`;
+        return;
+    }
 
-              listaContainer.appendChild(itemDiv);
-            });
+    regalos.forEach((regalo) => {
+      const isComprado = regalo.comprado;
 
-            // 3. Añadir el "click" a todos los checkboxes
-            document.querySelectorAll(".regalo-checkbox").forEach((checkbox) => {
-              checkbox.addEventListener("click", abrirModalConfirmacion); // Cambiado de 'marcarComoComprado'
-            });
-          } catch (error) {
-            console.error("Error al cargar regalos:", error);
-            listaContainer.innerHTML = "<p>Error al cargar la lista. Intenta de nuevo.</p>";
-          }
+      // Estilos Compactos
+      const cardClass = isComprado 
+        ? "bg-gray-100 border-gray-200 opacity-60" 
+        : "bg-white border-transparent shadow-sm hover:shadow-md hover:border-orange-200";
+
+      const btnClass = isComprado
+        ? "bg-gray-300 text-white cursor-not-allowed"
+        : "bg-gray-900 text-white hover:bg-[#f96d41] shadow-sm regalo-btn-accion";
+
+      const icon = isComprado ? "🔒" : "🎁";
+      const priceClass = isComprado ? "text-gray-400 line-through text-xs" : "text-[#f96d41] font-bold text-sm";
+      const btnText = isComprado ? "Ocupado" : "Regalar";
+      const btnDisabled = isComprado ? "disabled" : "";
+
+      const itemDiv = document.createElement("div");
+      
+      // FLEX ROW: Todo en una sola línea horizontal
+      itemDiv.className = `flex items-center justify-between p-3 rounded-lg border transition-all duration-200 gap-3 ${cardClass}`;
+      
+      itemDiv.innerHTML = `
+        <div class="flex items-center gap-3 overflow-hidden flex-1">
+            <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-lg flex-shrink-0 border border-gray-100">
+                ${icon}
+            </div>
+            <div class="min-w-0 flex flex-col">
+                <h3 class="font-playfair font-bold text-gray-800 text-base leading-tight truncate pr-2">${regalo.nombre}</h3>
+                <div class="flex items-center gap-2">
+                    <span class="font-montserrat ${priceClass}">${regalo.precio}</span>
+                    <a href="${regalo.link}" target="_blank" class="text-[10px] text-gray-400 underline hover:text-orange-500 truncate max-w-[80px]">Ver link</a>
+                </div>
+            </div>
+        </div>
+        
+        <button class="${btnClass} font-bold text-[10px] uppercase tracking-wide px-4 py-2 rounded-full transition-colors flex-shrink-0" data-id="${regalo.id}" ${btnDisabled}>
+            ${btnText}
+        </button>
+      `;
+
+      listaContainer.appendChild(itemDiv);
+    });
+
+    // Event listeners
+    document.querySelectorAll(".regalo-btn-accion").forEach((btn) => {
+      btn.addEventListener("click", abrirModalConfirmacion);
+    });
+
+  } catch (error) {
+    console.error(error);
+    listaContainer.innerHTML = "<p class='text-center text-xs text-red-400 py-4'>Error de conexión</p>";
+  }
+}
+
+        // --- FUNCIÓN 2: ABRIR MODAL DE CONFIRMACIÓN ---
+        function abrirModalConfirmacion(e) {
+          e.preventDefault();
+
+          // Usamos closest('button') para asegurar que capturamos el botón
+          // aunque el usuario haga click en el texto o borde interno
+          const btn = e.target.closest("button");
+
+          if (!btn) return; // Seguridad extra
+
+          const regaloID = btn.dataset.id;
+          modalConfirmacion.dataset.regaloId = regaloID;
+
+          // Mostrar el modal
+          confirmacionPregunta.classList.remove("hidden");
+          confirmacionGracias.classList.add("hidden");
+          modalConfirmacion.classList.remove("hidden");
         }
 
         // Nueva función que se ejecuta al hacer clic en un checkbox
         function abrirModalConfirmacion(e) {
-          const checkbox = e.target;
-          const regaloID = checkbox.dataset.id;
+          // Aseguramos que tomamos el botón, incluso si clickean en un span interno
+          const btn = e.target.closest("button");
+          const regaloID = btn.dataset.id;
 
-          // 1. Prevenir que el checkbox se marque solo
           e.preventDefault();
 
-          // 2. Guardar el ID del regalo en el modal de confirmación
           modalConfirmacion.dataset.regaloId = regaloID;
 
-          // 3. Resetear y mostrar el modal de confirmación
           confirmacionPregunta.classList.remove("hidden");
           confirmacionGracias.classList.add("hidden");
           modalConfirmacion.classList.remove("hidden");
@@ -1115,8 +1193,3 @@
     </div>
   </body>
 </html>
-
-
-
-
-
