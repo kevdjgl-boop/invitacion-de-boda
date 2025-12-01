@@ -84,7 +84,12 @@
 
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Precio (Aprox)</label>
-                <input type="text" id="admin-precio" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-sm" placeholder="Ej: S/. 150.00" required />
+                <div class="relative mt-1 rounded-md shadow-sm">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <span class="text-gray-500 sm:text-sm font-bold">S/</span>
+                  </div>
+                  <input type="number" step="0.01" id="admin-precio" class="block w-full rounded-lg border-gray-300 pl-10 p-2.5 focus:border-orange-500 focus:ring-orange-500 sm:text-sm border" placeholder="150.00" required />
+                </div>
               </div>
 
               <div>
@@ -120,7 +125,6 @@
     </div>
 
     <script>
-      // 1. Configuración de Firebase
       const firebaseConfig = {
         apiKey: "AIzaSyDtwlvV5GiZs_k827RTw8KRq4KZw9UthVw",
         authDomain: "boda-e2a20.firebaseapp.com",
@@ -133,23 +137,19 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
 
-      // Elementos DOM
       const form = document.getElementById("form-admin-regalo");
       const listaContainer = document.getElementById("admin-lista-container");
       
-      // Elementos para Edición
       const editIdInput = document.getElementById("edit-id");
       const btnGuardar = document.getElementById("btn-admin-guardar");
       const btnGuardarTexto = document.getElementById("btn-text");
       const btnCancelar = document.getElementById("btn-cancelar-edit");
       const formTitle = document.getElementById("form-title");
 
-      // Stats
       const statTotal = document.getElementById("stat-total");
       const statBought = document.getElementById("stat-bought");
       const statAvailable = document.getElementById("stat-available");
 
-      // 2. ESCUCHA EN VIVO
       db.collection("regalos")
         .orderBy("nombre")
         .onSnapshot(
@@ -163,7 +163,6 @@
           }
         );
 
-      // 3. Renderizar la Lista
       function renderizarLista(snapshot) {
         listaContainer.innerHTML = ""; 
 
@@ -176,7 +175,6 @@
           const regalo = doc.data();
           const id = doc.id;
 
-          // Escapar comillas para evitar errores en el onclick
           const safeNombre = regalo.nombre.replace(/'/g, "\\'");
           const safePrecio = regalo.precio.replace(/'/g, "\\'");
           const safeLink = regalo.link.replace(/'/g, "\\'");
@@ -203,11 +201,9 @@
                     </div>
 
                     <div class="mt-4 sm:mt-0 flex items-center gap-2 w-full sm:w-auto justify-end border-t sm:border-t-0 pt-3 sm:pt-0 border-gray-100">
-                        
                         <button onclick="prepararEdicion('${id}', '${safeNombre}', '${safePrecio}', '${safeLink}')" class="text-gray-400 hover:text-blue-600 p-2 rounded-lg hover:bg-blue-50 transition" title="Editar">
                             <i class="ph-bold ph-pencil-simple text-xl"></i>
                         </button>
-
                         ${
                           regalo.comprado
                             ? `<button onclick="marcarDisponible('${id}')" class="text-gray-400 hover:text-yellow-600 p-2 rounded-lg hover:bg-yellow-50 transition" title="Resetear">
@@ -215,7 +211,6 @@
                             </button>`
                             : ""
                         }
-
                         <button onclick="eliminarRegalo('${id}', '${safeNombre}')" class="text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition" title="Eliminar">
                             <i class="ph-bold ph-trash text-xl"></i>
                         </button>
@@ -235,15 +230,23 @@
         statAvailable.innerText = total - comprados;
       }
 
-      // --- LOGICA DE FORMULARIO (Agregar y Editar) ---
-
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const nombre = document.getElementById("admin-nombre").value;
-        const precio = document.getElementById("admin-precio").value;
         const link = document.getElementById("admin-link").value;
-        const editId = editIdInput.value; // ¿Hay un ID guardado?
+        const editId = editIdInput.value;
+        
+        // 1. OBTENER PRECIO Y FORMATEAR AUTOMÁTICAMENTE
+        let precioInput = document.getElementById("admin-precio").value;
+        
+        // Si el usuario escribe "150", lo guardamos como "S/. 150"
+        let precioFinal = "";
+        if (precioInput.includes("S/.")) {
+            precioFinal = precioInput; // Ya tiene el símbolo
+        } else {
+            precioFinal = "S/. " + precioInput; // Agregamos el símbolo
+        }
 
         btnGuardar.disabled = true;
         const textoOriginal = btnGuardarTexto.innerText;
@@ -251,20 +254,17 @@
 
         try {
           if (editId) {
-            // MODO EDICIÓN: Actualizar documento existente
             await db.collection("regalos").doc(editId).update({
                 nombre: nombre,
-                precio: precio,
+                precio: precioFinal, // Guardamos con S/.
                 link: link
             });
-            // Al terminar, salimos del modo edición
             cancelarEdicion();
           } else {
-            // MODO AGREGAR: Crear nuevo
             await db.collection("regalos").add({
               nombre: nombre,
               link: link,
-              precio: precio,
+              precio: precioFinal, // Guardamos con S/.
               comprado: false,
               creado: firebase.firestore.FieldValue.serverTimestamp(),
             });
@@ -275,53 +275,46 @@
           alert("Error: " + error.message);
         } finally {
           btnGuardar.disabled = false;
-          if(!editId) btnGuardarTexto.innerText = "Guardar Regalo"; // Solo restaurar texto si no estabamos editando (o si limpiamos form)
+          if(!editId) btnGuardarTexto.innerText = "Guardar Regalo"; 
         }
       });
 
       // --- FUNCIONES GLOBALES ---
 
-      // 1. Preparar Edición (Se llama al hacer click en el lápiz)
       window.prepararEdicion = (id, nombre, precio, link) => {
-          // Llenar el formulario con los datos
           document.getElementById("admin-nombre").value = nombre;
-          document.getElementById("admin-precio").value = precio;
+          
+          // 2. LIMPIAR PRECIO AL EDITAR
+          // Quitamos el "S/. " para que el input type="number" lo acepte
+          // y el usuario solo vea el número para editar.
+          let precioLimpio = precio.replace("S/. ", "").replace("S/.", "").trim();
+          document.getElementById("admin-precio").value = precioLimpio;
+          
           document.getElementById("admin-link").value = link;
           editIdInput.value = id;
 
-          // Cambiar interfaz a "Modo Edición"
           formTitle.innerHTML = '<i class="ph ph-pencil-simple text-blue-500"></i> Editando Regalo';
           btnGuardarTexto.innerText = "Actualizar Regalo";
           btnGuardar.classList.remove("bg-gray-900", "hover:bg-orange-600");
           btnGuardar.classList.add("bg-blue-600", "hover:bg-blue-700");
           
-          // Mostrar botón cancelar
           btnCancelar.classList.remove("hidden");
-
-          // Scroll suave hacia arriba para ver el formulario
           window.scrollTo({ top: 0, behavior: 'smooth' });
       };
 
-      // 2. Cancelar Edición
       window.cancelarEdicion = () => {
           form.reset();
           editIdInput.value = "";
-          
-          // Restaurar interfaz a "Modo Agregar"
           formTitle.innerHTML = '<i class="ph ph-plus-circle text-orange-500"></i> Agregar Nuevo Regalo';
           btnGuardarTexto.innerText = "Guardar Regalo";
           btnGuardar.classList.add("bg-gray-900", "hover:bg-orange-600");
           btnGuardar.classList.remove("bg-blue-600", "hover:bg-blue-700");
-
-          // Ocultar botón cancelar
           btnCancelar.classList.add("hidden");
       };
 
       window.eliminarRegalo = async (id, nombre) => {
         if (confirm(`¿Estás seguro de ELIMINAR "${nombre}"?\nEsta acción no se puede deshacer.`)) {
-            // Si estamos editando EL MISMO regalo que queremos borrar, cancelamos la edición primero
             if(editIdInput.value === id) cancelarEdicion();
-            
             try { await db.collection("regalos").doc(id).delete(); } 
             catch (error) { alert("Error: " + error.message); }
         }
