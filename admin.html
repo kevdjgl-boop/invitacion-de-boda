@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel Admin | Boda M&K</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #f3f4f6;
+      }
+      .card-shadow {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+    </style>
+  </head>
+  <body class="text-gray-800">
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center gap-2">
+            <i class="ph-fill ph-rings-wedding text-orange-500 text-3xl"></i>
+            <h1 class="text-xl font-bold tracking-tight text-gray-900">Admin Boda M&K</h1>
+          </div>
+          <div class="flex items-center">
+            <a href="index.html" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1"> Ver Invitación <i class="ph ph-arrow-square-out"></i> </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white rounded-xl p-6 card-shadow border-l-4 border-blue-500">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Total Regalos</p>
+              <p class="text-3xl font-bold text-gray-900" id="stat-total">0</p>
+            </div>
+            <div class="p-3 bg-blue-50 rounded-full text-blue-600"><i class="ph ph-gift text-2xl"></i></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-shadow border-l-4 border-green-500">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Comprados</p>
+              <p class="text-3xl font-bold text-green-600" id="stat-bought">0</p>
+            </div>
+            <div class="p-3 bg-green-50 rounded-full text-green-600"><i class="ph ph-check-circle text-2xl"></i></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-6 card-shadow border-l-4 border-orange-400">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-500">Disponibles</p>
+              <p class="text-3xl font-bold text-orange-500" id="stat-available">0</p>
+            </div>
+            <div class="p-3 bg-orange-50 rounded-full text-orange-500"><i class="ph ph-shopping-cart text-2xl"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-xl card-shadow p-6 sticky top-24">
+            <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="ph ph-plus-circle text-orange-500"></i> Agregar Nuevo Regalo</h2>
+            <form id="form-admin-regalo" class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del Producto</label>
+                <input type="text" id="admin-nombre" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-sm" placeholder="Ej: Licuadora Oster" required />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Precio (Aprox)</label>
+                <input type="text" id="admin-precio" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-sm" placeholder="Ej: S/. 150.00" required />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Enlace (Link)</label>
+                <input type="url" id="admin-link" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition shadow-sm" placeholder="https://..." required />
+              </div>
+
+              <button type="submit" id="btn-admin-guardar" class="w-full bg-gray-900 text-white font-bold py-3 px-4 rounded-lg hover:bg-orange-600 transition-colors duration-200 flex justify-center items-center gap-2">
+                <span>Guardar Regalo</span>
+                <i class="ph ph-paper-plane-right"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold text-gray-800">Lista Actual</h2>
+            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full animate-pulse">● En vivo</span>
+          </div>
+
+          <div id="admin-lista-container" class="grid grid-cols-1 gap-4">
+            <div class="text-center py-10 text-gray-500">Cargando datos...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 1. Configuración de Firebase (LA MISMA QUE TIENES)
+      const firebaseConfig = {
+        apiKey: "AIzaSyDtwlvV5GiZs_k827RTw8KRq4KZw9UthVw",
+        authDomain: "boda-e2a20.firebaseapp.com",
+        projectId: "boda-e2a20",
+        storageBucket: "boda-e2a20.firebasestorage.app",
+        messagingSenderId: "766114888160",
+        appId: "1:766114888160:web:235c92c8d6ecdb78cc5385",
+      };
+
+      // Inicializar
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+      // Elementos DOM
+      const form = document.getElementById("form-admin-regalo");
+      const listaContainer = document.getElementById("admin-lista-container");
+      const statTotal = document.getElementById("stat-total");
+      const statBought = document.getElementById("stat-bought");
+      const statAvailable = document.getElementById("stat-available");
+
+      // 2. ESCUCHA EN VIVO (Realtime)
+      // Usamos onSnapshot en lugar de get(). Esto actualiza la pantalla solo si hay cambios.
+      db.collection("regalos")
+        .orderBy("nombre")
+        .onSnapshot(
+          (snapshot) => {
+            renderizarLista(snapshot);
+            actualizarEstadisticas(snapshot);
+          },
+          (error) => {
+            console.error("Error obteniendo regalos:", error);
+            listaContainer.innerHTML = `<div class="bg-red-100 text-red-700 p-4 rounded">Error de conexión: ${error.message}</div>`;
+          }
+        );
+
+      // 3. Renderizar la Lista
+      function renderizarLista(snapshot) {
+        listaContainer.innerHTML = ""; // Limpiar
+
+        if (snapshot.empty) {
+          listaContainer.innerHTML = '<div class="text-center py-10 bg-white rounded-xl">No hay regalos registrados aún.</div>';
+          return;
+        }
+
+        snapshot.forEach((doc) => {
+          const regalo = doc.data();
+          const id = doc.id;
+
+          // Definir estilos según estado
+          const statusColor = regalo.comprado ? "bg-green-100 border-green-500" : "bg-white border-transparent";
+          const opacity = regalo.comprado ? "opacity-75" : "opacity-100";
+          const icon = regalo.comprado ? '<i class="ph-fill ph-check-circle text-green-600 text-xl"></i>' : '<i class="ph ph-circle text-gray-300 text-xl"></i>';
+
+          const cardHTML = `
+                <div class="relative group flex flex-col sm:flex-row items-center justify-between p-4 rounded-xl shadow-sm border-l-4 ${statusColor} bg-white hover:shadow-md transition-all duration-200 ${opacity}">
+                    
+                    <div class="flex items-center gap-4 w-full sm:w-auto overflow-hidden">
+                        <div class="flex-shrink-0">
+                            ${icon}
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-lg font-bold text-gray-900 truncate">${regalo.nombre}</p>
+                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                <span class="bg-gray-100 px-2 py-0.5 rounded text-gray-700 font-medium">${regalo.precio}</span>
+                                <a href="${regalo.link}" target="_blank" class="text-blue-500 hover:underline flex items-center gap-1">Ver Link <i class="ph-bold ph-arrow-up-right"></i></a>
+                            </div>
+                            ${regalo.comprado ? '<span class="inline-block mt-1 text-xs font-bold text-green-700 bg-green-200 px-2 py-0.5 rounded-full">COMPRADO</span>' : '<span class="inline-block mt-1 text-xs font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded-full">DISPONIBLE</span>'}
+                        </div>
+                    </div>
+
+                    <div class="mt-4 sm:mt-0 flex items-center gap-3 w-full sm:w-auto justify-end border-t sm:border-t-0 pt-3 sm:pt-0 border-gray-100">
+                        
+                        ${
+                          regalo.comprado
+                            ? `<button onclick="marcarDisponible('${id}')" class="text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-3 py-2 rounded-lg font-semibold transition" title="Volver a poner como disponible">
+                                Resetear
+                            </button>`
+                            : ""
+                        }
+
+                        <button onclick="eliminarRegalo('${id}', '${regalo.nombre}')" class="text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition" title="Eliminar permanentemente">
+                            <i class="ph-bold ph-trash text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                `;
+          listaContainer.innerHTML += cardHTML;
+        });
+      }
+
+      // 4. Actualizar Estadísticas
+      function actualizarEstadisticas(snapshot) {
+        const total = snapshot.size;
+        let comprados = 0;
+
+        snapshot.forEach((doc) => {
+          if (doc.data().comprado) comprados++;
+        });
+
+        statTotal.innerText = total;
+        statBought.innerText = comprados;
+        statAvailable.innerText = total - comprados;
+      }
+
+      // 5. Función Agregar Regalo
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const btn = document.getElementById("btn-admin-guardar");
+        const originalText = btn.innerHTML;
+
+        const nombre = document.getElementById("admin-nombre").value;
+        const precio = document.getElementById("admin-precio").value;
+        const link = document.getElementById("admin-link").value;
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Guardando...';
+
+        try {
+          await db.collection("regalos").add({
+            nombre: nombre,
+            link: link,
+            precio: precio,
+            comprado: false,
+            creado: firebase.firestore.FieldValue.serverTimestamp(), // Ordenamiento opcional futuro
+          });
+          form.reset();
+          // No necesitamos alert, la lista se actualiza sola gracias a onSnapshot
+        } catch (error) {
+          console.error(error);
+          alert("Error al guardar: " + error.message);
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        }
+      });
+
+      // 6. Funciones Globales (Eliminar y Resetear)
+
+      window.eliminarRegalo = async (id, nombre) => {
+        if (confirm(`¿Estás seguro de ELIMINAR "${nombre}"?\nEsta acción no se puede deshacer.`)) {
+          try {
+            await db.collection("regalos").doc(id).delete();
+          } catch (error) {
+            alert("Error al eliminar: " + error.message);
+          }
+        }
+      };
+
+      window.marcarDisponible = async (id) => {
+        if (confirm(`¿Quieres marcar este regalo como DISPONIBLE nuevamente?`)) {
+          try {
+            await db.collection("regalos").doc(id).update({
+              comprado: false,
+            });
+          } catch (error) {
+            alert("Error al actualizar: " + error.message);
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
