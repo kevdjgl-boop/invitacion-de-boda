@@ -11,13 +11,8 @@
 
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap");
-      body {
-        font-family: "Montserrat", sans-serif;
-        background-color: #f3f4f6;
-      }
-      .card-shadow {
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      }
+      body { font-family: "Montserrat", sans-serif; background-color: #f3f4f6; }
+      .card-shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
     </style>
   </head>
   <body class="text-gray-800">
@@ -86,7 +81,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1">Precio (Aprox)</label>
                 <div class="relative mt-1 rounded-md shadow-sm">
                   <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <span class="text-gray-500 sm:text-sm font-bold">S/</span>
+                    <span class="text-gray-500 sm:text-sm font-bold">S/.</span>
                   </div>
                   <input type="number" step="0.01" id="admin-precio" class="block w-full rounded-lg border-gray-300 pl-10 p-2.5 focus:border-orange-500 focus:ring-orange-500 sm:text-sm border" placeholder="150.00" required />
                 </div>
@@ -112,14 +107,23 @@
         </div>
 
         <div class="lg:col-span-2">
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-bold text-gray-800">Lista Actual</h2>
-            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full animate-pulse">● En vivo</span>
-          </div>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Lista Actual</h2>
+                    <span class="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full animate-pulse">● En vivo</span>
+                </div>
+                
+                <div class="relative w-full sm:w-64">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <i class="ph ph-magnifying-glass text-gray-400 text-lg"></i>
+                    </div>
+                    <input type="text" id="buscador-input" class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-orange-500 focus:border-orange-500" placeholder="Buscar regalo...">
+                </div>
+            </div>
 
-          <div id="admin-lista-container" class="grid grid-cols-1 gap-4">
-            <div class="text-center py-10 text-gray-500">Cargando datos...</div>
-          </div>
+            <div id="admin-lista-container" class="grid grid-cols-1 gap-4">
+                <div class="text-center py-10 text-gray-500">Cargando datos...</div>
+            </div>
         </div>
       </div>
     </div>
@@ -137,8 +141,10 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
 
+      // Variables Globales
       const form = document.getElementById("form-admin-regalo");
       const listaContainer = document.getElementById("admin-lista-container");
+      const buscadorInput = document.getElementById("buscador-input");
       
       const editIdInput = document.getElementById("edit-id");
       const btnGuardar = document.getElementById("btn-admin-guardar");
@@ -150,30 +156,54 @@
       const statBought = document.getElementById("stat-bought");
       const statAvailable = document.getElementById("stat-available");
 
+      // Variable para almacenar todos los regalos en memoria
+      let listaGlobalRegalos = [];
+
+      // 1. ESCUCHA DE FIREBASE
       db.collection("regalos")
         .orderBy("nombre")
         .onSnapshot(
           (snapshot) => {
-            renderizarLista(snapshot);
-            actualizarEstadisticas(snapshot);
+            // Guardamos todo en nuestra variable global
+            listaGlobalRegalos = [];
+            snapshot.forEach((doc) => {
+                listaGlobalRegalos.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Renderizamos usando la lista completa (al inicio)
+            renderizarLista(listaGlobalRegalos);
+            actualizarEstadisticas(listaGlobalRegalos);
           },
           (error) => {
-            console.error("Error obteniendo regalos:", error);
-            listaContainer.innerHTML = `<div class="bg-red-100 text-red-700 p-4 rounded">Error de conexión: ${error.message}</div>`;
+            console.error(error);
+            listaContainer.innerHTML = `<div class="bg-red-100 text-red-700 p-4 rounded">Error: ${error.message}</div>`;
           }
         );
 
-      function renderizarLista(snapshot) {
+      // 2. LÓGICA DEL BUSCADOR
+      buscadorInput.addEventListener('input', (e) => {
+          const texto = e.target.value.toLowerCase();
+          
+          // Filtramos la lista global
+          const listaFiltrada = listaGlobalRegalos.filter(regalo => 
+              regalo.nombre.toLowerCase().includes(texto)
+          );
+          
+          // Renderizamos solo lo filtrado
+          renderizarLista(listaFiltrada);
+      });
+
+      // 3. RENDERIZADO (Ahora recibe un ARRAY, no un snapshot)
+      function renderizarLista(listaItems) {
         listaContainer.innerHTML = ""; 
 
-        if (snapshot.empty) {
-          listaContainer.innerHTML = '<div class="text-center py-10 bg-white rounded-xl">No hay regalos registrados aún.</div>';
+        if (listaItems.length === 0) {
+          listaContainer.innerHTML = '<div class="text-center py-10 bg-white rounded-xl text-gray-500">No se encontraron regalos.</div>';
           return;
         }
 
-        snapshot.forEach((doc) => {
-          const regalo = doc.data();
-          const id = doc.id;
+        listaItems.forEach((regalo) => {
+          const id = regalo.id; // El ID ya viene dentro del objeto en listaGlobalRegalos
 
           const safeNombre = regalo.nombre.replace(/'/g, "\\'");
           const safePrecio = regalo.precio.replace(/'/g, "\\'");
@@ -221,15 +251,16 @@
         });
       }
 
-      function actualizarEstadisticas(snapshot) {
-        const total = snapshot.size;
+      function actualizarEstadisticas(lista) {
+        const total = lista.length;
         let comprados = 0;
-        snapshot.forEach((doc) => { if (doc.data().comprado) comprados++; });
+        lista.forEach((item) => { if (item.comprado) comprados++; });
         statTotal.innerText = total;
         statBought.innerText = comprados;
         statAvailable.innerText = total - comprados;
       }
 
+      // --- LOGICA DEL FORMULARIO ---
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -237,26 +268,17 @@
         const link = document.getElementById("admin-link").value;
         const editId = editIdInput.value;
         
-        // 1. OBTENER PRECIO Y FORMATEAR AUTOMÁTICAMENTE
         let precioInput = document.getElementById("admin-precio").value;
-        
-        // Si el usuario escribe "150", lo guardamos como "S/. 150"
-        let precioFinal = "";
-        if (precioInput.includes("S/.")) {
-            precioFinal = precioInput; // Ya tiene el símbolo
-        } else {
-            precioFinal = "S/. " + precioInput; // Agregamos el símbolo
-        }
+        let precioFinal = precioInput.includes("S/.") ? precioInput : "S/. " + precioInput;
 
         btnGuardar.disabled = true;
-        const textoOriginal = btnGuardarTexto.innerText;
         btnGuardarTexto.innerText = "Procesando...";
 
         try {
           if (editId) {
             await db.collection("regalos").doc(editId).update({
                 nombre: nombre,
-                precio: precioFinal, // Guardamos con S/.
+                precio: precioFinal,
                 link: link
             });
             cancelarEdicion();
@@ -264,7 +286,7 @@
             await db.collection("regalos").add({
               nombre: nombre,
               link: link,
-              precio: precioFinal, // Guardamos con S/.
+              precio: precioFinal,
               comprado: false,
               creado: firebase.firestore.FieldValue.serverTimestamp(),
             });
@@ -283,13 +305,8 @@
 
       window.prepararEdicion = (id, nombre, precio, link) => {
           document.getElementById("admin-nombre").value = nombre;
-          
-          // 2. LIMPIAR PRECIO AL EDITAR
-          // Quitamos el "S/. " para que el input type="number" lo acepte
-          // y el usuario solo vea el número para editar.
           let precioLimpio = precio.replace("S/. ", "").replace("S/.", "").trim();
           document.getElementById("admin-precio").value = precioLimpio;
-          
           document.getElementById("admin-link").value = link;
           editIdInput.value = id;
 
@@ -297,7 +314,6 @@
           btnGuardarTexto.innerText = "Actualizar Regalo";
           btnGuardar.classList.remove("bg-gray-900", "hover:bg-orange-600");
           btnGuardar.classList.add("bg-blue-600", "hover:bg-blue-700");
-          
           btnCancelar.classList.remove("hidden");
           window.scrollTo({ top: 0, behavior: 'smooth' });
       };
